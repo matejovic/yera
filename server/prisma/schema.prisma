@@ -22,9 +22,10 @@ model Bookmark {
   id Int @id @default(autoincrement())
   url String @unique
   title String 
-  description String
-  md_content String
-  published_at DateTime
+  description String?
+  content_md String
+  content_html String
+  published_at DateTime?
   users UserBookmark[]
 
 }
@@ -45,7 +46,7 @@ model UserBookmark {
   user_id Int
   bookmark Bookmark @relation(fields: [bookmark_id], references: [id])
   bookmark_id Int
-  annotations String
+  annotations String?
   created_at DateTime @default(now())
 
   @@id([user_id, bookmark_id])

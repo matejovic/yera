@@ -56,8 +56,8 @@ const handleCloseModal = () => {
 				<Modal onClose={handleCloseModal}>
 					{bookmarkData ? (
 							<>
-									<p>Bookmark created:</p>
-									<div>{JSON.stringify(bookmarkData, null, 2)}</div>
+									<h2>{bookmarkData.title}</h2>
+									<div dangerouslySetInnerHTML={{ __html: bookmarkData.content_html}}></div>
 							</>
 					) : (
 							<p>Loading...</p>

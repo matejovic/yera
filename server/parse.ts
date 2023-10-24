@@ -10,5 +10,9 @@ export async function parseArticle(url: string): Promise<{ content: string, titl
   const reader = new Readability(dom.window.document);
   const article = reader.parse();
   if (!article) throw new Error("Could not parse article");
-  return { content: turndownService.turndown(article.content), title: article.title };
+  return { 
+    content_md: turndownService.turndown(article.content), 
+    content_html: article.content,
+    title: article.title 
+  };
 }
