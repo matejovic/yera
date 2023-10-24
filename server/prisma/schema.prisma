@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      =  "file:./dev.db" // env("DATABASE_URL")
+}
+
+model User {
+  id    Int   @id @default(autoincrement())
+  username  String  @unique
+  password  String 
+  bookmarks UserBookmark[]
+  tags UserTags[]
+}
+
+model Bookmark {
+  id Int @id @default(autoincrement())
+  url String @unique
+  title String 
+  description String
+  md_content String
+  published_at DateTime
+  users UserBookmark[]
+
+}
+
+// List top level websites
+// can be extracted later
+model Publisher {
+  id Int @id @default(autoincrement())
+  url String @unique
+  title String
+  // bookmarked pages count
+  // favicon
+  // etc. 
+}
+
+model UserBookmark {
+  user  User @relation(fields: [user_id], references: [id])
+  user_id Int
+  bookmark Bookmark @relation(fields: [bookmark_id], references: [id])
+  bookmark_id Int
+  annotations String
+  created_at DateTime @default(now())
+
+  @@id([user_id, bookmark_id])
+}
+
+model Tag {
+  id Int @id @default(autoincrement())
+  name String @unique
+  bookmarks UserTags[]
+}
+
+model UserTags {
+  user  User @relation(fields: [user_id], references: [id])
+  user_id Int
+  tag Tag @relation(fields: [tag_id], references: [id])
+  tag_id Int
+  created_at DateTime @default(now())
+
+  @@id([user_id, tag_id])
+}
