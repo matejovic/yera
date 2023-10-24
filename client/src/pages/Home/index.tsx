@@ -19,7 +19,9 @@ export function Home() {
 						body: JSON.stringify({ url })
 				});
 				const data = await response.json();
-				setBookmarkData(data.data);
+				// add data.bookmark to bookmarks
+				setBookmarks([...bookmarks, data]);
+				setBookmarkData(data.bookmark);
 				console.log(data);
 				setShowModal(true);
 		}

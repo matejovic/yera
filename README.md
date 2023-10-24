@@ -14,12 +14,14 @@ Client
 ## Programmer's notes
 
 Proposed tasks
--[ ] stretch goal: release working demo on the server
+-[ ] mail goal: release working demo on the server
 -[ ] fix the reading xp work on the phone
+-[ ] catch external links before opening them and offer options: save this link, open in new tab.
 
 once basics are done
 
 Completed tasks
+-[x] add newly added article to the main feed on response
 -[x] So what I need to do first is to display proper article
 -[x] Actually add article into the database
 -[x] Display real data instead of fake on the homepage. 
