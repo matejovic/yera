@@ -25,15 +25,44 @@ const app = new Elysia()
 .get("/", () => "Hello Elysia")
 .use(swagger())
 .use(cors()) // TODO: fix before production
+.get("/bookmarks", async () => {
+  const bookmarks = await db.userBookmark.findMany({
+    where: {
+      user_id: 1,
+    },
+    select: {
+      bookmark: {
+        select: {
+          id: true,
+          url: true,
+          title: true,
+          published_at: true,
+        },
+      },
+      created_at: true,
+    },
+    orderBy: {
+      created_at: 'asc',
+    },
+  });
+  return bookmarks;
+})
+.get("/bookmark/:id", async ({ params }) => {
+  const { id } = params;
+  const bookmark = await db.bookmark.findUnique({
+    where: { id: Number(id) },
+  });
+  return bookmark;
+})
 .post("/bookmark", async ({ body }) => {
   // TODO: check if the user is authenticated
   const { url } = body;
 
-  // perform url fetching, can happen async for faster response
-
   // TODO: check if the bookmark already exists
-  // TODO: only update the annotation if it's different
+  // if yes, check if UserBookmark exists (for id=1), if yes, return it
+  // if UserBookmark does not exist, create it and return it
 
+  // we can do this in a separate worker thread
   const articleData = await parseArticle(url);
   
   // store data in the database
@@ -44,8 +73,8 @@ const app = new Elysia()
     content_html: articleData.content_html
   }
   
-  // fails silently
-  db.userBookmark.create({
+  // we need to return prisma Promise, not the data
+  return db.userBookmark.create({
     data: {
       user: { connect: { id: 1 }},
       bookmark: { create: bookmarkData },
@@ -53,37 +82,6 @@ const app = new Elysia()
     },
     include: { bookmark: true }
   })
-  
-  return {
-    data: {
-      url: url,
-      user_id: 1,
-      ...bookmarkData
-    }
-  }
-  
-  // An operation failed because it depends on one or more records that were required but not found. 
-  // No 'User' record(s) (needed to inline the relation on 'UserBookmark' record(s)) was found for a nested 
-  // connect on one-to-many relation 'UserToUserBookmark'.
-
-  // return db.userBookmark.create({
-  //   data: {
-  //     user: {
-  //       connect: {
-  //         id: user_id
-  //       }
-  //     },
-  //     bookmark: {
-  //       create: {
-  //         url: url
-  //       }
-  //     },
-  //     annotations: annotation
-  //   },
-  //   include: {
-  //     bookmark: true
-  //   }
-  // });
 
 }, {
   body: t.Object({

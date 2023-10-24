@@ -30,6 +30,13 @@
 	/* max-width: 490x; */
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
+
+.read-item:hover {
+	border: 1px solid #d6d2d2;
+	box-shadow: 0 25px 50px -12px #673ab888;
 }
 
 .read-item__right {

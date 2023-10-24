@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 import './style.css';
 import Modal from '../../components/Modal';
 
@@ -6,6 +6,7 @@ export function Home() {
 
 	const [showModal, setShowModal] = useState(false);
 	const [bookmarkData, setBookmarkData] = useState(null);
+	const [bookmarks, setBookmarks] = useState([]);
 
 	const handleKeyDown = async (event: KeyboardEvent) => {
 		if (event.key === "Enter") {
@@ -29,6 +30,23 @@ const handleCloseModal = () => {
 		setBookmarkData(null);
 };
 
+useEffect(() => {
+	const fetchBookmarks = async () => {
+		const response = await fetch("http://localhost:8000/bookmarks");
+		const data = await response.json();
+		setBookmarks(data);
+		console.log('bookmarks were set', bookmarks)
+	};
+	fetchBookmarks();
+}, []);
+
+const handleClick = async (id) => {
+	const response = await fetch(`http://localhost:8000/bookmark/${id}`);
+	const data = await response.json();
+	setBookmarkData(data);
+	setShowModal(true);
+}
+
 	return (
 		<div class="home">
 
@@ -36,22 +54,15 @@ const handleCloseModal = () => {
 				<input type="text" placeholder="https://" onKeyDown={handleKeyDown} />
 			</div>
 			<section class="reading-list">
-				<Resource
-					title="Learn about geopolitics"
-					href="/read/geopolitics"
-				/>
-				<Resource
-					title="Complicated nature of reality"
-					href="/read/reality"
-				/>
-				<Resource
-					title="Science of having fun"
-					href="/read/fun"
-				/>
+				{bookmarks.map((bookmark) => (
+					<Resource
+						title={bookmark.bookmark.title}
+						url={bookmark.bookmark.url}
+						clickAction={() => handleClick(bookmark.bookmark.id)}
+					/>
+				))}
 			</section>
-			{/* <Modal>
-				<p>Modal content</p>
-			</Modal> */}
+
 			{showModal && (
 				<Modal onClose={handleCloseModal}>
 					{bookmarkData ? (
@@ -70,10 +81,10 @@ const handleCloseModal = () => {
 
 function Resource(props) {
 	return (
-		<a href={props.href} target="_blank" class="read-item">
+		<a href={props.href} target="_blank" class="read-item" onClick={props.clickAction}>
 			<div className="read-item__left">
 				<h2>{props.title}</h2>
-				<span>Financial Times</span>
+				<span>{props.url}</span>
 			</div>
 			<div className="read-item__right">
 				<div className="tags">
