@@ -4,24 +4,10 @@ import { swagger } from "@elysiajs/swagger"
 import { cors } from '@elysiajs/cors'
 import { parseArticle } from "../parse";
 
-function parseUrl(url: string) {
-  // Options: mozilla/readability, postlight/parser
-  // https://github.com/mozilla/readability
-  // let's give this a try
-
-
-  // https://github.com/postlight/parser
-  // seems to err on bun. Should work with NPM or deno though
-  // Parser.parse(url).then((result) => {
-  //   console.log(result.title);
-  //   console.log(result.content);
-  // });
-
-
-}
+const BASE_URL = process.env.BASE_URL || "/"
 
 const db = new PrismaClient()
-const app = new Elysia()
+const app = new Elysia({ prefix: BASE_URL })
 .get("/", () => "Hello Elysia")
 .use(swagger())
 .use(cors()) // TODO: fix before production
