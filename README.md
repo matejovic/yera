@@ -1,7 +1,36 @@
+## Run the project
+
+Run the client
+```
+cd client
+bun install
+bun run dev
+```
+
+Run the server
+```
+cd server
+bun install
+bunx prisma generate
+bun run dev
+```
+
+## Releasing
+On the client we run `bun run build` instead of `dev`. It will generate `dist` folder.
+
+API for build (production) is set to /api
+for dev it's localhost:8000
+
+
+Read more
+- [Generating Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client)
+
+
 ## Project Management
 
 MVP we aim for 
 - link with all the useful parsed data is stored in the db
+- I will need a refactoring day
 
 Client
 - loader and toast messages

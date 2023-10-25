@@ -2,6 +2,11 @@ import { useState, useEffect } from 'preact/hooks';
 import './style.css';
 import Modal from '../../components/Modal';
 
+
+console.log(import.meta.env.MODE);
+
+const API_URL = import.meta.env.MODE === 'development' ? 'http://localhost:8000' : '/api';
+
 export function Home() {
 
 	const [showModal, setShowModal] = useState(false);
@@ -11,7 +16,7 @@ export function Home() {
 	const handleKeyDown = async (event: KeyboardEvent) => {
 		if (event.key === "Enter") {
 				const url = event.target.value;
-				const response = await fetch("http://localhost:8000/bookmark", {
+				const response = await fetch(API_URL + "/bookmark", {
 						method: "POST",
 						headers: {
 								"Content-Type": "application/json"
@@ -34,7 +39,7 @@ const handleCloseModal = () => {
 
 useEffect(() => {
 	const fetchBookmarks = async () => {
-		const response = await fetch("http://localhost:8000/bookmarks");
+		const response = await fetch(API_URL +"/bookmarks");
 		const data = await response.json();
 		setBookmarks(data);
 		console.log('bookmarks were set', bookmarks)
@@ -43,7 +48,7 @@ useEffect(() => {
 }, []);
 
 const handleClick = async (id) => {
-	const response = await fetch(`http://localhost:8000/bookmark/${id}`);
+	const response = await fetch(API_URL + `/bookmark/${id}`);
 	const data = await response.json();
 	setBookmarkData(data);
 	setShowModal(true);
