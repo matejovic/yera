@@ -4,7 +4,7 @@ import { swagger } from "@elysiajs/swagger"
 import { cors } from '@elysiajs/cors'
 import { parseArticle } from "../parse";
 
-const BASE_URL = process.env.BASE_URL || "/"
+const BASE_URL = process.env.BASE_URL || ""
 
 const db = new PrismaClient()
 const app = new Elysia({ prefix: BASE_URL })
