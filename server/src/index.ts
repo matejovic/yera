@@ -11,7 +11,8 @@ const BASE_URL = process.env.BASE_URL || ""
 
 
 let corsConfig = {
-  credentials: true
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }
 
 if (process.env.NODE_ENV === 'development') {
@@ -30,7 +31,9 @@ const app = new Elysia({ prefix: BASE_URL })
   })
 )
 .use(swagger())
-.use(cors({ credentials: true, origin: 'localhost:5173' })) // TODO: fix before production
+.use(cors(
+  corsConfig
+)) // TODO: fix before production
 .get("/auth/check", async ({ cookie: { token }, jwt }) => {
   // check if the user is authenticated
   const token_data = await jwt.verify(token);
@@ -59,10 +62,18 @@ const app = new Elysia({ prefix: BASE_URL })
 .post("/auth/register", async ({ body, jwt, cookie, setCookie }) => {
 
 })
-.get("/bookmarks", async () => {
+.get("/bookmarks", async ({ cookie: { token }, jwt }) => {
+
+  const token_data = await jwt.verify(token);
+
+  if (!token_data) {
+    // show only public bookmarks
+    return { message: "Unauthorized" };
+  }
+
   const bookmarks = await db.userBookmark.findMany({
     where: {
-      user_id: 1,
+      user_id: token_data.id,
     },
     select: {
       bookmark: {
@@ -128,3 +139,6 @@ const app = new Elysia({ prefix: BASE_URL })
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
+
+
+export type App = typeof app;

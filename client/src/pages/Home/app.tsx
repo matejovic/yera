@@ -18,6 +18,7 @@ export function ReaderApp() {
 				const url = event.target.value;
 				const response = await fetch(API_URL + "/bookmark", {
 						method: "POST",
+						credentials: "include",
 						headers: {
 								"Content-Type": "application/json"
 						},
@@ -39,7 +40,9 @@ const handleCloseModal = () => {
 
 useEffect(() => {
 	const fetchBookmarks = async () => {
-		const response = await fetch(API_URL +"/bookmarks");
+		const response = await fetch(API_URL +"/bookmarks", {
+			credentials: 'include'
+		});
 		const data = await response.json();
 		setBookmarks(data);
 		console.log('bookmarks were set', bookmarks)
