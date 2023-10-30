@@ -7,7 +7,7 @@ console.log(import.meta.env.MODE);
 
 const API_URL = import.meta.env.MODE === 'development' ? 'http://localhost:8000' : '/api';
 
-export function Home() {
+export function ReaderApp() {
 
 	const [showModal, setShowModal] = useState(false);
 	const [bookmarkData, setBookmarkData] = useState(null);

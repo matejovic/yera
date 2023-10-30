@@ -8,6 +8,16 @@ import { parseArticle } from "../parse";
 
 const BASE_URL = process.env.BASE_URL || ""
 
+
+
+let corsConfig = {
+  credentials: true
+}
+
+if (process.env.NODE_ENV === 'development') {
+  corsConfig.origin = 'localhost:5173'
+}
+
 const db = new PrismaClient()
 const app = new Elysia({ prefix: BASE_URL })
 .use(cookie())
@@ -20,8 +30,8 @@ const app = new Elysia({ prefix: BASE_URL })
   })
 )
 .use(swagger())
-.use(cors()) // TODO: fix before production
-.get("/", async ({ cookie: { token }, jwt }) => {
+.use(cors({ credentials: true, origin: 'localhost:5173' })) // TODO: fix before production
+.get("/auth/check", async ({ cookie: { token }, jwt }) => {
   // check if the user is authenticated
   const token_data = await jwt.verify(token);
 
@@ -29,15 +39,24 @@ const app = new Elysia({ prefix: BASE_URL })
     return { message: "Unauthorized" };
   }
 
-  return token_data.id;
+  return {
+    id: token_data.id
+  };
 
 })
-.get("/authenticate", async ({ jwt, cookie, setCookie, params }) => {
+.post("/auth/logout", async ({ cookie, setCookie }) => {
+  // invalidate the JWT token
+  setCookie('token', '', { httpOnly: true });
+  return { message: "Logged out" };
+})
+.post("/auth/login", async ({ jwt, cookie, setCookie, params }) => {
   // return a JWT token
   const token = await jwt.sign({ id: 1 });
   setCookie('token', token, { httpOnly: true });
   // return a cookie
-  return cookie.token;
+  return { token: token }
+})
+.post("/auth/register", async ({ body, jwt, cookie, setCookie }) => {
 
 })
 .get("/bookmarks", async () => {
