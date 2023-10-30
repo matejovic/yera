@@ -2,15 +2,44 @@ import { Elysia, t } from "elysia";
 import { PrismaClient } from "@prisma/client"
 import { swagger } from "@elysiajs/swagger"
 import { cors } from '@elysiajs/cors'
+import { cookie } from '@elysiajs/cookie'
+import { jwt } from '@elysiajs/jwt'
 import { parseArticle } from "../parse";
 
 const BASE_URL = process.env.BASE_URL || ""
 
 const db = new PrismaClient()
 const app = new Elysia({ prefix: BASE_URL })
-.get("/", () => "Hello Elysia")
+.use(cookie())
+.use(
+  jwt({
+    name: 'jwt',
+    // This should be Environment Variable
+    secret: 'MY_SECRETS',
+    exp: "7d"
+  })
+)
 .use(swagger())
 .use(cors()) // TODO: fix before production
+.get("/", async ({ cookie: { token }, jwt }) => {
+  // check if the user is authenticated
+  const token_data = await jwt.verify(token);
+
+  if (!token_data) {
+    return { message: "Unauthorized" };
+  }
+
+  return token_data.id;
+
+})
+.get("/authenticate", async ({ jwt, cookie, setCookie, params }) => {
+  // return a JWT token
+  const token = await jwt.sign({ id: 1 });
+  setCookie('token', token, { httpOnly: true });
+  // return a cookie
+  return cookie.token;
+
+})
 .get("/bookmarks", async () => {
   const bookmarks = await db.userBookmark.findMany({
     where: {
