@@ -64,7 +64,7 @@ const handleClick = async (id) => {
 				<input type="text" placeholder="https://" onKeyDown={handleKeyDown} />
 			</div>
 			<section class="reading-list">
-				{bookmarks.map((bookmark) => (
+				{bookmarks && bookmarks.map((bookmark) => (
 					<Resource
 						title={bookmark.bookmark.title}
 						url={bookmark.bookmark.url}
