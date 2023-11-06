@@ -15,14 +15,16 @@ export function Homepage() {
 
       <b>Current priorities:</b>
       <ul>
-        <li>Add minimal registration</li>
-        <li>Fix login with real credentials</li>
-        <li>Extension authentication</li>
-        <li>Extension single tab</li>
-        <li>Extension bulk save and close (session)</li>
-        <li>Reader: store reading progress</li>
-        <li>Processor view: keep/forget/schedule</li>
-        <li>Simple tags support</li>
+        <li>separate production db - 1h</li>
+        <li>Add minimal registration - 2h</li>
+        <li>Fix login with real credentials - 2h</li>
+        <li>refactoring - 3h</li>
+        <li>4h Extension authentication</li>
+        <li>2h Extension single tab</li>
+        <li>2h Extension bulk save and close (session)</li>
+        <li>4h Simple tags support</li>
+        <li>4h Reader: store reading progress</li>
+        <li>8h Processor view: keep/forget/schedule</li>
       </ul>
 
       <b>Overview: </b>

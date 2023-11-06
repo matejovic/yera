@@ -137,7 +137,8 @@ const app = new Elysia({ prefix: BASE_URL })
 .listen(8000);
 
 console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
+  `Database url is: ${process.env.DATABASE_URL}`
 );
 
 

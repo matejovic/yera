@@ -18,8 +18,18 @@ bun run dev
 ## Releasing
 On the client we run `bun run build` instead of `dev`. It will generate `dist` folder.
 
-API for build (production) is set to /api
-for dev it's localhost:8000
+API for build (production) is set to /api, db is prod.db
+for dev it's localhost:8000, db is dev.db
+
+Releasing new version
+```
+git pull
+sudo kill -9 $(lsof -t -i:8000) # kill the current nohup server process
+cd server
+bun install # if additional libraries
+bun run prod
+
+```
 
 
 Read more
