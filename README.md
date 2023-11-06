@@ -24,11 +24,18 @@ for dev it's localhost:8000, db is dev.db
 Releasing new version
 ```
 git pull
-sudo kill -9 $(lsof -t -i:8000) # kill the current nohup server process
-cd server
-bun install # if additional libraries
-bun run prod
 
+# client-side
+cd client
+bun install # if additional libraries
+bun run build
+
+# server side
+cd server
+sudo kill -9 $(lsof -t -i:8000) # kill the current nohup server process
+bun install  # if additional libraries
+bun run prod # test if runs, kill it if anyway
+nohup bun run prod
 ```
 
 
