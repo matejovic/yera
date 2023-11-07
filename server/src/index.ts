@@ -101,6 +101,7 @@ const app = new Elysia({ prefix: BASE_URL })
   }
   
   // we need to return prisma Promise, not the data
+  // TODO: this fails on duplicate url (unique constraint)
   return db.userBookmark.create({
     data: {
       user: { connect: { id: token_data.id }},
