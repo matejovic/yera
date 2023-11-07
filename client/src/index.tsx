@@ -9,6 +9,7 @@ import { NotFound } from './pages/_404.jsx';
 import { Login} from './pages/Authentication/login.js';
 import { Register} from './pages/Authentication/register.js';
 import Logout from './pages/Authentication/logout.js';
+import {Profile} from './pages/Authentication/profile.js';
 
 import './style.css';
 
@@ -56,8 +57,9 @@ export function App() {
 					<Route path="/reader" component={ReaderApp} />
 					<Route default component={NotFound} />
 					<Route path="/login" component={Login} profile={profile} />
-					<Route path="/register" component={Register} />
+					<Route path="/register" component={Register} profile={profile} />
 					<Route path="/logout" component={Logout} />
+					<Route path="/profile" component={Profile} profile={profile} />
 				</Router>
 			</main>
 		</LocationProvider>

@@ -64,13 +64,13 @@ const handleClick = async (id) => {
 				<input type="text" placeholder="https://" onKeyDown={handleKeyDown} />
 			</div>
 			<section class="reading-list">
-				{bookmarks && bookmarks.length && bookmarks.map((bookmark) => (
+				{bookmarks && bookmarks.length ? bookmarks.map((bookmark) => (
 					<Resource
 						title={bookmark.bookmark.title}
 						url={bookmark.bookmark.url}
 						clickAction={() => handleClick(bookmark.bookmark.id)}
 					/>
-				))}
+				)) : (<div>Your list is empty.</div>)}
 			</section>
 
 			{showModal && (

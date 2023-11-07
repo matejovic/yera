@@ -86,3 +86,10 @@
 		border: 1px solid #bbb;
 	}
 } */
+
+.form-errors {
+	border: 1px solid red;
+	width: 400px;
+	padding: 10px;
+	margin-bottom: 20px;
+}

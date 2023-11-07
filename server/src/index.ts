@@ -5,6 +5,7 @@ import { cors } from '@elysiajs/cors'
 import { cookie } from '@elysiajs/cookie'
 import { jwt } from '@elysiajs/jwt'
 import { parseArticle } from "../parse";
+import { auth } from "./auth";
 
 const BASE_URL = process.env.BASE_URL || ""
 
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 const db = new PrismaClient()
 const app = new Elysia({ prefix: BASE_URL })
 .use(cookie())
+.use(auth)
 .use(
   jwt({
     name: 'jwt',
@@ -34,34 +36,7 @@ const app = new Elysia({ prefix: BASE_URL })
 .use(cors(
   corsConfig
 )) // TODO: fix before production
-.get("/auth/check", async ({ cookie: { token }, jwt }) => {
-  // check if the user is authenticated
-  const token_data = await jwt.verify(token);
 
-  if (!token_data) {
-    return { message: "Unauthorized" };
-  }
-
-  return {
-    id: token_data.id
-  };
-
-})
-.post("/auth/logout", async ({ cookie, setCookie }) => {
-  // invalidate the JWT token
-  setCookie('token', '', { httpOnly: true });
-  return { message: "Logged out" };
-})
-.post("/auth/login", async ({ jwt, cookie, setCookie, params }) => {
-  // return a JWT token
-  const token = await jwt.sign({ id: 1 });
-  setCookie('token', token, { httpOnly: true });
-  // return a cookie
-  return { token: token }
-})
-.post("/auth/register", async ({ body, jwt, cookie, setCookie }) => {
-
-})
 .get("/bookmarks", async ({ cookie: { token }, jwt }) => {
 
   const token_data = await jwt.verify(token);
