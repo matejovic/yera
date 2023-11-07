@@ -74,8 +74,15 @@ const app = new Elysia({ prefix: BASE_URL })
   });
   return bookmark;
 })
-.post("/bookmark", async ({ body }) => {
-  // TODO: check if the user is authenticated
+.post("/bookmark", async ({ body, cookie: { token }, jwt }) => {
+  // check if the user is authenticated
+  const token_data = await jwt.verify(token);
+
+  if (!token_data) {
+    // show only public bookmarks
+    return { message: "Unauthorized" };
+  }
+
   const { url } = body;
 
   // TODO: check if the bookmark already exists
@@ -96,7 +103,7 @@ const app = new Elysia({ prefix: BASE_URL })
   // we need to return prisma Promise, not the data
   return db.userBookmark.create({
     data: {
-      user: { connect: { id: 1 }},
+      user: { connect: { id: token_data.id }},
       bookmark: { create: bookmarkData },
       annotations: 'fixme',
     },
