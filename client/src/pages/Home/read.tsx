@@ -17,7 +17,9 @@ useEffect(() => {
 const loadBookmark = async (id) => {
 	const response = await fetch(API_URL + `/bookmark/${id}`);
 	const data = await response.json();
-	setBookmarkData(data);
+	setBookmarkData(data.bookmark);
+  setNote(data.annotations);
+  setTags(data.tags.map(t => t.name).join(','));
 }
 
 const handleSubmit = async (event) => {

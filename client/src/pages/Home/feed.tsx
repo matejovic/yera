@@ -51,7 +51,7 @@ useEffect(() => {
 }, []);
 
 const handleClick = async (id) => {
-	const response = await fetch(API_URL + `/bookmark/${id}`);
+	const response = await fetch(API_URL + `/fast-bookmark/${id}`);
 	const data = await response.json();
 	setBookmarkData(data);
 	setShowModal(true);
@@ -68,6 +68,8 @@ const handleClick = async (id) => {
 					<ContentRow
 						title={bookmark.bookmark.title}
 						url={bookmark.bookmark.url}
+						createdAt={bookmark.created_at}
+						tags={bookmark.tags.map(t => t.name)}
 						clickAction={() => handleClick(bookmark.bookmark.id)}
 					/>
 				)) : (<div>Your list is empty.</div>)}
@@ -99,11 +101,12 @@ function ContentRow(props) {
 			</div>
 			<div className="read-item__right">
 				<div className="tags">
-					<span>#geopolitics</span>
-					<span>#politics</span>
+					{props.tags && props.tags.map((tag) => (
+						<span>#{tag}</span>
+					))}
 				</div>
 				<div className="datetime">
-					<span>Added: 2021-03-01</span>
+					<span>Added: {props.createdAt}</span>
 				</div>
 			</div>
 		</a>

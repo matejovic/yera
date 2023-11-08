@@ -63,6 +63,7 @@ const app = new Elysia({ prefix: BASE_URL })
         },
       },
       created_at: true,
+      tags: true,
     },
     orderBy: {
       created_at: 'asc',
@@ -70,10 +71,18 @@ const app = new Elysia({ prefix: BASE_URL })
   });
   return bookmarks;
 })
-.get("/bookmark/:id", async ({ params }) => {
+.get("/fast-bookmark/:id", async ({ params }) => {
   const { id } = params;
   const bookmark = await db.bookmark.findUnique({
     where: { id: Number(id) },
+  });
+  return bookmark;
+})
+.get("/bookmark/:id", async ({ params, cookie: { token }, jwt }) => {
+  const { id } = params;
+  const bookmark = await db.userBookmark.findUnique({
+    where: { user_id_bookmark_id: { user_id: 1, bookmark_id: Number(id) } },
+    include: { bookmark: true, tags: true },
   });
   return bookmark;
 })
