@@ -3,13 +3,14 @@ import { useState } from 'preact/hooks';
 import { LocationProvider, Router, Route } from 'preact-iso';
 
 import { Header } from './components/Header.jsx';
-import { ReaderApp } from './pages/Home/app.js';
+import { Feed } from './pages/Home/feed.js';
 import { Homepage } from './pages/Home/present.jsx';
 import { NotFound } from './pages/_404.jsx';
 import { Login} from './pages/Authentication/login.js';
 import { Register} from './pages/Authentication/register.js';
 import Logout from './pages/Authentication/logout.js';
 import {Profile} from './pages/Authentication/profile.js';
+import {Read} from './pages/Home/read.js';
 
 import './style.css';
 
@@ -54,7 +55,8 @@ export function App() {
 			<main>
 				<Router>
 					<Route path="/" component={Homepage} />
-					<Route path="/reader" component={ReaderApp} />
+					<Route path="/reader" component={Feed} />
+					<Route path="/read/:id" component={Read} /> 
 					<Route default component={NotFound} />
 					<Route path="/login" component={Login} profile={profile} />
 					<Route path="/register" component={Register} profile={profile} />

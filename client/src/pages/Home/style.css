@@ -13,7 +13,7 @@
 
 
 
-.reading-list, .page {
+.reading-list, .reader {
 	display: flex;
 	flex-direction: column;
 	max-width: 640px;

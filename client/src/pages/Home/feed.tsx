@@ -7,7 +7,7 @@ console.log(import.meta.env.MODE);
 
 const API_URL = import.meta.env.MODE === 'development' ? 'http://localhost:8000' : '/api';
 
-export function ReaderApp() {
+export function Feed() {
 
 	const [showModal, setShowModal] = useState(false);
 	const [bookmarkData, setBookmarkData] = useState(null);
@@ -65,7 +65,7 @@ const handleClick = async (id) => {
 			</div>
 			<section class="reading-list">
 				{bookmarks && bookmarks.length ? bookmarks.map((bookmark) => (
-					<Resource
+					<ContentRow
 						title={bookmark.bookmark.title}
 						url={bookmark.bookmark.url}
 						clickAction={() => handleClick(bookmark.bookmark.id)}
@@ -77,6 +77,7 @@ const handleClick = async (id) => {
 				<Modal onClose={handleCloseModal}>
 					{bookmarkData ? (
 							<>
+									<a href={"/read/"+bookmarkData.id}>full reader view</a>
 									<h2>{bookmarkData.title}</h2>
 									<div dangerouslySetInnerHTML={{ __html: bookmarkData.content_html}}></div>
 							</>
@@ -89,7 +90,7 @@ const handleClick = async (id) => {
 	);
 }
 
-function Resource(props) {
+function ContentRow(props) {
 	return (
 		<a href={props.href} target="_blank" class="read-item" onClick={props.clickAction}>
 			<div className="read-item__left">
