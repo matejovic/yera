@@ -15,7 +15,19 @@ model User {
   email  String  @unique
   password  String 
   bookmarks UserBookmark[]
-  tags UserTags[]
+  tags Tags[]
+}
+
+
+// List top level websites
+// can be extracted later
+model Publisher {
+  id Int @id @default(autoincrement())
+  url String @unique
+  title String
+  // bookmarked pages count
+  // favicon
+  // etc. 
 }
 
 model Bookmark {
@@ -30,16 +42,6 @@ model Bookmark {
 
 }
 
-// List top level websites
-// can be extracted later
-model Publisher {
-  id Int @id @default(autoincrement())
-  url String @unique
-  title String
-  // bookmarked pages count
-  // favicon
-  // etc. 
-}
 
 model UserBookmark {
   user  User @relation(fields: [user_id], references: [id])
@@ -48,22 +50,22 @@ model UserBookmark {
   bookmark_id Int
   annotations String?
   created_at DateTime @default(now())
+  tags Tags[]
 
   @@id([user_id, bookmark_id])
 }
 
-model Tag {
-  id Int @id @default(autoincrement())
-  name String @unique
-  bookmarks UserTags[]
-}
 
-model UserTags {
+model Tags {
+  id Int @id @default(autoincrement())
+  name String
+  color String?
+  bookmark UserBookmark @relation(fields: [bookmark_id, user_id], references: [bookmark_id, user_id])
+  bookmark_id Int
   user  User @relation(fields: [user_id], references: [id])
   user_id Int
-  tag Tag @relation(fields: [tag_id], references: [id])
-  tag_id Int
   created_at DateTime @default(now())
+  // combination of name, user_id and bookmark_id should be unique
+  @@unique([name, user_id, bookmark_id])
 
-  @@id([user_id, tag_id])
 }

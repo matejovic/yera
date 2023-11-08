@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia";
-import { PrismaClient } from "@prisma/client"
+import { Prisma, PrismaClient } from "@prisma/client"
 import { swagger } from "@elysiajs/swagger"
 import { cors } from '@elysiajs/cors'
 import { cookie } from '@elysiajs/cookie'
@@ -14,13 +14,16 @@ const BASE_URL = process.env.BASE_URL || ""
 let corsConfig = {
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }
 
 if (process.env.NODE_ENV === 'development') {
   corsConfig.origin = 'localhost:5173'
 }
 
-const db = new PrismaClient()
+ 
+const db = new PrismaClient();
+
 const app = new Elysia({ prefix: BASE_URL })
 .use(cookie())
 .use(auth)
@@ -115,6 +118,84 @@ const app = new Elysia({ prefix: BASE_URL })
   body: t.Object({
     url: t.String(),
   })
+})
+.put("/bookmark/:id", async ({ params, body, cookie: {token}, jwt }) => {
+  
+  const token_data = await jwt.verify(token);
+  if (!token_data) {
+    return { message: "Unauthorized" };
+  }
+  
+  const user_id = token_data.id;
+  const { id } = params;
+  const { tags, note } = body;
+
+  const userBookmark = await db.userBookmark.update({
+    where: { user_id_bookmark_id: { user_id: user_id, bookmark_id: Number(id) } },
+    data: { annotations: note },
+  });
+
+  // update tags
+  async function syncTags(user_id: number, bookmark_id: number, newTags: string[]) {
+    try {
+      // Start the transaction
+      await db.$transaction(async (db) => {
+        // Determine tags to be deleted and deleted them in bulk
+        await db.tags.deleteMany({
+          where: {
+            user_id,
+            bookmark_id,
+            NOT: {
+              name: { in: newTags },
+            },
+          },
+        });
+  
+        // Find out which tags already exist to avoid redundant operations
+        const existingTags = await db.tags.findMany({
+          where: { user_id, bookmark_id },
+          select: { name: true },
+        });
+        const existingTagNames = new Set(existingTags.map(tag => tag.name));
+  
+        // Filter out the tags that already exist
+        const tagsToCreate = newTags.filter(tag => !existingTagNames.has(tag));
+  
+        // Insert new tags in bulk
+        if (tagsToCreate.length > 0) {
+          // NOTE: SQLite does not support bulk insert
+          // good reason to move into Postgres
+          // await db.tags.createMany({
+          //   data: tagsToCreate.map(tagName => ({
+          //     user_id,
+          //     bookmark_id,
+          //     name: tagName,
+          //   })),
+          //   skipDuplicates: true,
+          // });
+          
+          // prepare data
+          const newTagData = tagsToCreate.map(tagName => ({
+            user_id,
+            bookmark_id,
+            name: tagName,
+          }))
+          // insert data
+          await Promise.all(newTagData.map(tag => {
+            return db.tags.create({ data: tag})
+          }));
+
+        }
+      });
+    } catch (error) {
+      console.error('Failed to sync tags:', error);
+      throw error; // Rethrow the error after logging or handling it
+    }
+  }
+  syncTags(user_id, Number(id), tags);  
+
+  // TODO: return updated data
+  return userBookmark;
 })
 
 .listen(8000);
