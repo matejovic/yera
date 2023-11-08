@@ -69,7 +69,7 @@ const handleClick = async (id) => {
 						title={bookmark.bookmark.title}
 						url={bookmark.bookmark.url}
 						createdAt={bookmark.created_at}
-						tags={bookmark.tags.map(t => t.name)}
+						tags={ bookmark.tags ? bookmark.tags.map(t => t.name) : []}
 						clickAction={() => handleClick(bookmark.bookmark.id)}
 					/>
 				)) : (<div>Your list is empty.</div>)}

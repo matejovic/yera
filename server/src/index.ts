@@ -118,7 +118,7 @@ const app = new Elysia({ prefix: BASE_URL })
     data: {
       user: { connect: { id: token_data.id }},
       bookmark: { create: bookmarkData },
-      annotations: 'fixme',
+      annotations: '',
     },
     include: { bookmark: true }
   })
