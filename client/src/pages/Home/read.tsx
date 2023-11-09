@@ -42,9 +42,14 @@ const handleSubmit = async (event) => {
   console.log(response.json());
 };
 
+const saveProgress = async () => {
+  alert(window.scrollY);
+}
+
 	return (
 		<div class="home">
 
+      <button className="floater" onClick={saveProgress}>Save Progress</button>
 
 					{bookmarkData ? (
 							<div class="reader">

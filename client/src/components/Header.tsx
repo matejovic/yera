@@ -26,9 +26,7 @@ export function Header(props: Props) {
 				<a href="/reader" class={url == '/reader' && 'active'}>
 					Reader
 				</a>
-				<a href="/404" class={url == '/404' && 'active'}>
-					404
-				</a>
+
 
 				{props.profile.id && <a href="/profile">Profile {props.profile.id}</a>}
 				{props.profile.id && <a href="/logout">Log out</a>}

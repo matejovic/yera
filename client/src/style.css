@@ -47,6 +47,16 @@ main {
 	}
 } */
 
+body {
+	margin: 0;
+}
+
+.floater {
+	position: absolute;
+	position: fixed;
+	left: 20px;
+	bottom: 20px;
+}
 
 header {
 	display: flex;
