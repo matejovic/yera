@@ -3,14 +3,14 @@ import { useState } from 'preact/hooks';
 import { LocationProvider, Router, Route } from 'preact-iso';
 
 import { Header } from './components/Header.jsx';
-import { Feed } from './pages/Home/feed.js';
-import { Homepage } from './pages/Home/present.jsx';
+import { Feed } from './pages/feed.js';
+import { Homepage } from './pages/home.jsx';
 import { NotFound } from './pages/_404.jsx';
 import { Login} from './pages/Authentication/login.js';
 import { Register} from './pages/Authentication/register.js';
 import Logout from './pages/Authentication/logout.js';
 import {Profile} from './pages/Authentication/profile.js';
-import {Read} from './pages/Home/read.js';
+import {Read} from './pages/read.js';
 
 import './style.css';
 

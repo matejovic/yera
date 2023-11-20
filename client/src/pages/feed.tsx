@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'preact/hooks';
 import './style.css';
-import Modal from '../../components/Modal';
+import Modal from '../components/Modal';
 
 
 console.log(import.meta.env.MODE);

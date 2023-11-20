@@ -87,3 +87,7 @@ header a.active {
 header a:hover {
 	background-color: #0008;
 }
+
+.highlighter-actions {
+	position: fixed;
+}
