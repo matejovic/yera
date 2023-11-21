@@ -1,7 +1,0 @@
-GET http://localhost:8000/bookmark/1 HTTP/1.1
-content-type: application/json
-
-{
-
-
-}

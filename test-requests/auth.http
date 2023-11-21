@@ -1,7 +1,0 @@
-POST http://localhost:3000/auth HTTP/1.1
-content-type: application/json
-
-{
-    "username": "matej123111",
-    "password": "please-hash-me"
-}

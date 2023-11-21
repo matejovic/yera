@@ -1,37 +1,20 @@
-import { useState, useEffect } from 'preact/hooks';
-import './style.css';
-import Modal from '../../components/Modal';
-
-
+import { useEffect, useState } from "preact/hooks";
+import Modal from "../../components/Modal";
+import "./style.css";
 
 export function Homepage() {
-
-
 	return (
 		<div class="reader">
-      <h2>Welcome to Reader [WIP]</h2>
-      <br />
+			<h2>Reader Prototype</h2>
+			<br />
+			
+			<p>We work towards alpha stage</p>
 
-      <b>(tbd) Overview: </b>
-      <ul>
-        <li>N: registered users</li>
-        <li>Z: stored bookmarks</li>
-      </ul>
-      
-      <b>Worlflow</b>
-      <ol>
-        <li>Register or Login</li>
-        <li>Add your links</li>
-        <li>Read</li>
-      </ol>
-      
-      <b>Roadmap</b>
-      <ul>
-        <li>Browser Extension</li>
-        <li>Highlighter</li>
-        <li>Mobile App</li>
-        <li>Offline support</li>
-      </ul>
+			// <b>(tbd) Overview: </b>
+			// <ul>
+			// 	<li>N: registered users</li>
+			// 	<li>Z: stored bookmarks</li>
+			// </ul>
 
 		</div>
 	);

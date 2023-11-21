@@ -1,7 +1,0 @@
-POST http://localhost:8000/bookmark HTTP/1.1
-content-type: application/json
-
-{
-    "url": "https://ske.land/diary/educat/Day%207.html"
-
-}

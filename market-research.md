@@ -1,16 +1,3 @@
-# Product Overview
-maybe move this out of the repo, until it's in a better shape
-for roadmap we will likely use google sheet and calendar
-
-# Roadmap
-**November**
-- highlighter
-- roaadmappig
-
-**December**
-
-
-
 # Market Research
 we think there is a hole in the market.
 
