@@ -6,4 +6,4 @@ We have [Product](/product-doc.md) document outlining milestones and roadmap. As
 
 Our current demo can be found at [www.reader.ovh](www.reader.ovh).
 
-TODO: add GIF with current user-flow
+![reader6mb](https://github.com/matejovic/reader/assets/10489019/a0fab6c4-22c1-4d5a-9418-9b4e087e9a13)
