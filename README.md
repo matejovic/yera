@@ -7,5 +7,3 @@ We have [Product](/product-doc.md) document outlining milestones and roadmap. As
 Our current demo can be found at [www.reader.ovh](www.reader.ovh).
 
 TODO: add GIF with current user-flow
-
-/etc/nginx/conf.d

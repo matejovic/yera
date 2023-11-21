@@ -67,3 +67,9 @@ Expect 100 weekly active users
 ## Official stage
 
 Expect 1k weekly active users
+
+# Growth Metrics
+- registered users (reasonable for alpha, bad later)
+- weekly active users (reasonable)
+- stored bookmarks (reasonable)
+- total time spent reading and organizing (reasonable after beta)

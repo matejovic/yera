@@ -1,20 +1,21 @@
 import { useEffect, useState } from "preact/hooks";
-import Modal from "../../components/Modal";
 import "./style.css";
 
 export function Homepage() {
 	return (
 		<div class="reader">
-			<h2>Reader Prototype</h2>
+			<h2>Welcome</h2>
 			<br />
 			
-			<p>We work towards alpha stage</p>
+			<ul>
+				<li>We work with enthusiasm towards alpha stage. </li>
+				<li>Product of Comenius Institute. </li>
+				<li>Everything is <a href="https://github.com/matejovic/reader">Open Sourced.</a></li>
+			</ul>
+			<p></p>
 
-			// <b>(tbd) Overview: </b>
-			// <ul>
-			// 	<li>N: registered users</li>
-			// 	<li>Z: stored bookmarks</li>
-			// </ul>
+			{/* TODO: add gif with current flow */}
+
 
 		</div>
 	);
