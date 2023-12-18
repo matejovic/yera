@@ -101,4 +101,20 @@ export const auth = new Elysia()
     setCookie('token', '', { httpOnly: true });
     return { message: "Logged out" };
   })
+  .post("/auth/profile", async({ body, cookie: { token }, jwt }) => {
+	// check if the user is authenticated
+	const token_data = await jwt.verify(token);
+
+	if (!token_data) {
+		return { message: "Unauthorized" };
+	}
+
+	
+	// TODO: add validation for body.bio
+	// TODO: add validation for token_data.id
+	const updatedUser = await db.user.update({ where: { id: token_data.id }, data: { bio: body.bio } })
+ 	
+	return { message: "Profile updated" };
+  })
+
   

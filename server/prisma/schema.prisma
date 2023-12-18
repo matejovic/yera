@@ -16,6 +16,7 @@ model User {
   password  String 
   bookmarks UserBookmark[]
   tags Tags[]
+  bio String?
 }
 
 

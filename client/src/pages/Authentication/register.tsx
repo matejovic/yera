@@ -44,12 +44,12 @@ export function Register (props: Props) {
   };
 
   return (
-    <div class="page">
-      <h2>Register here</h2>
+    <div class="page registration">
+      <h2>Pre-Alpha</h2>
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
     </div>
   )

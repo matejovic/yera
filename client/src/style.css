@@ -91,3 +91,19 @@ header a:hover {
 .highlighter-actions {
 	position: fixed;
 }
+
+
+/* REGISTRATION */
+.registration {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.registration input {
+	display: block;
+	margin-bottom: 20px;
+}
+
+/* PROFILE */
+
