@@ -1,4 +1,4 @@
-
+import { useState } from 'preact/hooks';
 
 interface Props {
   profile: {
@@ -13,6 +13,13 @@ export function Profile (props: Props) {
 
   const { id, email } = props.profile; 
 
+  // TODO: set bio on load from database
+  // a: use useEffect hook
+  // establish pattern for the project
+  const [bio, setBio] = useState('');
+
+  
+
   // update bio at /auth/profile based on the textarea
   // use the id to identify the user
   async function updateBio() {
@@ -22,7 +29,7 @@ export function Profile (props: Props) {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({bio: "test"})
+		body: JSON.stringify({bio: bio})
   	});
   }
 
@@ -31,7 +38,7 @@ export function Profile (props: Props) {
       {id ? <h2>id: {id}</h2> : <h2>You are not logged in</h2>}
 
 	<p>Whatever you will write in the box will be saved in the database</p>
-	<textarea/><br/>
+	<textarea onInput={(e) => setBio(e.target.value)} value={bio}/><br/>
 	<button onClick={updateBio}>Save</button>
     </div>
   )
