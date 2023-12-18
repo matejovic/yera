@@ -1,20 +1,16 @@
 import { Elysia, t } from "elysia";
 import { PrismaClient } from "@prisma/client"
-
 const db = new PrismaClient()
-
 
 export const auth = new Elysia()
   .post(
     "/auth/register", 
     async ({ body, jwt, cookie, setCookie }) => {
       
-      console.log(body)
       // Validate body data
       if (!body.email || !body.password) {
         throw new Error('email and password are required');
       }
-
 
       const hashedPassword = await Bun.password.hash(body.password)
 

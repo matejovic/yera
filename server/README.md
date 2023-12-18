@@ -1,6 +1,9 @@
 # Run the project
 
 ## Development
+
+You will need an .env file with database url. [ref](https://www.prisma.io/docs/orm/reference/connection-urls#sqlite)
+
 ```
 bun install # if any new libraries
 bunx prisma generate (schema change)
