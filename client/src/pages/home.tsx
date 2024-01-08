@@ -4,7 +4,7 @@ import "./style.css";
 export function Homepage() {
 	return (
 		<div class="reader">
-			<h2>Welcome</h2>
+			<h2>Research Tools</h2>
 			<br />
 			
 			<ul>

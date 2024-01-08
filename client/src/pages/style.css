@@ -13,7 +13,7 @@
 
 
 
-.reading-list, .reader {
+.reading-list, .reader, .write {
 	display: flex;
 	flex-direction: column;
 	max-width: 640px;
@@ -92,4 +92,18 @@
 	width: 400px;
 	padding: 10px;
 	margin-bottom: 20px;
+}
+
+.stream-response {
+	padding-top: 20px;
+	margin-top: 20px;
+	border-top: 1px solid green;
+}
+
+.stream > button{
+	margin-top: 10px;
+}
+
+.stream > textarea {
+	min-height: 40px;
 }

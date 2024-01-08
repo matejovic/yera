@@ -70,3 +70,11 @@ model Tags {
   @@unique([name, user_id, bookmark_id])
 
 }
+
+model UserResearch {
+	id Int @id @default (autoincrement())
+	title String
+	data String
+	created_at DateTime
+	updated_at DateTime
+}

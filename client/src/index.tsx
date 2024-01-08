@@ -11,6 +11,9 @@ import { Register} from './pages/Authentication/register.js';
 import Logout from './pages/Authentication/logout.js';
 import {Profile} from './pages/Authentication/profile.js';
 import {Read} from './pages/read.js';
+import {Write} from './pages/write.js';
+import {Stream} from './pages/stream.js';
+import {Advent} from './pages/advent.js';
 
 import './style.css';
 
@@ -57,6 +60,9 @@ export function App() {
 					<Route path="/" component={Homepage} />
 					<Route path="/reader" component={Feed} />
 					<Route path="/read/:id" component={Read} /> 
+					<Route path="/write" component={Write} />
+					<Route path="/stream" component={Stream} />
+					<Route path="/advent" component={Advent} />
 					<Route default component={NotFound} />
 					<Route path="/login" component={Login} profile={profile} />
 					<Route path="/register" component={Register} profile={profile} />
