@@ -21,13 +21,18 @@ export function Header(props: Props) {
 			</div>
 			<nav>
 			<a href="/" class={url == '/' && 'active'}>
-					Home
+					Hi
 				</a>
 				<a href="/reader" class={url == '/reader' && 'active'}>
-					Reader
+					Resources
 				</a>
+				
+				<a href="/write" class={url == '/write' && 'active'}>
+					Thesis
+				</a>
+				<a href="/stream" class={url == '/stream' && 'active'}>Stream</a>
 
-
+				<a href="/advent" class={url == '/advent' && 'active'}>Time</a>
 				{props.profile.id && <a href="/profile">Profile {props.profile.id}</a>}
 				{props.profile.id && <a href="/logout">Log out</a>}
 				{!props.profile.id && <a href="/login" class={url == '/login' && 'active'}>Log in</a>}
