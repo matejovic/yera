@@ -39,7 +39,9 @@ const app = new Elysia({ prefix: BASE_URL })
 .use(cors(
   corsConfig
 )) // TODO: fix before production
-
+.get("/", function() {
+	return "Hello";
+})
 .get("/bookmarks", async ({ cookie: { token }, jwt }) => {
 
   const token_data = await jwt.verify(token);
