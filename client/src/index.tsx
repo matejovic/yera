@@ -14,6 +14,7 @@ import {Read} from './pages/read.js';
 import {Write} from './pages/write.js';
 import {Stream} from './pages/stream.js';
 import {Advent} from './pages/advent.js';
+import {Data} from './pages/data.js';
 
 import './style.css';
 
@@ -63,6 +64,7 @@ export function App() {
 					<Route path="/write" component={Write} />
 					<Route path="/stream" component={Stream} />
 					<Route path="/advent" component={Advent} />
+					<Route path="/data" component={Data} />
 					<Route default component={NotFound} />
 					<Route path="/login" component={Login} profile={profile} />
 					<Route path="/register" component={Register} profile={profile} />

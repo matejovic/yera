@@ -30,6 +30,7 @@ export function Header(props: Props) {
 				<a href="/write" class={url == '/write' && 'active'}>
 					Thesis
 				</a>
+				<a href="/data" class={url == '/data' && 'active'}>Data</a>
 				<a href="/stream" class={url == '/stream' && 'active'}>Stream</a>
 
 				<a href="/advent" class={url == '/advent' && 'active'}>Time</a>
