@@ -3,7 +3,7 @@ import { useState } from 'preact/hooks';
 import { LocationProvider, Router, Route } from 'preact-iso';
 
 import { Header } from './components/Header.jsx';
-import { Feed } from './pages/feed.js';
+import { Resources } from './pages/resources.js';
 import { Homepage } from './pages/home.jsx';
 import { NotFound } from './pages/_404.jsx';
 import { Login} from './pages/Authentication/login.js';
@@ -59,8 +59,8 @@ export function App() {
 			<main>
 				<Router>
 					<Route path="/" component={Homepage} />
-					<Route path="/reader" component={Feed} />
-					<Route path="/read/:id" component={Read} /> 
+					<Route path="/resources" component={Resources} />
+					<Route path="/resource/:id" component={Read} /> 
 					<Route path="/write" component={Write} />
 					<Route path="/stream" component={Stream} />
 					<Route path="/advent" component={Advent} />

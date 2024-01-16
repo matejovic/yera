@@ -14,67 +14,38 @@ model User {
   id    Int   @id @default(autoincrement())
   email  String  @unique
   password  String 
-  bookmarks UserBookmark[]
-  tags Tags[]
+  entry Entry[]
   bio String?
 }
 
-
-// List top level websites
-// can be extracted later
-model Publisher {
-  id Int @id @default(autoincrement())
-  url String @unique
-  title String
-  // bookmarked pages count
-  // favicon
-  // etc. 
-}
-
-model Bookmark {
+model Entry {
   id Int @id @default(autoincrement())
   url String @unique
   title String 
-  description String?
-  content_md String
-  content_html String
+  content String
+  extra String
   published_at DateTime?
-  users UserBookmark[]
-
-}
-
-
-model UserBookmark {
+  created_at DateTime @default(now())
   user  User @relation(fields: [user_id], references: [id])
   user_id Int
-  bookmark Bookmark @relation(fields: [bookmark_id], references: [id])
-  bookmark_id Int
-  annotations String?
-  created_at DateTime @default(now())
   tags Tags[]
-
-  @@id([user_id, bookmark_id])
+  type String
 }
+
+// enum EntryType {
+//   RESOURCE
+//   RESEARCH
+//   ANNOTATION
+// }
+
 
 
 model Tags {
   id Int @id @default(autoincrement())
   name String
   color String?
-  bookmark UserBookmark @relation(fields: [bookmark_id, user_id], references: [bookmark_id, user_id])
-  bookmark_id Int
-  user  User @relation(fields: [user_id], references: [id])
-  user_id Int
+  entry Entry @relation(fields: [entry_id], references: [id])
+  entry_id Int
   created_at DateTime @default(now())
-  // combination of name, user_id and bookmark_id should be unique
-  @@unique([name, user_id, bookmark_id])
-
-}
-
-model UserResearch {
-	id Int @id @default (autoincrement())
-	title String
-	data String
-	created_at DateTime
-	updated_at DateTime
+  @@unique([name, entry_id])
 }

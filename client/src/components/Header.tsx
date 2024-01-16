@@ -23,7 +23,7 @@ export function Header(props: Props) {
 			<a href="/" class={url == '/' && 'active'}>
 					Hi
 				</a>
-				<a href="/reader" class={url == '/reader' && 'active'}>
+				<a href="/resources" class={url == '/resources' && 'active'}>
 					Resources
 				</a>
 				

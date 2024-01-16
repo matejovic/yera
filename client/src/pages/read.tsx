@@ -5,18 +5,18 @@ const API_URL =
 	import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
 
 export function Read(props) {
-	const [bookmarkData, setBookmarkData] = useState(null);
+	const [resource, setResource] = useState(null);
 	const [tags, setTags] = useState("");
 	const [note, setNote] = useState("");
 
 	useEffect(() => {
-		loadBookmark(props.id);
+		loadResource(props.id);
 	}, []);
 
-	const loadBookmark = async (id) => {
-		const response = await fetch(API_URL + `/bookmark/${id}`);
+	const loadResource = async (id) => {
+		const response = await fetch(API_URL + `/entry/${id}`);
 		const data = await response.json();
-		setBookmarkData(data.bookmark);
+		setResource(data);
 		setNote(data.annotations);
 		setTags(data.tags.map((t) => t.name).join(","));
 	};
@@ -26,8 +26,8 @@ export function Read(props) {
 		// Your submit logic here...
 		console.log(`Tags: ${tags}`);
 		console.log(`Note: ${note}`);
-		// send put request to update bookmark
-		const response = await fetch(API_URL + `/bookmark/${props.id}`, {
+		// send put request to update the resource
+		const response = await fetch(API_URL + `/entry/${props.id}`, {
 			method: "PUT",
 			credentials: "include",
 			headers: {
@@ -80,7 +80,7 @@ export function Read(props) {
 				<button type="button">Comment</button>
 			</div>
 
-			{bookmarkData ? (
+			{resource? (
 				<div class="reader">
 					<form onSubmit={handleSubmit} style="display: contents">
 						<input
@@ -99,9 +99,9 @@ export function Read(props) {
 						<button type="button">Save</button>
 					</form>
 
-					<h2>{bookmarkData.title}</h2>
+					<h2>{resource.title}</h2>
 					<div
-						dangerouslySetInnerHTML={{ __html: bookmarkData.content_html }}
+						dangerouslySetInnerHTML={{ __html: resource.extra }}
 					/>
 				</div>
 			) : (

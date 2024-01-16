@@ -42,53 +42,38 @@ const app = new Elysia({ prefix: BASE_URL })
 .get("/", function() {
 	return "Hello";
 })
-.get("/bookmarks", async ({ cookie: { token }, jwt }) => {
+// TODO: load all data upfront and call it a day
+.get("/entries", async ({ cookie: { token }, jwt }) => {
 
   const token_data = await jwt.verify(token);
 
   if (!token_data) {
-    // show only public bookmarks
+    // TODO: show only public data
     return { message: "Unauthorized" };
   }
+  
+  const user_id = token_data.id;
 
-  const bookmarks = await db.userBookmark.findMany({
+  const entries = await db.entry.findMany({
     where: {
-      user_id: token_data.id,
-    },
-    select: {
-      bookmark: {
-        select: {
-          id: true,
-          url: true,
-          title: true,
-          published_at: true,
-        },
-      },
-      created_at: true,
-      tags: true,
+      user_id: user_id,
     },
     orderBy: {
       created_at: 'asc',
     },
   });
-  return bookmarks;
+  return entries;
 })
-.get("/fast-bookmark/:id", async ({ params }) => {
+.get("/entry/:id", async ({ params, cookie: { token }, jwt }) => {
+  // TODO: optionality to skip tags
   const { id } = params;
-  const bookmark = await db.bookmark.findUnique({
-    where: { id: Number(id) },
+  const entry = await db.entry.findUnique({
+    where: { id: Number(id)  },
+    include: { tags: true },
   });
-  return bookmark;
+  return entry;
 })
-.get("/bookmark/:id", async ({ params, cookie: { token }, jwt }) => {
-  const { id } = params;
-  const bookmark = await db.userBookmark.findUnique({
-    where: { user_id_bookmark_id: { user_id: 1, bookmark_id: Number(id) } },
-    include: { bookmark: true, tags: true },
-  });
-  return bookmark;
-})
-.post("/bookmark", async ({ body, cookie: { token }, jwt }) => {
+.post("/entry", async ({ body, cookie: { token }, jwt }) => {
   // check if the user is authenticated
   const token_data = await jwt.verify(token);
 
@@ -97,8 +82,9 @@ const app = new Elysia({ prefix: BASE_URL })
     return { message: "Unauthorized" };
   }
 
-  const { url } = body;
+  const { url, type } = body;
 
+  // TODO: HANDLE DUPLICATES
   // TODO: check if the bookmark already exists
   // if yes, check if UserBookmark exists (for id=1), if yes, return it
   // if UserBookmark does not exist, create it and return it
@@ -106,31 +92,26 @@ const app = new Elysia({ prefix: BASE_URL })
   // we can do this in a separate worker thread
   const articleData = await parseArticle(url);
   
-  // store data in the database
-  const bookmarkData = {
-    url: url,
-    title: articleData.title,
-    content_md: articleData.content_md,
-    content_html: articleData.content_html
-  }
-  
   // we need to return prisma Promise, not the data
   // TODO: this fails on duplicate url (unique constraint)
-  return db.userBookmark.create({
+  return db.entry.create({
     data: {
       user: { connect: { id: token_data.id }},
-      bookmark: { create: bookmarkData },
-      annotations: '',
-    },
-    include: { bookmark: true }
+      url: url,
+      title: articleData.title,
+      content: articleData.content_md,
+      extra: articleData.content_html,
+      type: type
+    }
   })
-
 }, {
   body: t.Object({
+    // TODO: validation will depend on object type!!
     url: t.String(),
+    type: t.String()
   })
 })
-.put("/bookmark/:id", async ({ params, body, cookie: {token}, jwt }) => {
+.put("/entry/:id", async ({ params, body, cookie: {token}, jwt }) => {
   
   const token_data = await jwt.verify(token);
   if (!token_data) {
@@ -141,13 +122,13 @@ const app = new Elysia({ prefix: BASE_URL })
   const { id } = params;
   const { tags, note } = body;
 
-  const userBookmark = await db.userBookmark.update({
-    where: { user_id_bookmark_id: { user_id: user_id, bookmark_id: Number(id) } },
-    data: { annotations: note },
+  const entry = await db.entry.update({
+    where: { id: Number(id) },
+    // todo: what to update
   });
 
   // update tags
-  async function syncTags(user_id: number, bookmark_id: number, newTags: string[]) {
+  async function syncTags(user_id: number, entry_id: number, newTags: string[]) {
     try {
       // Start the transaction
       await db.$transaction(async (db) => {
@@ -155,7 +136,7 @@ const app = new Elysia({ prefix: BASE_URL })
         await db.tags.deleteMany({
           where: {
             user_id,
-            bookmark_id,
+            entry_id,
             NOT: {
               name: { in: newTags },
             },
@@ -164,7 +145,7 @@ const app = new Elysia({ prefix: BASE_URL })
   
         // Find out which tags already exist to avoid redundant operations
         const existingTags = await db.tags.findMany({
-          where: { user_id, bookmark_id },
+          where: { user_id, entry_id },
           select: { name: true },
         });
         const existingTagNames = new Set(existingTags.map(tag => tag.name));
@@ -179,7 +160,7 @@ const app = new Elysia({ prefix: BASE_URL })
           // await db.tags.createMany({
           //   data: tagsToCreate.map(tagName => ({
           //     user_id,
-          //     bookmark_id,
+          //     entry_id,
           //     name: tagName,
           //   })),
           //   skipDuplicates: true,
@@ -188,7 +169,7 @@ const app = new Elysia({ prefix: BASE_URL })
           // prepare data
           const newTagData = tagsToCreate.map(tagName => ({
             user_id,
-            bookmark_id,
+            entry_id,
             name: tagName,
           }))
           // insert data
@@ -206,7 +187,7 @@ const app = new Elysia({ prefix: BASE_URL })
   syncTags(user_id, Number(id), tags);  
 
   // TODO: return updated data
-  return userBookmark;
+  return entry;
 })
 
 .listen(8000);
