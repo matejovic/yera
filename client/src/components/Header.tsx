@@ -23,17 +23,19 @@ export function Header(props: Props) {
 			<a href="/" class={url == '/' && 'active'}>
 					Hi
 				</a>
-				<a href="/resources" class={url == '/resources' && 'active'}>
-					Resources
-				</a>
 				
 				<a href="/write" class={url == '/write' && 'active'}>
 					Thesis
 				</a>
-				<a href="/data" class={url == '/data' && 'active'}>Data</a>
-				<a href="/stream" class={url == '/stream' && 'active'}>Stream</a>
-
-				<a href="/advent" class={url == '/advent' && 'active'}>Time</a>
+				
+				<a href="/resources" class={url == '/resources' && 'active'}>
+					Resources
+				</a>
+				
+				{/* <a href="/data" class={url == '/data' && 'active'}>Data</a> */}
+				{/* <a href="/stream" class={url == '/stream' && 'active'}>Stream</a> */}
+				{/* <a href="/advent" class={url == '/advent' && 'active'}>Time</a> */}
+				
 				{props.profile.id && <a href="/profile">Profile {props.profile.id}</a>}
 				{props.profile.id && <a href="/logout">Log out</a>}
 				{!props.profile.id && <a href="/login" class={url == '/login' && 'active'}>Log in</a>}
