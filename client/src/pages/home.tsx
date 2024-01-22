@@ -4,17 +4,16 @@ import "./style.css";
 export function Homepage() {
 	return (
 		<div class="reader">
-			<h2>Research Tools</h2>
+			<h2>Free Research Tools</h2>
 			<br />
 			
 			<ul>
-				<li>We work with enthusiasm towards alpha stage. </li>
-				<li>Product of Comenius Institute. </li>
+				<li>We do what is needed... </li>
+				<li>Product of <a href="http://comenius.institute">Comenius Institute</a>. </li>
 				<li>Everything is <a href="https://github.com/matejovic/reader">Open Sourced.</a></li>
 			</ul>
 			<p></p>
 
-			{/* TODO: add gif with current flow */}
 
 
 		</div>
