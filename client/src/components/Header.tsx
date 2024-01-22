@@ -15,7 +15,7 @@ export function Header(props: Props) {
 		<header>
 			<div className="logo">
 				<a href="/">
-					Researcher
+					YR 24
 					{/* <img src="/logo.svg" alt="Web Reader" /> */}
 				</a>
 			</div>
