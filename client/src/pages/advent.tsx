@@ -1,5 +1,21 @@
 import { useEffect, useState } from "preact/hooks";
 import "./style.css";
+	
+	// constructor() {
+	// 	super();
+	// 	this.state = { time: Date.now() };
+	// }
+	
+	// componentDidMount() {
+	// 	// update time every second
+	// 	this.timer = setInterval(() => {
+	// 		this.setState({ time: Date.now() });
+	// 	}, 1000);
+	// }
+	
+	// componentWillUnmount() {
+	// 	clearInterval(this.timer);
+	// }
 
 export function Advent() {
 	// TODO: pseudocode to valid ts

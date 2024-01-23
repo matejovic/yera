@@ -7,24 +7,6 @@ import TextEditor from "../components/TextEditor.tsx";
 // TODO: browser storage
 // TODO: server storage
 // TODO: crud-many
-
-class Thesis extends Component () {
-	
-	// constructor() {
-	// 	super();
-	// 	this.state = { time: Date.now() };
-	// }
-	
-	// componentDidMount() {
-	// 	// update time every second
-	// 	this.timer = setInterval(() => {
-	// 		this.setState({ time: Date.now() });
-	// 	}, 1000);
-	// }
-	
-	// componentWillUnmount() {
-	// 	clearInterval(this.timer);
-	// }
 	
 	render () {
 		// get access to TextEditor content and store it somewhere
