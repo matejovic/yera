@@ -3,6 +3,7 @@ import { useState } from 'preact/hooks';
 import { LocationProvider, Router, Route } from 'preact-iso';
 
 import { Header } from './components/Header.jsx';
+import { Footer } from './components/Footer.jsx';
 import { Resources } from './pages/resources.js';
 import { Homepage } from './pages/home.jsx';
 import { NotFound } from './pages/_404.jsx';
@@ -10,8 +11,8 @@ import { Login} from './pages/Authentication/login.js';
 import { Register} from './pages/Authentication/register.js';
 import Logout from './pages/Authentication/logout.js';
 import {Profile} from './pages/Authentication/profile.js';
-import {Read} from './pages/read.js';
-import {Write} from './pages/write.js';
+import {Read} from './pages/Reader/read.js';
+// import Thesis from './pages/thesis.tsx';
 import {Stream} from './pages/stream.js';
 import {Advent} from './pages/advent.js';
 import {Data} from './pages/data.js';
@@ -61,7 +62,7 @@ export function App() {
 					<Route path="/" component={Homepage} />
 					<Route path="/resources" component={Resources} />
 					<Route path="/resource/:id" component={Read} /> 
-					<Route path="/write" component={Write} />
+					
 					<Route path="/stream" component={Stream} />
 					<Route path="/advent" component={Advent} />
 					<Route path="/data" component={Data} />
@@ -72,6 +73,7 @@ export function App() {
 					<Route path="/profile" component={Profile} profile={profile} />
 				</Router>
 			</main>
+			<Footer />
 		</LocationProvider>
 	);
 }

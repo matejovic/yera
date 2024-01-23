@@ -9,7 +9,7 @@ export function Advent() {
 	}
 	
 	return (
-		<div class="write advent">
+		<div class="thesis advent">
 			<h2>Adventure of Cycles</h2>
 			<p>scheduled for Jan-March cycle</p>
 			<div>

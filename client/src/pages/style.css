@@ -11,9 +11,7 @@
 	height: 2em;
 }
 
-
-
-.reading-list, .reader, .write {
+.reading-list, .thesis {
 	display: flex;
 	flex-direction: column;
 	max-width: 640px;

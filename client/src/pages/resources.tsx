@@ -1,16 +1,9 @@
 import { useState, useEffect } from 'preact/hooks';
 import './style.css';
 import Modal from '../components/Modal';
-
-
-console.log(import.meta.env.MODE);
-
 const API_URL = import.meta.env.MODE === 'development' ? 'http://localhost:8000' : '/api';
 
 export function Resources() {
-
-	// const [showModal, setShowModal] = useState(false);
-	// const [bookmarkData, setBookmarkData] = useState(null);
 	const [resources, setResources] = useState([]);
 
 	const handleKeyDown = async (event: KeyboardEvent) => {
@@ -25,18 +18,9 @@ export function Resources() {
 						body: JSON.stringify({ url, type: 'resource-html' })
 				});
 				const data = await response.json();
-
-				
-				// TODO: redirect to new bookmark page
-				console.log(data);
 				window.location = `/resource/${data.id}`
 		}
 	};
-
-	// const handleCloseModal = () => {
-	// 		setShowModal(false);
-	// 		setBookmarkData(null);
-	// };
 
 useEffect(() => {
 	const fetchResources = async () => {

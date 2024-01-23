@@ -7,7 +7,7 @@ class TextEditor extends Component {
 		this.quill = new Quill(this.editor, {
 			theme: 'snow',
 			modules: {
-				toolbar: true
+				toolbar: false
 			}
 		});
 	}

@@ -58,10 +58,25 @@ body {
 	bottom: 20px;
 }
 
+div#app {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.footer ul {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+main {
+	flex: 1;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
-	background-color: #77a97e;
+	background-color: rgb(61, 98, 140);
 	color: #fff;
 }
 

@@ -15,7 +15,7 @@ export function Header(props: Props) {
 		<header>
 			<div className="logo">
 				<a href="/">
-					YR 24
+					YERA
 					{/* <img src="/logo.svg" alt="Web Reader" /> */}
 				</a>
 			</div>
@@ -24,14 +24,16 @@ export function Header(props: Props) {
 					Hi
 				</a>
 				
-				<a href="/write" class={url == '/write' && 'active'}>
-					Thesis
-				</a>
-				
 				<a href="/resources" class={url == '/resources' && 'active'}>
 					Resources
 				</a>
 				
+				
+				<a href="/thesis" class={url == '/thesis' && 'active'}>
+					Thesis
+				</a>
+				
+
 				{/* <a href="/data" class={url == '/data' && 'active'}>Data</a> */}
 				{/* <a href="/stream" class={url == '/stream' && 'active'}>Stream</a> */}
 				{/* <a href="/advent" class={url == '/advent' && 'active'}>Time</a> */}
