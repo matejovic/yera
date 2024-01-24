@@ -8,6 +8,9 @@ import TextEditor from "../components/TextEditor.tsx";
 // TODO: server storage
 // TODO: crud-many
 	
+	// fix: change title for page-specific
+	// this page is now broken and hidden, please return to at least previous functional state before continue
+class Thesis extends Component {
 	render () {
 		// get access to TextEditor content and store it somewhere
 		// cross-refresh persistence within browser
