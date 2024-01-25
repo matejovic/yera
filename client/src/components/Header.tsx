@@ -13,7 +13,7 @@ export function Header(props: Props) {
 		<header>
 			<div className="logo">
 				<a href="/">
-					Intranet
+				YERA
 					{/* <img src="/logo.svg" alt="Web Reader" /> */}
 				</a>
 			</div>
@@ -30,11 +30,11 @@ export function Header(props: Props) {
 					text
 				</a>
 				
-				{props.profile.id && <a href="/profile">id: {props.profile.id}</a>}
-				{props.profile.id && <a href="/logout">out</a>}
-				{!props.profile.id && <a href="/register" class={url == '/register' && 'active'}>join</a>}
+				{props.profile?.id && <a href="/profile">id: {props.profile.id}</a>}
+				{props.profile?.id && <a href="/logout">out</a>}
+				{!props.profile?.id && <a href="/register" class={url == '/register' && 'active'}>join</a>}
 
-				{!props.profile.id && <a href="/login" class={url == '/login' && 'active'}>us</a>}
+				{!props.profile?.id && <a href="/login" class={url == '/login' && 'active'}>us</a>}
 			</nav>
 		</header>
 	);
