@@ -18,8 +18,8 @@ class Thesis extends Component {
 			const memo = window.localStorage.getItem("thesis");
 			let initial_data = memo ? JSON.parse(memo) : null;
 			if (initial_data) {
-		 		this.state.question = initial_data.question;
-				console.log('mount', this.state.question);
+				this.setState({ question: initial_data.question})
+
 		 		this.state.editor.current.quill.setContents(initial_data.raw)
 	 	}
 	}
