@@ -1,25 +1,42 @@
-
-.newUrl {
-	/* center horizontally */
-	display: flex;
-	justify-content: center;
-	margin-top: 24px;
+input {
+        background: #16333eb5;
+	border: 1px solid #ffffffbd;	
 }
 
-.newUrl input {
-	width: 48em;
-	height: 2em;
+.page {
+	width: 500px;
+	margin: 24px  auto 0;
+	border: 1px solid #ffffffbd;
 }
 
-.reading-list, .thesis {
+.block {
+	margin: 18px 24px;
+}
+
+.mb8 { margin-bottom: 8px; }
+.mb16 { margin-bottom: 16px; }
+.mt8 { margin-top: 8px; }
+.mt16 { margin-top: 16px; }
+.flex-between { display:flex; justify-content: space-between; }
+
+hr.block-split { 
+	border: 1px solid #ffffffbd;
+	margin: 0 24px;
+}
+h1.centered,
+h2.centered,
+p.centered
+{
+	text-align: center;
+}
+
+.reading-list{
 	display: flex;
 	flex-direction: column;
 	max-width: 640px;
 
 	/* Center self */
-	margin: 28px auto;
-
-	
+	margin: 28px auto;	
 }
 
 .read-item {

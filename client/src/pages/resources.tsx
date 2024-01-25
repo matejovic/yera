@@ -41,12 +41,9 @@ const handleClick = async (id) => {
 }
 
 	return (
-		<div class="home">
-
-			<div className="newUrl">
-				<input type="text" placeholder="https://" onKeyDown={handleKeyDown} />
-			</div>
-			<section class="reading-list">
+		<div class="page resources">
+			<div class="block add "><input type="text" placeholder="https://" onKeyDown={handleKeyDown} /></div>
+			<div class="block overview">
 				{resources && resources.length ? resources.map(resource => (
 					<ContentRow
 						title={resource.title}
@@ -55,8 +52,8 @@ const handleClick = async (id) => {
 						tags={ resource.tags ? resource.tags.map(t => t.name) : []}
 						clickAction={() => handleClick(resource.id)}
 					/>
-				)) : (<div>Your list is empty.</div>)}
-			</section>
+				)) : (<div>No records found. You can add a link by pasting it into the input area above and pressing enter (which should work on mobile as well.</div>)}
+			</div>
 		</div>
 	);
 }
