@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'preact/hooks';
 import { useLocation } from 'preact-iso';
 
-
 const API_URL = import.meta.env.MODE === 'development' ? 'http://localhost:8000' : '/api';
 
 interface Props {
 	profile: {
-		id: number;
+	  id: number;
 	  email: string;
 	}
 }
-
 
 export function Login(props: Props) {
   const location = useLocation();
@@ -18,7 +16,7 @@ export function Login(props: Props) {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
 
-  if (props.profile.id) {
+  if (props.profile?.id) {
     location.route('/reader');
   }
 
@@ -54,7 +52,11 @@ export function Login(props: Props) {
 
   return (
     <div class="page">
+	<div class="block">
       <h2>Login here</h2>
+
+	<p>If you lost your password, there is nothing we can do. </p>
+
       {errors.length > 0 && (
               <div className="form-errors">
               {errors.map((error) => (
@@ -69,5 +71,6 @@ export function Login(props: Props) {
         <button type="submit">Login</button>
       </form>
     </div>
+	</div>
   );
 }

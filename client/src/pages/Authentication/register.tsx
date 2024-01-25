@@ -34,7 +34,6 @@ export function Register (props: Props) {
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
-      console.log('LOGIN RESPONSE', data);
       window.location = '/reader';
       // handle successful login
     } catch (error) {
@@ -44,13 +43,17 @@ export function Register (props: Props) {
   };
 
   return (
-    <div class="page registration">
-      <h2>Pre-Alpha</h2>
+    <div class="page ">
+
+	<div class="block">
+      <h2>Registration</h2>
+      <p>We are not yet in a stable release, therefore your account and data can disappear. We expect the first stable release in March and continue with data and uptime guarantees. </p>
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <button type="submit">Register</button>
       </form>
+	</div>
     </div>
   )
 }
