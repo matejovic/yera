@@ -13,7 +13,7 @@ import { Login } from './pages/Authentication/login.js';
 import Logout from './pages/Authentication/logout.js';
 // import Thesis from './pages/thesis.tsx';
 import { NotFound } from './pages/_404.jsx';
-// import {Advent} from './pages/advent.js';
+import {Advent} from './pages/advent.js';
 // import {Data} from './pages/data.js';
 // import {Stream} from './pages/stream.js';
 
@@ -57,8 +57,8 @@ export function App() {
 				</Router>
 			</main>
 			<Footer />
-		>
-		</LocationProvider>
-	
+		</LocationProvider>	
+)
+}
 
 render(<App />, document.getElementById('app'));
