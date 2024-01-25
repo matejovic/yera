@@ -21,20 +21,19 @@ export function Header(props: Props) {
 			<a href="/" class={url == '/' && 'active'}>
 					a
 				</a>
-				
-				<a href="/resources" class={url == '/resources' && 'active'}>
-					http
-				</a>
-				
+					
 				<a href="/thesis" class={url == '/thesis' && 'active'}>
 					text
 				</a>
-				
+
+				<a href="/resources" class={url == '/resources' && 'active'}>
+					http
+				</a>
+							
 				{props.profile?.id && <a href="/profile">id: {props.profile.id}</a>}
 				{props.profile?.id && <a href="/logout">out</a>}
-				{!props.profile?.id && <a href="/register" class={url == '/register' && 'active'}>join</a>}
+				{!props.profile?.id && <a href="/auth" class={url == '/auth' && 'active'}>auth</a>}
 
-				{!props.profile?.id && <a href="/login" class={url == '/login' && 'active'}>us</a>}
 			</nav>
 		</header>
 	);
