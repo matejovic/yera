@@ -37,66 +37,63 @@ main {
 } */
 
 body {
-	margin: 0;
+  margin: 0;
 }
 
 .floater {
-	position: absolute;
-	position: fixed;
-	left: 20px;
-	bottom: 20px;
+  position: absolute;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
 }
 
 div#app {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .footer {
-	text-align: center;
-	margin: 20px 0;
-	padding-top: 20px;
-	border-top: 1px solid black;
+  text-align: center;
+  margin: 20px 0;
+  padding-top: 20px;
+  border-top: 1px solid black;
 }
 
 main {
-	flex: 1;
+  flex: 1;
 }
 
 header {
-	display: flex;
-	justify-content: space-between;
-	background-color: rgb(61, 98, 140);
-	color: #fff;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(61, 98, 140);
+  color: #fff;
 }
 
 header .logo {
-	display: flex;
-	padding: 0 0.75rem;
+  display: flex;
+  padding: 0 0.75rem;
 }
 
 header nav {
-	display: flex;
+  display: flex;
 }
 
 header a {
-	color: #fff;
-	padding: 0.75rem;
-	text-decoration: none;
+  color: #fff;
+  padding: 0.75rem;
+  text-decoration: none;
 }
 
 header a.active {
-	background-color: #0005;
+  background-color: #0005;
 }
 
 header a:hover {
-	background-color: #0008;
+  background-color: #0008;
 }
 
 .highlighter-actions {
-	position: fixed;
+  position: fixed;
 }
-
-
-

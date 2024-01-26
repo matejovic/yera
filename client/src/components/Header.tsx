@@ -1,40 +1,43 @@
-import { useLocation } from 'preact-iso';
+import { useLocation } from "preact-iso";
 
 interface Props {
-	profile: {
-		id: number;
-		username: string;
-	}
+  profile: {
+    id: number;
+    username: string;
+  };
 }
 
 export function Header(props: Props) {
-	const { url } = useLocation();
-	return (
-		<header>
-			<div className="logo">
-				<a href="/">
-				YR
-					{/* <img src="/logo.svg" alt="Web Reader" /> */}
-				</a>
-			</div>
-			<nav>
-			<a href="/" class={url == '/' && 'active'}>
-					Welcome
-				</a>
-					
-				<a href="/thesis" class={url == '/thesis' && 'active'}>
-					Research
-				</a>
+  const { url } = useLocation();
+  return (
+    <header>
+      <div className="logo">
+        <a href="/">
+          YR
+          {/* <img src="/logo.svg" alt="Web Reader" /> */}
+        </a>
+      </div>
+      <nav>
+        <a href="/" class={url == "/" && "active"}>
+          Welcome
+        </a>
 
-				<a href="/resources" class={url == '/resources' && 'active'}>
-					Resources
-				</a>
-							
-				{!props.profile?.id && <a href="/auth" class={url == '/auth' && 'active'}>Join</a>}
-				{props.profile?.id && <a href="/profile">id: {props.profile.id}</a>}
-				{props.profile?.id && <a href="/logout">out</a>}
+        <a href="/thesis" class={url == "/thesis" && "active"}>
+          Research
+        </a>
 
-			</nav>
-		</header>
-	);
+        <a href="/resources" class={url == "/resources" && "active"}>
+          Resources
+        </a>
+
+        {!props.profile?.id && (
+          <a href="/auth" class={url == "/auth" && "active"}>
+            Join
+          </a>
+        )}
+        {props.profile?.id && <a href="/profile">id: {props.profile.id}</a>}
+        {props.profile?.id && <a href="/logout">out</a>}
+      </nav>
+    </header>
+  );
 }
