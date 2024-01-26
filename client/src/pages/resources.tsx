@@ -12,14 +12,18 @@ export function Resources() {
       const url = event.target.value;
       const response = await fetch(API_URL + "/entry", {
         method: "POST",
-        credentials: "include",
+        credentials: "include", // consider no credentials local storage.  
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ url, type: "resource-html" }),
       });
       const data = await response.json();
-      window.location = `/resource/${data.id}`;
+      if (data.id) {
+        window.location = `/resource/${data.id}`;
+      } else {
+        alert("invalid server response");
+      }
     }
   };
 
@@ -59,8 +63,7 @@ export function Resources() {
           ))
         ) : (
           <div>
-            No records found. You can add a link by pasting it into the input
-            area above and pressing enter (which should work on mobile as well.
+            Add your first resource by pasting a public URL address above and press Enter.
           </div>
         )}
       </div>
