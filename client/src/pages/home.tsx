@@ -17,10 +17,9 @@ export function Homepage() {
           .{" "}
         </p>
         <ul>
-          <li>app skeleton</li>
-          <li>research xp</li>
-          <li>research xp</li>
-          <li>auth (recovery, token, profile)</li>
+          <li>jan - read xp</li>
+          <li>feb - write xp</li>
+          <li>mar - auth (recovery, token, profile)</li>
         </ul>
       </div>
     </div>
