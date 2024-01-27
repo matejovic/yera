@@ -5,7 +5,7 @@ export function Homepage() {
   return (
     <div class="page a">
       <div class="block">
-        <h2 class="centered">Researcher's Confidant</h2>
+        <h2 class="centered">Young Educated Researcher's Assistant</h2>
         <p>
           Jan as an{" "}
           <a

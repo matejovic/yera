@@ -13,22 +13,22 @@ export function Header(props: Props) {
     <header>
       <div className="logo">
         <a href="/">
-          YR
+          Yera
           {/* <img src="/logo.svg" alt="Web Reader" /> */}
         </a>
       </div>
       <nav>
         <a href="/" class={url == "/" && "active"}>
-          Welcome
+          Overview
         </a>
 
-        <a href="/thesis" class={url == "/thesis" && "active"}>
+        {props.profile?.id && <a href="/thesis" class={url == "/thesis" && "active"}>
           Research
-        </a>
+        </a>}
 
-        <a href="/resources" class={url == "/resources" && "active"}>
+        {props.profile?.id && <a href="/resources" class={url == "/resources" && "active"}>
           Resources
-        </a>
+        </a>}
 
         {!props.profile?.id && (
           <a href="/auth" class={url == "/auth" && "active"}>
