@@ -16,11 +16,13 @@ export function Homepage() {
           </a>
           .{" "}
         </p>
-        <ul>
-          <li>jan - read xp</li>
-          <li>feb - write xp</li>
-          <li>mar - auth (recovery, token, profile)</li>
-        </ul>
+        <ol>
+          <label>features (need to improve the visuals)</label>
+          <li>Develop Thesis</li>
+          <li>Gather and Process Resources</li>
+          <li>Advent Experiment</li>
+          <li>auth (recovery, token, profile)</li>
+        </ol>
       </div>
     </div>
   );
