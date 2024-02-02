@@ -77,13 +77,7 @@ const app = new Elysia({ prefix: BASE_URL })
         // show only public bookmarks
         return { message: "Unauthorized" };
       }
-
       const { url, type } = body;
-
-      // TODO: HANDLE DUPLICATES
-      // TODO: check if the bookmark already exists
-      // if yes, check if UserBookmark exists (for id=1), if yes, return it
-      // if UserBookmark does not exist, create it and return it
 
       // we can do this in a separate worker thread
       const articleData = await parseArticle(url);

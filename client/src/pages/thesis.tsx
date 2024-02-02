@@ -29,6 +29,7 @@ class Thesis extends Component {
       const raw = this.state.editor.current.quill.getContents();
       const data = { question: this.state.question, body: body, raw: raw };
       localStorage.setItem("thesis", JSON.stringify(data));
+      alert("saved. you can now refresh the page.")
     };
 
     return (
@@ -57,11 +58,12 @@ class Thesis extends Component {
 
           <TextEditor ref={this.state.editor} />
         </div>
-        <hr class="block-split" />
         <div class="block">
           <h2 class="centered">History</h2>
           <ul>
-            <li>a) browser memory b) n problem c) server memory</li>
+            <li>a) browser memory</li>
+	    <li>b) n problem </li>
+	    <li>c) server memory</li>
           </ul>
         </div>
       </div>

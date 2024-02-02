@@ -47,6 +47,7 @@ export function Resources() {
 
   return (
     <div class="page resources">
+      <h2 class="centered">Resources</h2>
       <div class="block add ">
         <input type="text" placeholder="https://" onKeyDown={handleKeyDown} />
       </div>
@@ -80,16 +81,16 @@ function ContentRow(props) {
       onClick={props.clickAction}
     >
       <div className="read-item__left">
-        <h2>{props.title}</h2>
+        <h3>{props.title}</h3>
         <span>{props.url}</span>
+        <div className="small mt16"><span>Added: {props.createdAt}</span> </div>
       </div>
       <div className="read-item__right">
+        <img src="https://picsum.photos/200/120?grayscale" />
         <div className="tags">
           {props.tags && props.tags.map((tag) => <span>#{tag}</span>)}
         </div>
-        <div className="datetime">
-          <span>Added: {props.createdAt}</span>
-        </div>
+
       </div>
     </a>
   );

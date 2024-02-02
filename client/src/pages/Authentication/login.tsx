@@ -18,7 +18,7 @@ export function Login(props: Props) {
   const [errors, setErrors] = useState([]);
 
   if (props.profile?.id) {
-    location.route("/reader");
+    location.route("/resources");
   }
 
   const handleSubmit = async (event) => {
@@ -43,7 +43,7 @@ export function Login(props: Props) {
       // handle successful login
       // maybe check that token is part of the response
       // before redirecting
-      window.location = "/reader";
+      window.location = "/resources";
     } catch (error) {
       console.log("LOGIN ERROR", error);
       setErrors([error]);
@@ -56,7 +56,7 @@ export function Login(props: Props) {
       <div class="block">
         <h2>Login here</h2>
 
-        <p>If you lost your password, there is nothing we can do. </p>
+        <p>todo: add recover password </p>
 
         {errors.length > 0 && (
           <div className="form-errors">

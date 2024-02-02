@@ -1,10 +1,16 @@
-/* :root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+:root {
+  
+    --primary-color: #ffffff;
+    --text-color: #222;
+    --tag-color: #f29d00;
+    --tag-color-hv: #ffa80959;
+    --tag-color-bg: #ffb52f45;
+  
+	font-family: system-ui;
 	line-height: 1.5;
 	font-weight: 400;
-
-	color: #222;
-	background-color: #ffffff;
+	color: var(--text-color);
+	background-color: var(--primary-color);
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -13,7 +19,25 @@
 	-webkit-text-size-adjust: 100%;
 }
 
+a {
+  color: var(--tag-color);
+  text-decoration: none;
+}
 
+a:hover {
+  border-bottom: 1px dashed;
+}
+
+button {
+  background: transparent;
+  border: 1px solid var(--tag-color);
+  color: var(--tag-color);
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 
 main {
 	flex: auto;
 	display: flex;
@@ -40,24 +64,11 @@ body {
   margin: 0;
 }
 
-.floater {
-  position: absolute;
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-}
 
 div#app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.footer {
-  text-align: center;
-  margin: 20px 0;
-  padding-top: 20px;
-  border-top: 1px solid black;
 }
 
 main {
@@ -67,13 +78,17 @@ main {
 header {
   display: flex;
   justify-content: space-between;
-  background-color: rgb(61, 98, 140);
+  border-bottom: 1px solid var(--tag-color-hv);
   color: #fff;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 header .logo {
   display: flex;
   padding: 0 0.75rem;
+  color: var(--tag-color);
+  font-size: 18px;
 }
 
 header nav {
@@ -81,19 +96,44 @@ header nav {
 }
 
 header a {
-  color: #fff;
+  color: var(--tag-color);
   padding: 0.75rem;
-  text-decoration: none;
 }
 
 header a.active {
-  background-color: #0005;
+  background-color: var(--tag-color-bg);
+
 }
 
 header a:hover {
-  background-color: #0008;
+  background-color: var(--tag-color-hv);
+  border-bottom: none;  
+}
+
+.footer {
+  text-align: center;
+  margin: 20px 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--tag-color-hv);
 }
 
 .highlighter-actions {
   position: fixed;
+}
+
+.floater {
+  position: absolute;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+}
+
+.ql-container.ql-snow {
+  border-radius: 4px;
+  border-color: var(--tag-color);
+}
+
+.ql-container {
+  font-family: inherit;
+  font-size: inherit;
 }
