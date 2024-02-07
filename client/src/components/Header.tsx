@@ -33,11 +33,8 @@ export function Header(props: Props) {
         {!props.profile?.id && (
           <>
 	  <a href="/login" class={url == "/login" && "active"}>
-            in
+           broken auth
           </a>
-	  <a href="/register" class={url == "/register" && "active"}>
-	    reg
-	  </a>
 	  </>
         )}
         {props.profile?.id && <a href="/profile">id: {props.profile.id}</a>}

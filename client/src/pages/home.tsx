@@ -1,6 +1,8 @@
 import { useEffect, useState } from "preact/hooks";
 
 export function Homepage() {
+  const [theme, setTheme] = useState("");
+  setTheme(localStorage.getItem('theme'));
 
   function setColourScheme(theme: string) : void {
     document.documentElement.className = 'theme-' + theme; 
@@ -23,7 +25,7 @@ export function Homepage() {
 	<h2 class="centered">Config</h2>
 
 	<label>Color Scheme: </label>
-	<select onChange={e => setColourScheme(e.currentTarget.value)}>
+	<select value={ theme  } onChange={e => setColourScheme(e.currentTarget.value)}>
 		<option value="bright-orange">Bright Orange</option>
 		<option value="bright-purple">Bright Purple</option>
 		<option value="dark">Dark</option>
