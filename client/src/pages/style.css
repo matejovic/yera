@@ -1,52 +1,86 @@
-.page {
-  margin: 24px auto 0;
-  border: 1px solid #ffffffbd;
+/* hacking ahead */
+.highlighter-actions {
+  position: fixed;
+}
+/* KID helper (keep/improve/delete) */
+.floater {
+  position: absolute;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
 }
 
-.block {
-  margin: 18px 24px;
+/* Textarea */
+.ql-container.ql-snow {
+  border-radius: 4px;
+  border-color: var(--tag-color);
 }
 
-.mb8 {
-  margin-bottom: 8px;
+.ql-container {
+  font-family: inherit;
+  font-size: inherit;
 }
-.mb16 {
-  margin-bottom: 16px;
-}
-.mt8 {
-  margin-top: 8px;
-}
-.mt16 {
-  margin-top: 16px;
-}
-.flex-between {
+
+/* Header Component */
+header {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid var(--tag-color-hv);
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
 }
 
-h1.centered,
-h2.centered,
-p.centered {
-  text-align: center;
+header .logo {
+  display: flex;
+  padding: 0 0.75rem;
   color: var(--tag-color);
-}
-
-input {
-  background: transparent;
-  color: var(--tag-color);
-  border: 1px solid var(--tag-color);
-  border-radius: 4px;
-  
-  min-width: 200px;
   font-size: 18px;
-  width: 90%;
-  padding: 8px;
 }
 
-input:focus{
-  outline:none;
+header nav {
+  display: flex;
 }
 
+header a {
+  color: var(--tag-color);
+  padding: 0.75rem;
+}
+
+header a.active {
+  background-color: var(--tag-color-bg);
+
+}
+
+header a:hover {
+  background-color: var(--tag-color-hv);
+  border-bottom: none;  
+}
+
+/* Footer Component */
+.footer {
+  text-align: center;
+  margin: 20px 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--tag-color-hv);
+}
+
+/* Move to a separate file  */
+.stream-response {
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid green;
+}
+
+.stream > button {
+  margin-top: 10px;
+}
+
+.stream > textarea {
+  min-height: 40px;
+}
+
+/* Again a separate file... */
 .reading-list {
   display: flex;
   flex-direction: column;
@@ -86,52 +120,4 @@ input:focus{
   /* attach # symbol before the span text */
   content: "#" attr(data-tag);
   font-size: 0.8em;
-}
-
-.small{
-  font-size: 0.6em;
-}
-
-/* .resource:hover {
-	border: 1px solid #000;
-	box-shadow: 0 25px 50px -12px #673ab888;
-} */
-
-/* @media (max-width: 639px) {
-	.home section {
-		margin-top: 5rem;
-		grid-template-columns: 1fr;
-		row-gap: 1rem;
-	}
-} */
-
-/* @media (prefers-color-scheme: dark) {
-	.resource {
-		color: #ccc;
-		background-color: #161616;
-	}
-	.resource:hover {
-		border: 1px solid #bbb;
-	}
-} */
-
-.form-errors {
-  border: 1px solid red;
-  width: 400px;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-.stream-response {
-  padding-top: 20px;
-  margin-top: 20px;
-  border-top: 1px solid green;
-}
-
-.stream > button {
-  margin-top: 10px;
-}
-
-.stream > textarea {
-  min-height: 40px;
 }

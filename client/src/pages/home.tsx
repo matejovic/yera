@@ -1,19 +1,16 @@
 import { useEffect, useState } from "preact/hooks";
-import "./style.css";
 
 export function Homepage() {
 
-  // todo: type in-out
-  // todo: start with client OS/browser prefered colour scheme. 
-  // todo: keep config in browser memory as well.
-  function setColourScheme(theme) {
+  function setColourScheme(theme: string) : void {
     document.documentElement.className = 'theme-' + theme; 
+    localStorage.setItem('theme', theme);
   }
 
   return (
-    <div class="page a">
+    <div class="page">
       <div class="block">
-        <h2 class="centered">Young Educated Research Assistant</h2>
+      <h2 class="centered">Your Evolving Research Atlas</h2>
         <ol>
           <li>Develop <a href="/thesis">Thesis</a></li>
  	      <li>Gather and Process <a href="/resources">Resources</a></li>
