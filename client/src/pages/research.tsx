@@ -7,7 +7,7 @@ class Research extends Component {
   constructor() {
     super();
     this.state = {
-      hash: "solo",
+      hash: 1,
       question: "",
       editor: createRef(),
       archive: [], // n-problem storage
@@ -18,20 +18,20 @@ class Research extends Component {
     const arch: string | null = window.localStorage.getItem("archive");
     const archive: [] = JSON.parse(arch ? arch : "[]");
     if (archive.length) {
-      const entry = archive.find(e => e.hash === 'solo');
+      const entry = archive[0]; // top of the stack...
       this.setState({
+	hash:     entry.hash,
         question: entry.question, 
-        archive: archive,
+        archive:  archive,
       });
       // in func component useEffect() instead (we might want to migrate for consistency)
-      this.state.editor.current.quill.setContents(archive[0].raw);
+      this.state.editor.current.quill.setContents(entry.raw);
     }
   }
 
   render() {
+    // no auth feb experiment
     const updateArchive = () => {
-      // can fail on race conditions
-      // and too inefficient (good enough for 24...)
       const entry = {
         hash: this.state.hash,
         question: this.state.question,
@@ -48,10 +48,24 @@ class Research extends Component {
       alert("saved. you can now refresh the page.");
     };
 
+    const newId = () => {
+	const hash = this.state.archive.reduce((a,b)=>a.hash>b.hash ? a : b).hash
+	return hash ? hash  + 1 : 1;
+    }
+
     const newResearchEntry = () => {
-      this.setState({ question: "", hash: "solo" });
+      this.setState({ question: "", hash: newId() });
       this.state.editor.current.quill.setContents();
     };
+
+    const selectThesis = (hash) => {
+       const entry = this.state.archive.find(e => e.hash === hash);
+       this.state.editor.current.quill.setContents(entry.raw);
+       this.setState({
+		hash: entry.hash,
+		question: entry.question
+	})
+    }
 
     const trash = () => {
       alert("tbd");
@@ -88,7 +102,7 @@ class Research extends Component {
           <h2>Archive</h2>
           <ul>
             {this.state.archive.map((thesis) => (
-              <li>{thesis.question}</li>
+              <li onClick={() => selectThesis(thesis.hash)}>{thesis.question}</li>
             ))}
             <li>
               <a href="#" onClick={newResearchEntry}>
