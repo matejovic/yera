@@ -41,7 +41,7 @@ class Thesis extends Component {
             research question before making a decision of working on your
             thesis. It will take time to develop your thinking and we recommend
             you to start by gathering <a href="/resources">Resources</a> and
-            improving your <a href="/advent">Time Management</a>.{" "}
+            improving your <a href="/time">Time Management</a>.{" "}
           </p>
           <div class="flex-between mb16">
             {" "}

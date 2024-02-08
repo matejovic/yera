@@ -16,7 +16,7 @@ export function Homepage() {
         <ol>
           <li>Develop <a href="/thesis">Thesis</a></li>
  	      <li>Gather and Process <a href="/resources">Resources</a></li>
-          <li>Play with <a href="/advent">Time</a></li>
+          <li>Play with <a href="/time">Time</a></li>
           <li><a href="/in">auth</a> (recovery, token, profile)</li>
         </ol>
       </div>

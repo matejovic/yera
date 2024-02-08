@@ -13,7 +13,7 @@ import { Login } from "./pages/Authentication/login.js";
 import Logout from "./pages/Authentication/logout.js";
 import Thesis from "./pages/thesis.tsx";
 import { NotFound } from "./pages/_404.jsx";
-import { Advent } from "./pages/advent.js";
+import { Time } from "./pages/time.js";
 // import {Data} from './pages/data.js';
 // import {Stream} from './pages/stream.js';
 
@@ -50,7 +50,7 @@ export function App() {
       <main>
         <Router>
           <Route path="/" component={Homepage} />
-          <Route path="/advent" component={Advent} />
+          <Route path="/time" component={Time} />
           <Route path="/resources" component={Resources} />
           <Route path="/resource/:id" component={Read} />
           <Route path="/thesis" component={Thesis} />
