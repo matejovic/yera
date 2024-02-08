@@ -28,7 +28,7 @@ class Research extends Component {
   }
 
   render() {
-    let save = () => {
+    const save = () => {
 	// data
       const entry = { 
 	question: this.state.question, 
@@ -40,22 +40,23 @@ class Research extends Component {
       alert("saved. you can now refresh the page.")
     };
 
+    const newResearchEntry = () => {
+	// create a new hash_id (ask storage)
+	this.state.editor.current.quill.setContents(); // clean the editor
+	this.setState({ question: ''}); // clean the question
+    };
+
+    const trash = () => {
+	alert('tbd');
+    }	
+    
+
     return (
       <div class="page">
-	<div class="block">
-          <h2 class="centered">History</h2>
-        <p>
-		need to a) store multiple essays b) display them up here c) open detail on button click. 
-	</p>  
-	<ul>
-	    <li>ng-repeat='' this.state. </li>
-	    <li>c) server memory</li>
-	    <li><a href="#">Start a new research</a></li>
-          </ul>
-        </div>
+	
 
         <div class="block">
-          <h2 class="centered">Research</h2>
+          <h2>Research</h2>
           <p class="help">
             Each thesis starts with a question. Think carefully about your
             research question before making a decision of working on your
@@ -74,11 +75,24 @@ class Research extends Component {
             <button onClick={save} class="save">
               Save
             </button>
+
+	<button class="save">Auto</button>
+	<button class="save">Trash</button>
+
+
           </div>
 
           <TextEditor ref={this.state.editor} />
         </div>
-        
+        <div class="block">
+          <h2>Archive</h2>
+	<ul>
+	   {this.state.archive.map(thesis => (
+		<li>{thesis.question}</li>
+	   ))}
+	    <li><a href="#" onClick={newResearchEntry}>Start a new research</a></li>
+          </ul>
+        </div>
       </div>
     );
   }
