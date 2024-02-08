@@ -7,20 +7,21 @@ class Research extends Component {
   constructor() {
     super();
     this.state = {
-      hash: null, // used for CRUD operations...
+      hash: "solo",
       question: "",
       editor: createRef(),
-      archive: [] // n-problem storage
+      archive: [], // n-problem storage
     };
   }
 
   componentDidMount() {
-    const arch: string = window.localStorage.getItem("archive"); // todo: can be null...
-    const archive: [] = JSON.parse(arch ? arch : []);
+    const arch: string | null = window.localStorage.getItem("archive");
+    const archive: [] = JSON.parse(arch ? arch : "[]");
     if (archive.length) {
-      this.setState({ 
-	question: archive[0].question, // pre-select first (until better idea)
-	archive: archive 
+      const entry = archive.find(e => e.hash === 'solo');
+      this.setState({
+        question: entry.question, 
+        archive: archive,
       });
       // in func component useEffect() instead (we might want to migrate for consistency)
       this.state.editor.current.quill.setContents(archive[0].raw);
@@ -28,33 +29,36 @@ class Research extends Component {
   }
 
   render() {
-    const save = () => {
-	// data
-      const entry = { 
-	question: this.state.question, 
-	body: this.state.editor.current.quill.getText(), 
-	raw: this.state.editor.current.quill.getContents()
+    const updateArchive = () => {
+      // can fail on race conditions
+      // and too inefficient (good enough for 24...)
+      const entry = {
+        hash: this.state.hash,
+        question: this.state.question,
+        body: this.state.editor.current.quill.getText(),
+        raw: this.state.editor.current.quill.getContents(),
       };
-      // set entry into archive
-      localStorage.setItem("archive", JSON.stringify([entry])); // single entry only...
-      alert("saved. you can now refresh the page.")
+      var entry_id = this.state.archive.findIndex((e) => e.hash === entry.hash);
+      if (entry_id === -1) {
+        this.state.archive.push(entry);
+      } else {
+        this.state.archive[entry_id] = entry;
+      }
+      localStorage.setItem("archive", JSON.stringify(this.state.archive));
+      alert("saved. you can now refresh the page.");
     };
 
     const newResearchEntry = () => {
-	// create a new hash_id (ask storage)
-	this.state.editor.current.quill.setContents(); // clean the editor
-	this.setState({ question: ''}); // clean the question
+      this.setState({ question: "", hash: "solo" });
+      this.state.editor.current.quill.setContents();
     };
 
     const trash = () => {
-	alert('tbd');
-    }	
-    
+      alert("tbd");
+    };
 
     return (
       <div class="page">
-	
-
         <div class="block">
           <h2>Research</h2>
           <p class="help">
@@ -72,25 +76,25 @@ class Research extends Component {
               value={this.state.question}
               onInput={(e) => (this.state.question = e.target.value)}
             />
-            <button onClick={save} class="save">
+            <button onClick={updateArchive} class="save">
               Save
             </button>
-
-	<button class="save">Auto</button>
-	<button class="save">Trash</button>
-
-
+            <button class="save">Auto</button>
+            <button class="save">Trash</button>
           </div>
-
           <TextEditor ref={this.state.editor} />
         </div>
         <div class="block">
           <h2>Archive</h2>
-	<ul>
-	   {this.state.archive.map(thesis => (
-		<li>{thesis.question}</li>
-	   ))}
-	    <li><a href="#" onClick={newResearchEntry}>Start a new research</a></li>
+          <ul>
+            {this.state.archive.map((thesis) => (
+              <li>{thesis.question}</li>
+            ))}
+            <li>
+              <a href="#" onClick={newResearchEntry}>
+                Start a new research
+              </a>
+            </li>
           </ul>
         </div>
       </div>
