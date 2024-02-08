@@ -11,7 +11,7 @@ import { Register } from "./pages/Authentication/register.js";
 import { Profile } from "./pages/Authentication/profile.js";
 import { Login } from "./pages/Authentication/login.js";
 import Logout from "./pages/Authentication/logout.js";
-import Thesis from "./pages/thesis.tsx";
+import Research from "./pages/research.tsx";
 import { NotFound } from "./pages/_404.jsx";
 import { Time } from "./pages/time.js";
 // import {Data} from './pages/data.js';
@@ -53,7 +53,7 @@ export function App() {
           <Route path="/time" component={Time} />
           <Route path="/resources" component={Resources} />
           <Route path="/resource/:id" component={Read} />
-          <Route path="/thesis" component={Thesis} />
+          <Route path="/research" component={Research} />
           <Route path="/logout" component={Logout} />
           <Route path="/login" component={Login} profile={profile} />
           <Route path="/register" component={Register} profile={profile} />

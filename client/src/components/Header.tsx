@@ -22,7 +22,7 @@ export function Header(props: Props) {
           About
         </a>
 
-        <a href="/thesis" class={url == "/thesis" && "active"}>
+        <a href="/research" class={url == "/research" && "active"}>
           Research
         </a>
 
@@ -33,7 +33,7 @@ export function Header(props: Props) {
         {!props.profile?.id && (
           <>
 	  <a href="/login" class={url == "/login" && "active"}>
-           broken auth
+           Join Us
           </a>
 	  </>
         )}
