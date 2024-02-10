@@ -35,11 +35,11 @@ function timeToSeconds(time: string): number {
 }
   
   
-  // helper tbd
 function secondsToTime(seconds: int): string {
   const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  return `${hours}h ${minutes}min`;
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  return `${hours} h ${mins} min ${secs} sec`;
 }  
   
 // helper tbd
@@ -54,8 +54,10 @@ function startTimer(seconds: number) {
     setTick(prev => {
       if (prev <= 0) {
         stopTimer();
+        document.title = 'AT'; // revert
         return 0;
       }
+      document.title = (prev - 1).toString();
       return prev - 1;
     })
   }, 1000)
@@ -84,7 +86,7 @@ function startTimer(seconds: number) {
         <b>Productivity timers</b><br/>
         {tick > 0 ? 
           <div>
-            <span>{tick}</span>
+            <span>{secondsToTime(tick)}</span>
             <button onClick={stopTimer}>Stop</button>
           </div> : 
           <div>
@@ -100,23 +102,23 @@ function startTimer(seconds: number) {
       }
       {view === 'day' &&
       <div class="block">
-        <b>Day 10. February</b>
-        <TextEditor ref={editor} />
+        <b>Day 10. February</b> 
+        <TextEditor ref={editor} /> save
       </div>}
       {view === 'week' &&
       <div class="block">
-        <b>Week 6</b>
+        <b>Week 6</b> save
         <TextEditor ref={editor} />
       </div>}
       {view === 'month' &&
       <div class="block">
         <b>February</b>
-        <TextEditor ref={editor} />
+        <TextEditor ref={editor} /> save
       </div>}
       {view === 'year' &&
       <div class="block">
-        <b>24</b>g
-        <TextEditor ref={editor} />
+        <b>24</b>
+        <TextEditor ref={editor} /> save and autosave
       </div>}
 
     </div>
