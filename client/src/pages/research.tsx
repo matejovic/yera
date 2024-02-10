@@ -73,8 +73,9 @@ class Research extends Component {
       alert("tbd");
     };
     
-    const auto = () => {
-      // toggle interval runner
+    const autosave = () => {
+      // toggle interval runner; tbd...
+      
     }
 
     return (
@@ -99,8 +100,10 @@ class Research extends Component {
             <button onClick={updateArchive} class="save">
               Save
             </button>
-            <button class="save">Auto</button>
-            <button class="save">Trash</button>
+            {/*
+              <button class="active" onClick={autosave} disabled>Autosave (timestamp)</button>
+              <button class="danger" onClick={trash} disabled>Trash</button>
+              */}
           </div>
           <TextEditor ref={this.state.editor} />
         </div>

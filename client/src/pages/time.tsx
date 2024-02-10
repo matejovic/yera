@@ -115,7 +115,7 @@ function startTimer(seconds: number) {
       </div>}
       {view === 'year' &&
       <div class="block">
-        <b>24</b>
+        <b>24</b>g
         <TextEditor ref={editor} />
       </div>}
 

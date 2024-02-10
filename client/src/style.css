@@ -4,7 +4,7 @@
 	line-height: 1.5;
 	font-weight: 400;
 	color: var(--text-color);
-	background-color: var(--primary-color);
+	background-color: var(--bg-color);
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -14,28 +14,40 @@
 }
 
 html.theme-dark {
-    --primary-color: #222;
+    --bg-color: #222;
     --text-color: #fff;
+    
     --tag-color: #fff;
-    --tag-color-hv: #222;
-    --tag-color-bg: #222;
+    --tag-color-hv: #a8a8a8;
+    --tag-color-bg: #c5c5c5;
+    
+    --action-color: #00ff00;
+    --danger-color: #ff0000;
 }
 
 html.theme-bright-orange {
-    --primary-color: #ffffff;
+    --bg-color: #ffffff;
     --text-color: #222;
+    
     --tag-color: #f29d00;
-    --tag-color-hv: #ffa80959;
-    --tag-color-bg: #ffb52f45;
+    --tag-color-hv: #54401b45;
+    --tag-color-bg: #dc9108c2;
+    
+    --action-color: #00ff00;
+    --danger-color: #ff0000;
  
 }
 
 html.theme-bright-purple {
-    --primary-color: #ffffff;
+    --bg-color: #ffffff;
     --text-color: #222;
+    
     --tag-color: #7F27FF;
     --tag-color-hv: #9F70FD;
     --tag-color-bg: #9F70FD;
+    
+    --action-color: #00ff00;
+    --danger-color: #ff0000;
  
 }
 
@@ -57,7 +69,7 @@ main {
 /* Core Elements */
 .page {
   margin: 24px auto 0;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--bg-color);
 }
 
 .block {
@@ -80,6 +92,16 @@ button {
   font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
+}
+
+button.active {
+  border-color: var(--action-color);
+  color: var(--action-color);
+}
+
+button.danger {
+  border-color: var(--danger-color);
+  color: var(--danger-color);
 }
 
 /* Typo */
