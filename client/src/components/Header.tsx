@@ -19,16 +19,22 @@ export function Header(props: Props) {
       </div>
       <nav>
         <a href="/" class={url == "/" && "active"}>
-          About
-        </a>
-
-        <a href="/research" class={url == "/research" && "active"}>
-          Research
+          re
         </a>
 
         <a href="/resources" class={url == "/resources" && "active"}>
           Resources
         </a>
+        
+        <a href="/research" class={url == "/research" && "active"}>
+          Research
+        </a>
+        
+        <a href="/time" class={url === '/time' && "active"}>
+          Recovery
+        </a>
+
+
 
         {!props.profile?.id && (
           <>

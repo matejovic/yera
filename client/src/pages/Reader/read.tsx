@@ -105,21 +105,38 @@ export function Read(props) {
         </Modal>
       )}
 
-      {showMeta && <Modal onClose={() => setShowMeta(false)}>Metadata</Modal>}
+      {showMeta && <Modal onClose={() => setShowMeta(false)}>
+        <h2>Metadata</h2>
+        <form onSubmit={handleSubmit} style="display: contents">
+            <input
+              type="text"
+              placeholder="add comma separated tags"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+            />
+            <textarea
+              name=""
+              id=""
+              placeholder="Add a note"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            />
+            <button type="button">Save</button>
+          </form>
+      </Modal>}
 
       <button
         className="floater"
         onClick={() => setShowConfig(true)}
         type="button"
       >
-        Magic (a)
+        Reader
       </button>
 
       <button onClick={() => setShowMeta(true)} type="button">
-        Meta (s)
+        Meta
       </button>
 
-      <button onClick={() => alert("annotations")}>Magic(d)</button>
       {/**
 				
 				<button className="floater" onClick={saveProgress} type="button">
@@ -138,27 +155,8 @@ export function Read(props) {
       {resource ? (
         <div class="reader">
           <h2>{resource.title}</h2>
-
           <div class="metadata"></div>
-
           <div dangerouslySetInnerHTML={{ __html: resource.extra }} />
-
-          <form onSubmit={handleSubmit} style="display: contents">
-            <input
-              type="text"
-              placeholder="add comma separated tags"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-            />
-            <textarea
-              name=""
-              id=""
-              placeholder="Add a note"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-            />
-            <button type="button">Save</button>
-          </form>
         </div>
       ) : (
         <p>Loading...</p>

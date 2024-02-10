@@ -1,24 +1,28 @@
 import { h } from "preact";
 
 function ReaderConfig() {
+  
+  function setReaderFont(font: string) {
+    document.querySelector('.reader').style.fontFamily = font;
+  }
+  
   return (
     <div>
-      Adjust your reading experience.
-      <ul>
-        <li>Font Select</li>
-        <li>Font Size</li>
-        <li>Letter Spacing</li>
-        <li>Line Height</li>
-      </ul>
+      Adjust your reading experience. <br /><br />
       <div class="form-input">
         <label>Font Type: </label>
-        <select>
-          <option>Sans</option>
-          <option>Mono</option>
-          <option>Util</option>
+        <select onChange={e => setReaderFont(e.currentTarget.value)}>
+          <option value="sans">Sans</option>
+          <option value="mono">Mono</option>
+          <option value="roboto">Roboto</option>
         </select>
       </div>
-      <div class="form-input">
+      {/*
+        // problem with these is that it requires relative slider 
+        // single input value to correctly adjust various font elements
+        // such as paragraph and headers
+        
+        <div class="form-input">
         <label>Font Size: </label>
         <input type="number" />
       </div>
@@ -30,6 +34,7 @@ function ReaderConfig() {
         <label>Line Height: </label>
         <input type="number" />
       </div>
+        */}
     </div>
   );
 }
