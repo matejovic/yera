@@ -14,7 +14,7 @@ export function Homepage() {
       <div class="block">
       <h2 class="centered">Your Evolving Research Atlas</h2>
         <ol>
-          <li>Develop <a href="/thesis">Thesis</a></li>
+          <li>Develop <a href="/research">Thesis</a></li>
  	      <li>Gather and Process <a href="/resources">Resources</a></li>
           <li>Play with <a href="/time">Time</a></li>
           <li><a href="/in">auth</a> (recovery, token, profile)</li>

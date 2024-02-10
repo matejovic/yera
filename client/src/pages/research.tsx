@@ -20,7 +20,7 @@ class Research extends Component {
     if (archive.length) {
       const entry = archive[0]; // top of the stack...
       this.setState({
-	hash:     entry.hash,
+	    hash:     entry.hash,
         question: entry.question, 
         archive:  archive,
       });
@@ -37,6 +37,7 @@ class Research extends Component {
         question: this.state.question,
         body: this.state.editor.current.quill.getText(),
         raw: this.state.editor.current.quill.getContents(),
+        updated: new Date().toString().substr(0,24),
       };
       var entry_id = this.state.archive.findIndex((e) => e.hash === entry.hash);
       if (entry_id === -1) {
@@ -45,7 +46,8 @@ class Research extends Component {
         this.state.archive[entry_id] = entry;
       }
       localStorage.setItem("archive", JSON.stringify(this.state.archive));
-      alert("saved. you can now refresh the page.");
+      this.forceUpdate(); // todo: remove need for this ...
+      alert("saved. you can now refresh the page."); // todo: add simple toast ...
     };
 
     const newId = () => {
@@ -70,6 +72,10 @@ class Research extends Component {
     const trash = () => {
       alert("tbd");
     };
+    
+    const auto = () => {
+      // toggle interval runner
+    }
 
     return (
       <div class="page">
@@ -102,7 +108,7 @@ class Research extends Component {
           <h2>Archive</h2>
           <ul>
             {this.state.archive.map((thesis) => (
-              <li onClick={() => selectThesis(thesis.hash)}>{thesis.question}</li>
+              <li><a href="#" onClick={() => selectThesis(thesis.hash)}>{thesis.question}</a> ({thesis.updated})</li>
             ))}
             <li>
               <a href="#" onClick={newResearchEntry}>
