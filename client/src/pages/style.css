@@ -24,7 +24,7 @@
 /* Header Component */
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   background-color: var(--tag-color);
   font-size: 14px;
   line-height: 20px;
@@ -58,9 +58,15 @@ header a:hover {
 /* Footer Component */
 .footer {
   text-align: center;
-  margin: 20px 0;
-  padding-top: 20px;
-  border-top: 1px solid var(--tag-color-hv);
+  padding: 20px 0;
+  border-top: 4px solid var(--tag-color);
+  background-color: var(--tag-color-bg);
+  color: var(--bg-color);
+}
+
+.footer a {
+  color: var(--bg-color);
+  border-bottom: 1px solid var(--bg-color);
 }
 
 /* Move to a separate file  */
@@ -78,43 +84,46 @@ header a:hover {
   min-height: 40px;
 }
 
-/* Again a separate file... */
-.reading-list {
-  display: flex;
-  flex-direction: column;
-  max-width: 640px;
 
-  /* Center self */
-  margin: 28px auto;
+/* Library */
+
+input.lib-item-new {
+  background: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  border-radius: 4px;
+  padding: 4px 8px;
+  /* maybe can be made into auto-expanding max-width, hehe */
+  width: 70%;
 }
 
-.read-item {
-  border: 1px solid whitesmoke;
-  border-radius: 6px;
-  padding: 0px 20px 20px 20px;
-  /* max-width: 490x; */
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+input.lib-item-new:focus {
+  border: 1px solid var(--tag-color-bg);
+}
+
+button.lib-item-new {
+  padding: 4px 8px;
+  margin-left: 12px;
+}
+
+.lib-item {
   cursor: pointer;
+  border: 1px solid var(--tag-color-hv);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 24px;
+  /* display: flex;
+  justify-content: space-between; */
 }
 
-.read-item:hover {
-  /*border: 1px solid var(--tag-color-hv);*/
-  box-shadow: -1px -2px 12px 1px var(--tag-color-bg);
+.lib-item:hover {
+  border: 1px solid var(--tag-color-bg);
+  /* box-shadow: -1px -2px 12px 1px var(--tag-color-bg); */
 }
 
-.read-item__right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-top: 24px;
-}
 
-.read-item__right .tags {
-}
 
-.read-item__right .tags span {
+.lib-item__right .tags span {
   display: block;
   /* attach # symbol before the span text */
   content: "#" attr(data-tag);

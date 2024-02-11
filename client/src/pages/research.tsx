@@ -108,7 +108,7 @@ class Research extends Component {
           <TextEditor ref={this.state.editor} />
         </div>
         <div class="block">
-          <h2>Archive</h2>
+          <h2>More</h2>
           <ul>
             {this.state.archive.map((thesis) => (
               <li><a href="#" onClick={() => selectThesis(thesis.hash)}>{thesis.question}</a> ({thesis.updated})</li>

@@ -70,17 +70,18 @@ const app = new Elysia({ prefix: BASE_URL })
   .post(
     "/entry",
     async ({ body, cookie: { token }, jwt }) => {
-      // check if the user is authenticated
-      const token_data = await jwt.verify(token);
 
-      if (!token_data) {
-        // show only public bookmarks
-        return { message: "Unauthorized" };
-      }
       const { url, type } = body;
 
       // we can do this in a separate worker thread
       const articleData = await parseArticle(url);
+
+      // check if the user is authenticated
+      const token_data = await jwt.verify(token);
+      if (!token_data) {
+        // free giveaway; no storage
+        return articleData;
+      }
 
       // we need to return prisma Promise, not the data
       // TODO: this fails on duplicate url (unique constraint)

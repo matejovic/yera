@@ -64,16 +64,18 @@ div#app {
 
 main {
   flex: 1;
+  background-color: antiquewhite;
 }
 
 /* Core Elements */
-.page {
-  margin: 24px auto 0;
-  border: 1px solid var(--bg-color);
-}
 
 .block {
-  margin: 18px 24px;
+  box-sizing: border-box;
+  max-width: 777px;
+  padding: 24px;
+  margin: 24px auto;
+  border: 4px dotted var(--tag-color-bg);
+  background-color: var(--bg-color);
 }
 
 a {
@@ -86,14 +88,20 @@ a:hover {
 }
 
 button {
-  background: transparent;
-  border: 1px solid var(--tag-color);
-  color: var(--tag-color);
   font-weight: bold;
-  border-radius: 4px;
   cursor: pointer;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--text-color);
+  border-radius: 4px;
 }
 
+button:active {
+  /* color: var(--tag-color); */
+  border: 1px solid var(--tag-color);
+
+}
+  
 button.active {
   border-color: var(--action-color);
   color: var(--action-color);
@@ -109,7 +117,11 @@ h1.centered,
 h2.centered,
 p.centered {
   text-align: center;
-  color: var(--tag-color);
+}
+
+h1,h2,h3 {
+  /* will need to find a better solution here... */
+  margin-top: 0;
 }
 
 .small {
@@ -157,9 +169,3 @@ input:focus{
   display: flex;
   justify-content: space-between;
 }
-
-
-
-
-
-

@@ -12,9 +12,9 @@ function ReaderConfig() {
       <div class="form-input">
         <label>Font Type: </label>
         <select onChange={e => setReaderFont(e.currentTarget.value)}>
-          <option value="sans">Sans</option>
-          <option value="mono">Mono</option>
-          <option value="roboto">Roboto</option>
+          <option value="georgia">Georgia</option>
+          <option value="monospace">Monospace</option>
+          <option value="helvetica">Helvetica</option>
         </select>
       </div>
       {/*

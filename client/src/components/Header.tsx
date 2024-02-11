@@ -12,27 +12,30 @@ export function Header(props: Props) {
   return (
     <header>
       <div className="logo">
-        <a href="/">
+        <a href="/" class={url == "/" && "active"}>
           <b>Y</b>era
           {/* <img src="/logo.svg" alt="Web Reader" /> */}
         </a>
       </div>
       <nav>
-        <a href="/" class={url == "/" && "active"}>
+        {/* <a href="/" class={url == "/" && "active"}>
           re
-        </a>
+        </a> */}
+        
 
         <a href="/resources" class={url == "/resources" && "active"}>
-          Resources
+          Read
         </a>
-        
+      
+
         <a href="/research" class={url == "/research" && "active"}>
           Research
         </a>
-        
+
         <a href="/time" class={url === '/time' && "active"}>
-          Recovery
+          Rest
         </a>
+
 
 
 
