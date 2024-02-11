@@ -2,15 +2,30 @@ import { useEffect, useState } from "preact/hooks";
 
 export function Homepage() {
   const [theme, setTheme] = useState("");
-  setTheme(
-    localStorage.getItem("theme")
-      ? localStorage.getItem("theme")
-      : "bright-orange",
-  );
+  const [showHelp, setShowHelp] = useState(true);
+
+  const ls = localStorage.getItem("theme");
+  setTheme(ls ? ls : "bright-orange");
+
+  // const _sh = localStorage.getItem('show-help');
+  // if (_sh) { setShowHelp(_sh === ''); }
 
   function setColourScheme(theme: string): void {
     document.documentElement.className = "theme-" + theme; // root element
     localStorage.setItem("theme", theme);
+  }
+
+  function toggleShowHelp() {
+    // localStorage.setItem("show-help", String(showHelp));
+    setShowHelp((prev) => {
+      const show = !prev;
+      if (show) {
+        // .help show
+      } else {
+        // .help hide
+      }
+      return show;
+    });
   }
 
   return (
@@ -52,10 +67,11 @@ export function Homepage() {
           <option value="bright-orange">Bright Orange</option>
           <option value="bright-purple">Bright Purple</option>
           <option value="dark">Dark</option>
+          <option value="vision-a">Default</option>
         </select>
         <br />
         <label>Show Help: </label>
-        <input type="checkbox" />
+        <input type="checkbox" checked={showHelp} onClick={toggleShowHelp} />
       </div>
     </div>
   );

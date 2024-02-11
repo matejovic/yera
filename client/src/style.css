@@ -17,9 +17,9 @@ html.theme-dark {
   --bg-color: #222;
   --text-color: #fff;
 
-  --tag-color: #fff;
-  --tag-color-hv: #a8a8a8;
-  --tag-color-bg: #c5c5c5;
+  --tag-color: #cacbcccc;
+  --tag-color-hv: #0000002e;
+  --tag-color-bg: #00000033;
 
   --action-color: #00ff00;
   --danger-color: #ff0000;
@@ -43,8 +43,18 @@ html.theme-bright-purple {
 
   --tag-color: #7f27ff;
   --tag-color-hv: #9f70fd;
-  --tag-color-bg: #9f70fd;
+  --tag-color-bg: #8f70fd;
 
+  --action-color: #00ff00;
+  --danger-color: #ff0000;
+}
+
+html.theme-vision-a {
+  --bg-color: #ffffff;
+  --text-color: #222;
+  --tag-color: #d98a51;
+  --tag-color-hv: #54401b45;
+  --tag-color-bg: #b078102e;
   --action-color: #00ff00;
   --danger-color: #ff0000;
 }
@@ -61,7 +71,7 @@ div#app {
 
 main {
   flex: 1;
-  background-color: antiquewhite;
+  background-color: var(--tag-color-bg);
 }
 
 /* Core Elements */
@@ -71,7 +81,7 @@ main {
   max-width: 777px;
   padding: 24px;
   margin: 24px auto;
-  border: 4px dotted var(--tag-color-bg);
+  border: 2px dotted var(--tag-color-bg);
   background-color: var(--bg-color);
 }
 

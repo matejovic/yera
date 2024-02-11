@@ -21,19 +21,25 @@
   font-size: inherit;
 }
 
+/* Banner */
+.banner {
+  margin: 12px auto;
+}
+
 /* Header Component */
 header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   background-color: var(--tag-color);
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 500;
   line-height: 20px;
 }
 
 header .logo {
   display: flex;
   padding: 0 0.75rem;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 header nav {
@@ -58,8 +64,8 @@ header a:hover {
 .footer {
   text-align: center;
   padding: 20px 0;
-  border-top: 4px solid var(--tag-color);
-  background-color: var(--tag-color-bg);
+  border-top: 1px solid var(--tag-color-hv);
+  background-color: var(--tag-color);
   color: var(--bg-color);
 }
 

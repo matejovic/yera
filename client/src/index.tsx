@@ -46,6 +46,9 @@ export function App() {
 
   return (
     <LocationProvider>
+      <div class="banner">
+        developed for each and every student and archivist.
+      </div>
       <Header profile={profile} />
       <main>
         <Router>
