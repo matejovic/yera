@@ -67,7 +67,6 @@ export function Homepage() {
           <option value="bright-orange">Bright Orange</option>
           <option value="bright-purple">Bright Purple</option>
           <option value="dark">Dark</option>
-          <option value="vision-a">Default</option>
         </select>
         <br />
         <label>Show Help: </label>

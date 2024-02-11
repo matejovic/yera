@@ -28,11 +28,9 @@ html.theme-dark {
 html.theme-bright-orange {
   --bg-color: #ffffff;
   --text-color: #222;
-
-  --tag-color: #f29d00;
+  --tag-color: #ffa500;
   --tag-color-hv: #54401b45;
-  --tag-color-bg: #dc9108c2;
-
+  --tag-color-bg: #a4772430;
   --action-color: #00ff00;
   --danger-color: #ff0000;
 }
@@ -41,20 +39,10 @@ html.theme-bright-purple {
   --bg-color: #ffffff;
   --text-color: #222;
 
-  --tag-color: #7f27ff;
-  --tag-color-hv: #9f70fd;
-  --tag-color-bg: #8f70fd;
+  --tag-color: #a077dd;
+  --tag-color-hv: #a88be3;
+  --tag-color-bg: #3f09ff1a;
 
-  --action-color: #00ff00;
-  --danger-color: #ff0000;
-}
-
-html.theme-vision-a {
-  --bg-color: #ffffff;
-  --text-color: #222;
-  --tag-color: #d98a51;
-  --tag-color-hv: #54401b45;
-  --tag-color-bg: #b078102e;
   --action-color: #00ff00;
   --danger-color: #ff0000;
 }
