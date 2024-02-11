@@ -20,9 +20,9 @@ class Research extends Component {
     if (archive.length) {
       const entry = archive[0]; // top of the stack...
       this.setState({
-	    hash:     entry.hash,
-        question: entry.question, 
-        archive:  archive,
+        hash: entry.hash,
+        question: entry.question,
+        archive: archive,
       });
       // in func component useEffect() instead (we might want to migrate for consistency)
       this.state.editor.current.quill.setContents(entry.raw);
@@ -37,7 +37,7 @@ class Research extends Component {
         question: this.state.question,
         body: this.state.editor.current.quill.getText(),
         raw: this.state.editor.current.quill.getContents(),
-        updated: new Date().toString().substr(0,24),
+        updated: new Date().toString().substr(0, 24),
       };
       var entry_id = this.state.archive.findIndex((e) => e.hash === entry.hash);
       if (entry_id === -1) {
@@ -51,9 +51,11 @@ class Research extends Component {
     };
 
     const newId = () => {
-	const hash = this.state.archive.reduce((a,b)=>a.hash>b.hash ? a : b).hash
-	return hash ? hash  + 1 : 1;
-    }
+      const hash = this.state.archive.reduce((a, b) =>
+        a.hash > b.hash ? a : b,
+      ).hash;
+      return hash ? hash + 1 : 1;
+    };
 
     const newResearchEntry = () => {
       this.setState({ question: "", hash: newId() });
@@ -61,22 +63,21 @@ class Research extends Component {
     };
 
     const selectThesis = (hash) => {
-       const entry = this.state.archive.find(e => e.hash === hash);
-       this.state.editor.current.quill.setContents(entry.raw);
-       this.setState({
-		hash: entry.hash,
-		question: entry.question
-	})
-    }
+      const entry = this.state.archive.find((e) => e.hash === hash);
+      this.state.editor.current.quill.setContents(entry.raw);
+      this.setState({
+        hash: entry.hash,
+        question: entry.question,
+      });
+    };
 
     const trash = () => {
       alert("tbd");
     };
-    
+
     const autosave = () => {
       // toggle interval runner; tbd...
-      
-    }
+    };
 
     return (
       <div class="page">
@@ -111,7 +112,12 @@ class Research extends Component {
           <h2>More</h2>
           <ul>
             {this.state.archive.map((thesis) => (
-              <li><a href="#" onClick={() => selectThesis(thesis.hash)}>{thesis.question}</a> ({thesis.updated})</li>
+              <li>
+                <a href="#" onClick={() => selectThesis(thesis.hash)}>
+                  {thesis.question}
+                </a>{" "}
+                ({thesis.updated})
+              </li>
             ))}
             <li>
               <a href="#" onClick={newResearchEntry}>

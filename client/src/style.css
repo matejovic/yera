@@ -1,60 +1,57 @@
 /* Root should be configurable */
-:root { 
-	font-family: system-ui;
-	line-height: 1.5;
-	font-weight: 400;
-	color: var(--text-color);
-	background-color: var(--bg-color);
+:root {
+  font-family: system-ui;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text-color);
+  background-color: var(--bg-color);
 
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-text-size-adjust: 100%;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 }
 
 html.theme-dark {
-    --bg-color: #222;
-    --text-color: #fff;
-    
-    --tag-color: #fff;
-    --tag-color-hv: #a8a8a8;
-    --tag-color-bg: #c5c5c5;
-    
-    --action-color: #00ff00;
-    --danger-color: #ff0000;
+  --bg-color: #222;
+  --text-color: #fff;
+
+  --tag-color: #fff;
+  --tag-color-hv: #a8a8a8;
+  --tag-color-bg: #c5c5c5;
+
+  --action-color: #00ff00;
+  --danger-color: #ff0000;
 }
 
 html.theme-bright-orange {
-    --bg-color: #ffffff;
-    --text-color: #222;
-    
-    --tag-color: #f29d00;
-    --tag-color-hv: #54401b45;
-    --tag-color-bg: #dc9108c2;
-    
-    --action-color: #00ff00;
-    --danger-color: #ff0000;
- 
+  --bg-color: #ffffff;
+  --text-color: #222;
+
+  --tag-color: #f29d00;
+  --tag-color-hv: #54401b45;
+  --tag-color-bg: #dc9108c2;
+
+  --action-color: #00ff00;
+  --danger-color: #ff0000;
 }
 
 html.theme-bright-purple {
-    --bg-color: #ffffff;
-    --text-color: #222;
-    
-    --tag-color: #7F27FF;
-    --tag-color-hv: #9F70FD;
-    --tag-color-bg: #9F70FD;
-    
-    --action-color: #00ff00;
-    --danger-color: #ff0000;
- 
+  --bg-color: #ffffff;
+  --text-color: #222;
+
+  --tag-color: #7f27ff;
+  --tag-color-hv: #9f70fd;
+  --tag-color-bg: #9f70fd;
+
+  --action-color: #00ff00;
+  --danger-color: #ff0000;
 }
 
 body {
   margin: 0;
 }
-
 
 div#app {
   display: flex;
@@ -99,9 +96,8 @@ button {
 button:active {
   /* color: var(--tag-color); */
   border: 1px solid var(--tag-color);
-
 }
-  
+
 button.active {
   border-color: var(--action-color);
   color: var(--action-color);
@@ -119,7 +115,9 @@ p.centered {
   text-align: center;
 }
 
-h1,h2,h3 {
+h1,
+h2,
+h3 {
   /* will need to find a better solution here... */
   margin-top: 0;
 }
@@ -134,15 +132,15 @@ input.branded {
   color: var(--tag-color);
   border: 1px solid var(--tag-color);
   border-radius: 4px;
-  
+
   min-width: 200px;
   font-size: 18px;
   width: 90%;
   padding: 8px;
 }
 
-input:focus{
-  outline:none;
+input:focus {
+  outline: none;
 }
 
 .form-errors {

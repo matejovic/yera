@@ -34,8 +34,8 @@ async function isAuthenticated() {
 }
 
 // todo: start with client OS/browser prefered colour scheme. #ox (onboarding experience)
-const theme: string = localStorage.getItem('theme');
-if (theme) document.documentElement.className = 'theme-' + theme; 
+const theme: string = localStorage.getItem("theme");
+if (theme) document.documentElement.className = "theme-" + theme;
 
 export function App() {
   const [profile, setProfile] = useState(null);

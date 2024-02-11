@@ -105,9 +105,10 @@ export function Read(props) {
         </Modal>
       )}
 
-      {showMeta && <Modal onClose={() => setShowMeta(false)}>
-        <h2>Metadata</h2>
-        <form onSubmit={handleSubmit} style="display: contents">
+      {showMeta && (
+        <Modal onClose={() => setShowMeta(false)}>
+          <h2>Metadata</h2>
+          <form onSubmit={handleSubmit} style="display: contents">
             <input
               type="text"
               placeholder="add comma separated tags"
@@ -123,7 +124,8 @@ export function Read(props) {
             />
             <button type="button">Save</button>
           </form>
-      </Modal>}
+        </Modal>
+      )}
 
       <button
         className="floater"

@@ -1,17 +1,17 @@
 import { h } from "preact";
 
 function ReaderConfig() {
-  
   function setReaderFont(font: string) {
-    document.querySelector('.reader').style.fontFamily = font;
+    document.querySelector(".reader").style.fontFamily = font;
   }
-  
+
   return (
     <div>
-      Adjust your reading experience. <br /><br />
+      Adjust your reading experience. <br />
+      <br />
       <div class="form-input">
         <label>Font Type: </label>
-        <select onChange={e => setReaderFont(e.currentTarget.value)}>
+        <select onChange={(e) => setReaderFont(e.currentTarget.value)}>
           <option value="georgia">Georgia</option>
           <option value="monospace">Monospace</option>
           <option value="helvetica">Helvetica</option>

@@ -12,7 +12,7 @@ export function Resources() {
       const url = event.target.value;
       const response = await fetch(API_URL + "/entry", {
         method: "POST",
-        credentials: "include", // consider no credentials local storage.  
+        credentials: "include", // consider no credentials local storage.
         headers: {
           "Content-Type": "application/json",
         },
@@ -47,15 +47,31 @@ export function Resources() {
 
   return (
     <div class="page">
-
       <div class="block">
-      <h2>Archive</h2>
-      <p class="help">You are allowed to store up to 100mb right now. All your data can be exported at anytime. Expand your data storage with out cheap plans. </p>
-      <p class="help">You can paste any publicly available URL containing text you want to read or remember into the input field below and press Enter. We will extract the text and store it in html and markdown formats. You can read it distraction-free in our reader app.  </p>
+        <h2>Resources</h2>
+        <p class="help">
+          You are allowed to store up to 100mb right now. All your data can be
+          exported at anytime. Expand your data storage with out affordable
+          plans and tester options.{" "}
+        </p>
+        <p class="help">
+          You can paste any publicly available URL containing text you want to
+          read or remember into the input field below and press Enter. We will
+          extract the text and store it in html and markdown formats. You can
+          read it distraction-free in our reader app.{" "}
+        </p>
         <div>
-        <input type="text" class="lib-item-new" placeholder="https://" onKeyDown={handleKeyDown} />
-        <button class="lib-item-new" onClick={() => alert('press enter...')}>Enter</button>
-        <br/><br />
+          <input
+            type="text"
+            class="lib-item-new"
+            placeholder="https://"
+            onKeyDown={handleKeyDown}
+          />
+          <button class="lib-item-new" onClick={() => alert("press enter...")}>
+            Enter
+          </button>
+          <br />
+          <br />
         </div>
         {resources && resources.length ? (
           resources.map((resource) => (
@@ -69,7 +85,8 @@ export function Resources() {
           ))
         ) : (
           <div>
-            Add your first resource by pasting a public URL address above and press Enter.
+            Add your first resource by pasting a public URL address above and
+            press Enter.
           </div>
         )}
       </div>
@@ -89,17 +106,19 @@ function ResourceLink(props) {
         <b>{props.title}</b>
       </div>
       <div class="small">
-       Added: <i>{props.createdAt}</i>
+        Added: <i>{props.createdAt}</i>
       </div>
       <div class="small">
-        Source: <i><a target="_blank" href={props.url}>{props.url}</a></i>
+        Source:{" "}
+        <i>
+          <a target="_blank" href={props.url}>
+            {props.url}
+          </a>
+        </i>
       </div>
       <div>
         {/* <img src="https://picsum.photos/200/120?grayscale" /> */}
-        <div>
-          {props.tags && props.tags.map((tag) => <span>#{tag}</span>)}
-        </div>
-
+        <div>{props.tags && props.tags.map((tag) => <span>#{tag}</span>)}</div>
       </div>
     </div>
   );

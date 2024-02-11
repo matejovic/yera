@@ -47,12 +47,11 @@ header a {
 
 header a.active {
   background-color: var(--tag-color-bg);
-
 }
 
 header a:hover {
   background-color: var(--tag-color-hv);
-  border-bottom: none;  
+  border-bottom: none;
 }
 
 /* Footer Component */
@@ -83,7 +82,6 @@ header a:hover {
 .stream > textarea {
   min-height: 40px;
 }
-
 
 /* Library */
 
@@ -120,8 +118,6 @@ button.lib-item-new {
   border: 1px solid var(--tag-color-bg);
   /* box-shadow: -1px -2px 12px 1px var(--tag-color-bg); */
 }
-
-
 
 .lib-item__right .tags span {
   display: block;

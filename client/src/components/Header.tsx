@@ -21,30 +21,25 @@ export function Header(props: Props) {
         {/* <a href="/" class={url == "/" && "active"}>
           re
         </a> */}
-        
 
         <a href="/resources" class={url == "/resources" && "active"}>
-          Read
+          Resources
         </a>
-      
 
         <a href="/research" class={url == "/research" && "active"}>
           Research
         </a>
 
-        <a href="/time" class={url === '/time' && "active"}>
+        <a href="/time" class={url === "/time" && "active"}>
           Rest
         </a>
 
-
-
-
         {!props.profile?.id && (
           <>
-	  <a href="/login" class={url == "/login" && "active"}>
-           Join Us
-          </a>
-	  </>
+            <a href="/login" class={url == "/login" && "active"}>
+              Join Us
+            </a>
+          </>
         )}
         {props.profile?.id && <a href="/profile">id: {props.profile.id}</a>}
         {props.profile?.id && <a href="/logout">out</a>}
