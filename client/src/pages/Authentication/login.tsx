@@ -56,7 +56,6 @@ export function Login(props: Props) {
       <div class="block">
         <h2>Login here</h2>
 
-        <p>todo: add recover password </p>
 
         {errors.length > 0 && (
           <div className="form-errors">
@@ -81,6 +80,7 @@ export function Login(props: Props) {
           />
           <button type="submit">Login</button>
         </form>
+	<div><a href="#">No password</a></div>
       </div>
     </div>
   );

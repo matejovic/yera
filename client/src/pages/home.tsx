@@ -31,11 +31,12 @@ export function Homepage() {
   return (
     <div class="page">
       <div class="block">
+	the simplest login ever...	
+      </div>
+      <div class="block">
         <h2>About</h2>
         <p>
-          YERA stands for Your Evolving Research Atlas and it's a recovery
-          investment project by Matej Vrzala to support global literacy. So far
-          we are focused on the development of following tools:
+	  We are an early-stage experimental software engineering project on a mission to increase global literacy, including various forms of digital media, but primarly working with a text and data. 
         </p>
         <ol>
           <li>

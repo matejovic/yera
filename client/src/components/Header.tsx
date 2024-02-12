@@ -21,6 +21,15 @@ export function Header(props: Props) {
         {/* <a href="/" class={url == "/" && "active"}>
           re
         </a> */}
+        {!props.profile?.id && (
+          <>
+            <a href="/login" class={url == "/login" && "active"}>
+              Join Us
+            </a>
+          </>
+        )}
+        {props.profile?.id && <>
+
 
         <a href="/resources" class={url == "/resources" && "active"}>
           Resources
@@ -34,15 +43,10 @@ export function Header(props: Props) {
           Rest
         </a>
 
-        {!props.profile?.id && (
-          <>
-            <a href="/login" class={url == "/login" && "active"}>
-              Join Us
-            </a>
-          </>
-        )}
-        {props.profile?.id && <a href="/profile">id: {props.profile.id}</a>}
-        {props.profile?.id && <a href="/logout">out</a>}
+
+		<a href="/profile">id: {props.profile.id}</a>
+		<a href="/logout">out</a>
+	</>}
       </nav>
     </header>
   );

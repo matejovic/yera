@@ -24,6 +24,7 @@
 /* Banner */
 .banner {
   margin: 12px auto;
+  display: none; /* Distracting ... */
 }
 
 /* Header Component */
