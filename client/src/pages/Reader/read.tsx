@@ -11,7 +11,7 @@ export function Read(props) {
   const [tags, setTags] = useState("");
   const [note, setNote] = useState("");
   const [showConfig, setShowConfig] = useState(false);
-  const [showMeta, setShowMeta] = useState(false);
+  // const [showMeta, setShowMeta] = useState(false);
 
   useEffect(() => {
     loadResource(props.id);
@@ -80,13 +80,13 @@ export function Read(props) {
     console.log(`Key pressed: ${event.key}`);
     if (event.key === "Escape") {
       setShowConfig(false);
-      setShowMeta(false);
+      // setShowMeta(false);
     }
     if (event.key === "a") {
       setShowConfig(!showConfig);
     }
     if (event.key === "s") {
-      setShowMeta(!showMeta);
+      // setShowMeta(!showMeta);
     }
   });
 
@@ -105,27 +105,11 @@ export function Read(props) {
         </Modal>
       )}
 
-      {showMeta && (
+      {/* {showMeta && (
         <Modal onClose={() => setShowMeta(false)}>
-          <h2>Metadata</h2>
-          <form onSubmit={handleSubmit} style="display: contents">
-            <input
-              type="text"
-              placeholder="add comma separated tags"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-            />
-            <textarea
-              name=""
-              id=""
-              placeholder="Add a note"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-            />
-            <button type="button">Save</button>
-          </form>
+          now back in main block...
         </Modal>
-      )}
+      )} */}
 
       <button
         className="floater"
@@ -135,9 +119,9 @@ export function Read(props) {
         Reader
       </button>
 
-      <button onClick={() => setShowMeta(true)} type="button">
+      {/* <button onClick={() => setShowMeta(true)} type="button">
         Meta
-      </button>
+      </button> */}
 
       {/**
 				
@@ -155,10 +139,33 @@ export function Read(props) {
 				  **/}
 
       {resource ? (
-        <div class="reader">
-          <h2>{resource.title}</h2>
-          <div class="metadata"></div>
-          <div dangerouslySetInnerHTML={{ __html: resource.extra }} />
+        <div class="page">
+          <div class="block metadata">
+            <p>Title: {resource.title}</p>
+            <p>Source: {resource.url}</p>
+            <p>Saved: {resource.created_at}</p>
+
+              <form onSubmit={handleSubmit} style="display: contents">
+                <input
+                  type="text"
+                  placeholder="add comma separated tags"
+                  value={tags}
+                  onChange={(e) => setTags(e.target.value)}
+                /> 
+                <br/>
+                <textarea
+                  name=""
+                  id=""
+                  placeholder="Add a note"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                />
+                <br/>
+                <button type="button">Save</button>
+              </form>
+           
+          </div>
+          <div class="reader block" dangerouslySetInnerHTML={{ __html: resource.extra }} />
         </div>
       ) : (
         <p>Loading...</p>

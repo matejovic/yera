@@ -17,6 +17,7 @@ function ReaderConfig() {
           <option value="helvetica">Helvetica</option>
         </select>
       </div>
+      {/* add reader-width in px or slider... */}
       {/*
         // problem with these is that it requires relative slider 
         // single input value to correctly adjust various font elements
