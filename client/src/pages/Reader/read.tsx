@@ -24,11 +24,28 @@ export function Read(props) {
     setResource(data);
     setNote(data.annotations);
     setTags(data.tags.map((t) => t.name).join(","));
+
     setTimeout(() => {
       document
         .querySelector(".reader")
-        .addEventListener("mouseup", displayToolbar);
+        // .addEventListener("select", () => {
+        //   alert('select')
+        // })
+        .addEventListener("mouseup", onMouseUp);
     }, 500); // heh...
+  };
+
+  const onMouseUp = (event) => {
+    // window.event = event;
+    const selection = window.getSelection();
+    if (selection.isCollapsed) {
+      hideToolbar();
+    } else {
+      const span = document.createElement("span");
+      span.classList.add("clean-me");
+      const wrapped = wrapSelection(span);
+      displayToolbar(wrapped);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -55,7 +72,12 @@ export function Read(props) {
   //   // TODO: save reading progress `window.scrollY`
   // };
 
-  function wrapSelection(elem: JSX.Element): JSX.Element {
+  function unwrap(elem: JSX.Element): JSX.Element {
+    elem.replaceWith(...elem.childNodes);
+    return elem;
+  }
+
+  function wrapSelection(elem: JSX.Element): JSX.Element | void {
     const selection: Selection = window.getSelection();
     if (!selection.rangeCount) return;
 
@@ -69,17 +91,12 @@ export function Read(props) {
     return elem;
   }
 
-  function displayToolbar() {
-    const span = wrapSelection(document.createElement("span"));
-
-    if (span) {
-      const toolbar = document.querySelector(".highlighter-actions");
-      const rect = span.getBoundingClientRect();
-      toolbar.style.left = `${rect.left + window.scrollX}px`; // Adjust for scroll position
-      toolbar.style.top = `${rect.top + window.scrollY - Math.max(toolbar.offsetHeight, 17)}px`; // Adjust for scroll and toolbar height
-
-      toolbar.style.display = "block";
-    }
+  function displayToolbar(span: JSX.Element) {
+    const toolbar = document.querySelector(".highlighter-actions");
+    const rect = span.getBoundingClientRect();
+    toolbar.style.left = `${rect.left + window.scrollX}px`; // Adjust for scroll position
+    toolbar.style.top = `${rect.top + window.scrollY - Math.max(toolbar.offsetHeight, 22)}px`; // Adjust for scroll and toolbar height
+    toolbar.style.display = "block";
   }
 
   function hideToolbar() {
@@ -101,6 +118,13 @@ export function Read(props) {
     // }
 
     const mark = wrapSelection(document.createElement("mark"));
+
+    mark.onclick = () => {
+      // self-destruct
+      setAnnotations(annotations.filter((_, i) => i !== mark.innerText));
+      unwrap(mark);
+      //  todo: reopen toolbar above selection (next UX)
+    };
     hideToolbar();
 
     // add to annotations state
