@@ -28,25 +28,24 @@ export function Header(props: Props) {
             </a>
           </>
         )}
-        {props.profile?.id && <>
+        {props.profile?.id && (
+          <>
+            <a href="/resources" class={url == "/resources" && "active"}>
+              Resources
+            </a>
 
+            <a href="/research" class={url == "/research" && "active"}>
+              Research
+            </a>
 
-        <a href="/resources" class={url == "/resources" && "active"}>
-          Resources
-        </a>
+            <a href="/time" class={url === "/time" && "active"}>
+              Rest
+            </a>
 
-        <a href="/research" class={url == "/research" && "active"}>
-          Research
-        </a>
-
-        <a href="/time" class={url === "/time" && "active"}>
-          Rest
-        </a>
-
-
-		<a href="/profile">id: {props.profile.id}</a>
-		<a href="/logout">out</a>
-	</>}
+            <a href="/profile">id: {props.profile.id}</a>
+            <a href="/logout">out</a>
+          </>
+        )}
       </nav>
     </header>
   );

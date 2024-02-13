@@ -11,7 +11,7 @@ export function Read(props) {
   const [tags, setTags] = useState("");
   const [note, setNote] = useState("");
   const [showConfig, setShowConfig] = useState(false);
-  const [ annotations, setAnnotations] = useState(['test']);
+  const [annotations, setAnnotations] = useState([]);
   // const [showMeta, setShowMeta] = useState(false);
 
   useEffect(() => {
@@ -24,6 +24,11 @@ export function Read(props) {
     setResource(data);
     setNote(data.annotations);
     setTags(data.tags.map((t) => t.name).join(","));
+    setTimeout(() => {
+      document
+        .querySelector(".reader")
+        .addEventListener("mouseup", highlightSelection);
+    }, 500); // heh...
   };
 
   const handleSubmit = async (event) => {
@@ -56,17 +61,18 @@ export function Read(props) {
 
     const range = selection.getRangeAt(0);
     const selectedText = selection.toString();
+    if (selectedText === "") return;
+    if (annotations.includes(selectedText)) return; // there might be a good reason to allow duplicates...
 
     const mark = document.createElement("mark");
     mark.textContent = selectedText;
 
     // add to annotations state
-    setAnnotations(prev => {
-      prev.push(selectedText);
-      alert('set annotation' + selectedText);
-      return prev;
-    })
-    // store in localStorage
+    setAnnotations((prev) => {
+      const newList = [...prev, selectedText];
+      localStorage.setItem("resource-1-annotations", newList);
+      return newList;
+    });
 
     range.deleteContents();
     range.insertNode(mark);
@@ -77,11 +83,7 @@ export function Read(props) {
     // toolbar.style.display = 'block';
   }
 
-  // document.querySelector('.reader').addEventListener("mouseup", highlightSelection);
-
-
   // toggle images and links, remove ads
-  // change fonts; font-size; letter and line spacing; colour themes
 
   // on keypress open modal window
   // TODO: needs to be scoped and removed before problems arise.
@@ -113,24 +115,7 @@ export function Read(props) {
           />
         </Modal>
       )}
-
-      {/* {showMeta && (
-        <Modal onClose={() => setShowMeta(false)}>
-          now back in main block...
-        </Modal>
-      )} */}
-
-      {/* <button onClick={() => setShowMeta(true)} type="button">
-        Meta
-      </button> */}
-
       {/**
-				
-				<button className="floater" onClick={saveProgress} type="button">
-					Save Progress
-				</button>
-				
-				
 				<div class="highlighter-actions">
 					<button type="button">Highlight</button>
 					<button type="button">Underline</button>
@@ -147,44 +132,44 @@ export function Read(props) {
             <p>Saved: {resource.created_at}</p>
 
             {annotations.length ? (
-            <section>
-              <h3>Highlights</h3>
-              <ul>
-                {annotations.map(a => {
-                  (<li>{a}</li>)
-                })}
-              </ul>
-            </section>
-            ) : ''}
+              <section>
+                <h3>Highlights</h3>
+                <ul>
+                  {annotations.map((a) => {
+                    return <li key={a}>{a}</li>;
+                  })}
+                </ul>
+              </section>
+            ) : (
+              ""
+            )}
 
-              <form onSubmit={handleSubmit} style="display: contents">
-                <input
-                  type="text"
-                  placeholder="add comma separated tags"
-                  value={tags}
-                  onChange={(e) => setTags(e.target.value)}
-                /> 
-                <br/>
-                <textarea
-                  name=""
-                  id=""
-                  placeholder="Add a note"
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                />
-                <br/>
-                <button type="button">Save</button>
-              </form>
-           
+            <form onSubmit={handleSubmit} style="display: contents">
+              <input
+                type="text"
+                placeholder="add comma separated tags"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+              />
+              <br />
+              <textarea
+                name=""
+                id=""
+                placeholder="Add a note"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+              />
+              <br />
+              <button type="button">Save</button>
+            </form>
           </div>
-          <button
-                  className=""
-                  onClick={() => setShowConfig(true)}
-                  type="button"
-                >
-                  config
-                </button>
-          <div class="reader block" dangerouslySetInnerHTML={{ __html: resource.extra }} />
+          <button onClick={() => setShowConfig(true)} type="button">
+            config
+          </button>
+          <div
+            class="reader block"
+            dangerouslySetInnerHTML={{ __html: resource.extra }}
+          />
         </div>
       ) : (
         <p>Loading...</p>

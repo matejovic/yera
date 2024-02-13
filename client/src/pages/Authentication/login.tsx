@@ -56,7 +56,6 @@ export function Login(props: Props) {
       <div class="block">
         <h2>Login here</h2>
 
-
         {errors.length > 0 && (
           <div className="form-errors">
             {errors.map((error) => (
@@ -80,7 +79,9 @@ export function Login(props: Props) {
           />
           <button type="submit">Login</button>
         </form>
-	<div><a href="#">No password</a></div>
+        <div>
+          <a href="#">No password</a>
+        </div>
       </div>
     </div>
   );
