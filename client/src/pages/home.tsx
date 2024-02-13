@@ -5,7 +5,7 @@ export function Homepage() {
   const [showHelp, setShowHelp] = useState(true);
 
   const ls = localStorage.getItem("theme");
-  setTheme(ls ? ls : "bright-orange");
+  setTheme(ls ? ls : "bright");
 
   // const _sh = localStorage.getItem('show-help');
   // if (_sh) { setShowHelp(_sh === ''); }
@@ -65,13 +65,14 @@ export function Homepage() {
           value={theme}
           onChange={(e) => setColourScheme(e.currentTarget.value)}
         >
-          <option value="bright-orange">Bright Orange</option>
-          <option value="bright-purple">Bright Purple</option>
+          <option value="">None</option>
+          <option value="orange">Light</option>
           <option value="dark">Dark</option>
+          <option value="purple">Purple</option>
         </select>
-        <br />
+        {/* <br />
         <label>Show Help: </label>
-        <input type="checkbox" checked={showHelp} onClick={toggleShowHelp} />
+        <input type="checkbox" checked={showHelp} onClick={toggleShowHelp} /> */}
       </div>
     </div>
   );

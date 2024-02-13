@@ -25,17 +25,17 @@ html.theme-dark {
   --danger-color: #ff0000;
 }
 
-html.theme-bright-orange {
+html.theme-light {
   --bg-color: #ffffff;
   --text-color: #222;
-  --tag-color: #ffa500;
+  --tag-color: #ce9a3a;
   --tag-color-hv: #54401b45;
   --tag-color-bg: #a4772430;
   --action-color: #00ff00;
   --danger-color: #ff0000;
 }
 
-html.theme-bright-purple {
+html.theme-purple {
   --bg-color: #ffffff;
   --text-color: #222;
 

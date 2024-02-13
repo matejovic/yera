@@ -10,3 +10,7 @@
 .form-input {
   margin-bottom: 10px;
 }
+
+mark {
+  background-color: var(--tag-color);
+}

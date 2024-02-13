@@ -11,6 +11,7 @@ export function Read(props) {
   const [tags, setTags] = useState("");
   const [note, setNote] = useState("");
   const [showConfig, setShowConfig] = useState(false);
+  const [ annotations, setAnnotations] = useState(['test']);
   // const [showMeta, setShowMeta] = useState(false);
 
   useEffect(() => {
@@ -59,17 +60,25 @@ export function Read(props) {
     const mark = document.createElement("mark");
     mark.textContent = selectedText;
 
+    // add to annotations state
+    setAnnotations(prev => {
+      prev.push(selectedText);
+      alert('set annotation' + selectedText);
+      return prev;
+    })
+    // store in localStorage
+
     range.deleteContents();
     range.insertNode(mark);
 
-    const rect = mark.getBoundingClientRect();
+    // const rect = mark.getBoundingClientRect();
     // toolbar.style.left = `${rect.left}px`;
     // toolbar.style.top = `${rect.top - toolbar.offsetHeight}px`;
     // toolbar.style.display = 'block';
   }
 
-  // Usage
-  // document.addEventListener("mouseup", highlightSelection);
+  // document.querySelector('.reader').addEventListener("mouseup", highlightSelection);
+
 
   // toggle images and links, remove ads
   // change fonts; font-size; letter and line spacing; colour themes
@@ -111,14 +120,6 @@ export function Read(props) {
         </Modal>
       )} */}
 
-      <button
-        className="floater"
-        onClick={() => setShowConfig(true)}
-        type="button"
-      >
-        Reader
-      </button>
-
       {/* <button onClick={() => setShowMeta(true)} type="button">
         Meta
       </button> */}
@@ -145,6 +146,17 @@ export function Read(props) {
             <p>Source: {resource.url}</p>
             <p>Saved: {resource.created_at}</p>
 
+            {annotations.length ? (
+            <section>
+              <h3>Highlights</h3>
+              <ul>
+                {annotations.map(a => {
+                  (<li>{a}</li>)
+                })}
+              </ul>
+            </section>
+            ) : ''}
+
               <form onSubmit={handleSubmit} style="display: contents">
                 <input
                   type="text"
@@ -165,6 +177,13 @@ export function Read(props) {
               </form>
            
           </div>
+          <button
+                  className=""
+                  onClick={() => setShowConfig(true)}
+                  type="button"
+                >
+                  config
+                </button>
           <div class="reader block" dangerouslySetInnerHTML={{ __html: resource.extra }} />
         </div>
       ) : (
