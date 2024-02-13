@@ -83,16 +83,15 @@ a:hover {
 }
 
 button {
-  font-weight: bold;
   cursor: pointer;
-  color: inherit;
+  color: var(--text-color);
   background: transparent;
   border: 1px solid var(--text-color);
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 button:active {
-  /* color: var(--tag-color); */
+  color: var(--tag-color);
   border: 1px solid var(--tag-color);
 }
 

@@ -27,7 +27,7 @@ export function Read(props) {
     setTimeout(() => {
       document
         .querySelector(".reader")
-        .addEventListener("mouseup", highlightSelection);
+        .addEventListener("mouseup", displayToolbar);
     }, 500); // heh...
   };
 
@@ -51,39 +51,65 @@ export function Read(props) {
     console.log(response.json());
   };
 
-  const saveProgress = async () => {
-    // TODO: save reading progress `window.scrollY`
-  };
+  // const saveProgress = async () => {
+  //   // TODO: save reading progress `window.scrollY`
+  // };
 
-  function highlightSelection() {
-    const selection = window.getSelection();
+  function wrapSelection(elem: JSX.Element): JSX.Element {
+    const selection: Selection = window.getSelection();
     if (!selection.rangeCount) return;
 
-    const range = selection.getRangeAt(0);
-    const selectedText = selection.toString();
+    const range: Range = selection.getRangeAt(0);
+    const selectedText: string = selection.toString();
     if (selectedText === "") return;
-    if (annotations.includes(selectedText)) return; // there might be a good reason to allow duplicates...
 
-    const mark = document.createElement("mark");
-    mark.textContent = selectedText;
-
-    // add to annotations state
-    setAnnotations((prev) => {
-      const newList = [...prev, selectedText];
-      localStorage.setItem("resource-1-annotations", newList);
-      return newList;
-    });
-
+    elem.textContent = selectedText;
     range.deleteContents();
-    range.insertNode(mark);
-
-    // const rect = mark.getBoundingClientRect();
-    // toolbar.style.left = `${rect.left}px`;
-    // toolbar.style.top = `${rect.top - toolbar.offsetHeight}px`;
-    // toolbar.style.display = 'block';
+    range.insertNode(elem);
+    return elem;
   }
 
-  // toggle images and links, remove ads
+  function displayToolbar() {
+    const span = wrapSelection(document.createElement("span"));
+
+    if (span) {
+      const toolbar = document.querySelector(".highlighter-actions");
+      const rect = span.getBoundingClientRect();
+      toolbar.style.left = `${rect.left + window.scrollX}px`; // Adjust for scroll position
+      toolbar.style.top = `${rect.top + window.scrollY - Math.max(toolbar.offsetHeight, 17)}px`; // Adjust for scroll and toolbar height
+
+      toolbar.style.display = "block";
+    }
+  }
+
+  function hideToolbar() {
+    const toolbar = document.querySelector(".highlighter-actions");
+    toolbar.style.display = "none";
+    window.getSelection().removeAllRanges();
+  }
+
+  function highlight() {
+    const selectedText = window.getSelection().toString();
+    if (annotations.includes(selectedText)) {
+      return;
+    }
+    // let highlight_data = {
+    //   id: 0,
+    //   text: selectedText,
+    //   tags: ['red', 'memorize'],
+    //   time: new Date()
+    // }
+
+    const mark = wrapSelection(document.createElement("mark"));
+    hideToolbar();
+
+    // add to annotations state
+    setAnnotations((_prev) => {
+      const _list = [..._prev, selectedText]; // well not so great...
+      localStorage.setItem("resource-1-annotations", _list); // tbd
+      return _list;
+    });
+  }
 
   // on keypress open modal window
   // TODO: needs to be scoped and removed before problems arise.
@@ -113,30 +139,62 @@ export function Read(props) {
               line_height: 16,
             }}
           />
+          Archived: {resource.created_at} (reload and compare) <br />
+          Show Images: <input type="checkbox" /> <br />
+          Show Links: <br />
+          Remove Ads <br />
         </Modal>
       )}
-      {/**
-				<div class="highlighter-actions">
-					<button type="button">Highlight</button>
-					<button type="button">Underline</button>
+
+      <div class="highlighter-actions">
+        <button type="button" onClick={highlight}>
+          Highlight
+        </button>
+        {/**
+					  <button type="button">Underline</button>
 					<button type="button">Strike</button>
-					<button type="button">Comment</button>
-				</div>
-				  **/}
+					  					<button type="button">Comment</button>
+					  **/}
+
+        <button onClick={hideToolbar}>Close</button>
+      </div>
 
       {resource ? (
         <div class="page">
           <div class="block metadata">
-            <p>Title: {resource.title}</p>
-            <p>Source: {resource.url}</p>
-            <p>Saved: {resource.created_at}</p>
+            <p>
+              <button onClick={() => setShowConfig(true)} type="button">
+                config
+              </button>
+            </p>
 
             {annotations.length ? (
               <section>
                 <h3>Highlights</h3>
                 <ul>
-                  {annotations.map((a) => {
-                    return <li key={a}>{a}</li>;
+                  {annotations.map((a, x) => {
+                    return (
+                      <li key={x}>
+                        {a}{" "}
+                        <button
+                          onClick={() => {
+                            setAnnotations(
+                              annotations.filter((_, i) => i !== x),
+                            );
+                            // use ref to efficiently remove <mark> wrapper
+                            document
+                              .querySelectorAll("mark")
+                              .forEach((mark) => {
+                                if (mark.textContent === a) {
+                                  mark.classList.add("deactivated");
+                                }
+                              });
+                          }}
+                        >
+                          remove
+                        </button>
+                      </li>
+                    );
                   })}
                 </ul>
               </section>
@@ -163,13 +221,16 @@ export function Read(props) {
               <button type="button">Save</button>
             </form>
           </div>
-          <button onClick={() => setShowConfig(true)} type="button">
-            config
-          </button>
-          <div
-            class="reader block"
-            dangerouslySetInnerHTML={{ __html: resource.extra }}
-          />
+
+          <div class="block">
+            <h1>{resource.title}</h1>
+            <p>Source: {resource.url}</p>
+            <hr />
+            <div
+              class="reader"
+              dangerouslySetInnerHTML={{ __html: resource.extra }}
+            />
+          </div>
         </div>
       ) : (
         <p>Loading...</p>

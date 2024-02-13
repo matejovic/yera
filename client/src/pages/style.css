@@ -1,6 +1,8 @@
 /* hacking ahead */
 .highlighter-actions {
-  position: fixed;
+  position: absolute;
+  display: none;
+  background-color: var(--bg-color);
 }
 /* KID helper (keep/improve/delete) */
 .floater {
@@ -91,6 +93,19 @@ header a:hover {
 }
 
 /* Library */
+
+input[type="text"] {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  border-radius: 2px;
+}
+
+textarea {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+}
 
 input.lib-item-new {
   background: var(--bg-color);

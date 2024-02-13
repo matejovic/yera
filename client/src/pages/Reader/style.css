@@ -14,3 +14,7 @@
 mark {
   background-color: var(--tag-color);
 }
+
+mark.deactivated {
+  background-color: inherit;
+}
