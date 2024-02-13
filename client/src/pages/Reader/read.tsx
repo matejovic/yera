@@ -1,3 +1,4 @@
+// TODO: save reading progress `window.scrollY`
 import { useEffect, useState } from "preact/hooks";
 import "./style.css";
 import ReaderConfig from "./config.tsx";
@@ -36,59 +37,60 @@ export function Read(props) {
   };
 
   const onMouseUp = (event) => {
-    // window.event = event;
     const selection = window.getSelection();
+
     if (selection.isCollapsed) {
       hideToolbar();
     } else {
+      // span is not properly cleaned and might cause issues....
       const span = document.createElement("span");
-      span.classList.add("clean-me");
-      const wrapped = wrapSelection(span);
-      displayToolbar(wrapped);
+      displayToolbar(wrap(span));
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    // Your submit logic here...
-    console.log(`Tags: ${tags}`);
-    console.log(`Note: ${note}`);
-    // send put request to update the resource
-    const response = await fetch(API_URL + `/entry/${props.id}`, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        tags: tags.split(",").map((tag) => tag.trim()),
-        note,
-      }),
-    });
-    console.log(response.json());
-  };
-
-  // const saveProgress = async () => {
-  //   // TODO: save reading progress `window.scrollY`
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   // Your submit logic here...
+  //   console.log(`Tags: ${tags}`);
+  //   console.log(`Note: ${note}`);
+  //   // send put request to update the resource
+  //   const response = await fetch(API_URL + `/entry/${props.id}`, {
+  //     method: "PUT",
+  //     credentials: "include",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       tags: tags.split(",").map((tag) => tag.trim()),
+  //       note,
+  //     }),
+  //   });
+  //   console.log(response.json());
   // };
 
-  function unwrap(elem: JSX.Element): JSX.Element {
-    elem.replaceWith(...elem.childNodes);
-    return elem;
-  }
-
-  function wrapSelection(elem: JSX.Element): JSX.Element | void {
+  function wrap(elem: JSX.Element): JSX.Element | void {
     const selection: Selection = window.getSelection();
     if (!selection.rangeCount) return;
 
-    const range: Range = selection.getRangeAt(0);
     const selectedText: string = selection.toString();
     if (selectedText === "") return;
-
     elem.textContent = selectedText;
+
+    const range: Range = selection.getRangeAt(0);
+    // consider validation... (if empty wraps)
+
     range.deleteContents();
     range.insertNode(elem);
+
     return elem;
+  }
+
+  function removeAnnotation(el) {
+    const id = el.getAttribute("data-id");
+    setAnnotations(annotations.filter((_, i) => i.id !== id));
+
+    // unwrap mark
+    el.replaceWith(...el.childNodes);
   }
 
   function displayToolbar(span: JSX.Element) {
@@ -107,32 +109,34 @@ export function Read(props) {
 
   function highlight() {
     const selectedText = window.getSelection().toString();
+
     if (annotations.includes(selectedText)) {
       return;
     }
-    // let highlight_data = {
-    //   id: 0,
-    //   text: selectedText,
-    //   tags: ['red', 'memorize'],
-    //   time: new Date()
-    // }
 
-    const mark = wrapSelection(document.createElement("mark"));
-
-    mark.onclick = () => {
-      // self-destruct
-      setAnnotations(annotations.filter((_, i) => i !== mark.innerText));
-      unwrap(mark);
-      //  todo: reopen toolbar above selection (next UX)
+    let data = {
+      id: annotations.length ? annotations[annotations.length - 1].id + 1 : 1,
+      text: selectedText,
+      // tags: ['red', 'memorize'],
+      // time: new Date()
     };
-    hideToolbar();
 
-    // add to annotations state
+    // maybe just write your own storage function which will handle server & browser sync with app state
+    // localStorage.setItem("resource-1-annotations", _list); // tbd ...
+    // http.fetch // tbd ...
     setAnnotations((_prev) => {
-      const _list = [..._prev, selectedText]; // well not so great...
-      localStorage.setItem("resource-1-annotations", _list); // tbd
+      const _list = [..._prev, data]; // consider efficiency...
       return _list;
     });
+
+    const el: HTMLElement = document.createElement("mark");
+    el.setAttribute("data-id", data.id);
+    // task: reopen toolbar with more actions instead...
+    el.onclick = () => removeAnnotation(el);
+
+    // ui side-effects
+    wrap(el);
+    hideToolbar();
   }
 
   // on keypress open modal window
@@ -175,10 +179,10 @@ export function Read(props) {
           Highlight
         </button>
         {/**
-					  <button type="button">Underline</button>
-					<button type="button">Strike</button>
-					  					<button type="button">Comment</button>
-					  **/}
+			<button type="button">Underline</button>
+			<button type="button">Strike</button>
+			<button type="button">Comment</button>
+		**/}
 
         <button onClick={hideToolbar}>Close</button>
       </div>
@@ -196,29 +200,8 @@ export function Read(props) {
               <section>
                 <h3>Highlights</h3>
                 <ul>
-                  {annotations.map((a, x) => {
-                    return (
-                      <li key={x}>
-                        {a}{" "}
-                        <button
-                          onClick={() => {
-                            setAnnotations(
-                              annotations.filter((_, i) => i !== x),
-                            );
-                            // use ref to efficiently remove <mark> wrapper
-                            document
-                              .querySelectorAll("mark")
-                              .forEach((mark) => {
-                                if (mark.textContent === a) {
-                                  mark.classList.add("deactivated");
-                                }
-                              });
-                          }}
-                        >
-                          remove
-                        </button>
-                      </li>
-                    );
+                  {annotations.map((a) => {
+                    return <li key={a.id}>{a.text} </li>;
                   })}
                 </ul>
               </section>
@@ -226,7 +209,8 @@ export function Read(props) {
               ""
             )}
 
-            <form onSubmit={handleSubmit} style="display: contents">
+            {/**
+             <form onSubmit={handleSubmit} style="display: contents">
               <input
                 type="text"
                 placeholder="add comma separated tags"
@@ -244,6 +228,7 @@ export function Read(props) {
               <br />
               <button type="button">Save</button>
             </form>
+             **/}
           </div>
 
           <div class="block">
