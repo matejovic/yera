@@ -7,9 +7,8 @@ import { Footer } from "./components/Footer.jsx";
 import { Homepage } from "./pages/home.jsx";
 import { Resources } from "./pages/resources.js";
 import { Read } from "./pages/Reader/read.js";
-import { Register } from "./pages/Authentication/register.js";
+import { Auth } from "./pages/Authentication/auth.js";
 import { Profile } from "./pages/Authentication/profile.js";
-import { Login } from "./pages/Authentication/login.js";
 import Logout from "./pages/Authentication/logout.js";
 import Research from "./pages/research.tsx";
 import { NotFound } from "./pages/_404.jsx";
@@ -22,14 +21,13 @@ const API_URL =
 
 async function isAuthenticated() {
   try {
-    const response = await fetch(API_URL + "/auth/check", {
+    const response = await fetch(API_URL + "/auth/profile", {
       credentials: "include",
     });
     const profile = await response.json();
     return profile;
   } catch (error) {
-    console.log("ERROR", error);
-    alert("credentials loading error in console. pls fix.");
+    console.log("AUTH PROFILE", error);
   }
 }
 
@@ -58,8 +56,7 @@ export function App() {
           <Route path="/resource/:id" component={Read} />
           <Route path="/research" component={Research} />
           <Route path="/logout" component={Logout} />
-          <Route path="/login" component={Login} profile={profile} />
-          <Route path="/register" component={Register} profile={profile} />
+          <Route path="/auth" component={Auth} profile={profile} />
           <Route path="/profile" component={Profile} profile={profile} />
           <Route default component={NotFound} />
         </Router>

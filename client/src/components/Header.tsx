@@ -23,8 +23,8 @@ export function Header(props: Props) {
         </a> */}
         {!props.profile?.id && (
           <>
-            <a href="/login" class={url == "/login" && "active"}>
-              Join Us
+            <a href="/auth" class={url == "/auth" && "active"}>
+              auth
             </a>
           </>
         )}

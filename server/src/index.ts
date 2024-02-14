@@ -70,7 +70,6 @@ const app = new Elysia({ prefix: BASE_URL })
   .post(
     "/entry",
     async ({ body, cookie: { token }, jwt }) => {
-
       const { url, type } = body;
 
       // we can do this in a separate worker thread
