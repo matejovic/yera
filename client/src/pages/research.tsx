@@ -2,6 +2,7 @@ import { useEffect, useState } from "preact/hooks";
 import { createRef, Component } from "preact";
 import "./style.css";
 import TextEditor from "../components/TextEditor.tsx";
+import { showHelp } from "../globals";
 
 function toast () {
   const el = document.querySelector('.toast')
@@ -91,13 +92,13 @@ class Research extends Component {
       <div class="page">
         <div class="block">
           <h2>Research</h2>
-          <p class="help">
+          {showHelp &&<p class="help">
             Each thesis starts with a question. Think carefully about your
             research question before making a decision of working on your
             thesis. It will take time to develop your thinking and we recommend
             you to start by gathering <a href="/resources">Resources</a> and
             improving your <a href="/time">Time Management</a>.{" "}
-          </p>
+          </p>}
           <div class="flex-between mb16">
             {" "}
             <input

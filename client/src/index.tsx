@@ -16,6 +16,8 @@ import { Time } from "./pages/time.js";
 // import {Data} from './pages/data.js';
 // import {Stream} from './pages/stream.js';
 
+import { showHelp } from "./globals";
+
 const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
 
@@ -34,6 +36,10 @@ async function isAuthenticated() {
 // todo: start with client OS/browser prefered colour scheme. #ox (onboarding experience)
 const theme: string = localStorage.getItem("theme");
 if (theme) document.documentElement.className = "theme-" + theme;
+
+if (showHelp) {
+  document.documentElement.style.setProperty('--show-help-display', 'block')
+}
 
 export function App() {
   const [profile, setProfile] = useState(null);

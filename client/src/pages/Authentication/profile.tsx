@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-
+import { showHelp } from "../../globals";
 interface Props {
   profile: {
     id: number;
@@ -11,39 +11,21 @@ const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
 
 export function Profile(props: Props) {
-  const { id, email } = props.profile;
+  const { id, email } = props.profile ? props.profile : {id: null, email: undefined};
 
-  // TODO: set bio on load from database
-  // a: use useEffect hook
-  // establish pattern for the project
   const [bio, setBio] = useState("");
-
   const [theme, setTheme] = useState("");
-  const [showHelp, setShowHelp] = useState(true);
+  const [_showHelp, setShowHelp] = useState(Boolean(showHelp));
 
   const ls = localStorage.getItem("theme");
   setTheme(ls ? ls : "bright");
-
-  // const _sh = localStorage.getItem('show-help');
-  // if (_sh) { setShowHelp(_sh === ''); }
 
   function setColourScheme(theme: string): void {
     document.documentElement.className = "theme-" + theme; // root element
     localStorage.setItem("theme", theme);
   }
 
-  function toggleShowHelp() {
-    // localStorage.setItem("show-help", String(showHelp));
-    setShowHelp((prev) => {
-      const show = !prev;
-      if (show) {
-        // .help show
-      } else {
-        // .help hide
-      }
-      return show;
-    });
-  }
+
 
   // update bio at /auth/profile based on the textarea
   // use the id to identify the user
@@ -84,9 +66,21 @@ export function Profile(props: Props) {
           <option value="dark">Dark</option>
           <option value="purple">Purple</option>
         </select>
-        {/* <br />
+        <br />
         <label>Show Help: </label>
-        <input type="checkbox" checked={showHelp} onClick={toggleShowHelp} /> */}
+        <input type="checkbox" checked={_showHelp} onClick={() => {
+          setShowHelp((prev) => {
+              const next = !prev;
+              const style = document.documentElement.style;
+              if (next) {
+                style.setProperty('--show-help-display', 'block')
+              } else {
+                style.setProperty('--show-help-display', 'none')
+              }
+              localStorage.setItem("show-help", String(next));
+              return next;
+            });
+        }} />
       </div>
     </div>
   );
