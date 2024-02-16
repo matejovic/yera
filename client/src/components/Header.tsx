@@ -42,7 +42,7 @@ export function Header(props: Props) {
               Rest
             </a>
 
-            <a href="/profile">id: {props.profile.id}</a>
+            <a href="/profile">M40{props.profile.id}</a>
             <a href="/logout">out</a>
           </>
         )}

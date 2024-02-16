@@ -3,7 +3,6 @@ import { showHelp } from "../../globals";
 interface Props {
   profile: {
     id: number;
-    email: string;
   };
 }
 
@@ -11,11 +10,12 @@ const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
 
 export function Profile(props: Props) {
-  const { id, email } = props.profile ? props.profile : {id: null, email: undefined};
+  const { id } = props.profile ? props.profile : {};
 
-  const [bio, setBio] = useState("");
   const [theme, setTheme] = useState("");
   const [_showHelp, setShowHelp] = useState(Boolean(showHelp));
+
+  // const [bio, setBio] = useState("");
 
   const ls = localStorage.getItem("theme");
   setTheme(ls ? ls : "bright");
@@ -43,11 +43,15 @@ export function Profile(props: Props) {
   return (
     <div class="page">
       <div class="block">
-        {id ? <h2>id: {id}</h2> : <h2>You are not logged in</h2>}
-        <p>Whatever you will write in the box will be saved in the database</p>
-        <textarea onInput={(e) => setBio(e.target.value)} value={bio} />
-        <br />
-        <button onClick={updateBio}>Save</button>
+          <h2>Metabox</h2>
+          <p>id: {id}</p>
+          <p>username: unknown</p>
+          <p>email: unknown</p>
+
+        {/*<p>Whatever you will write in the box will be saved in the database</p>*/}
+        {/*<textarea onInput={(e) => setBio(e.target.value)} value={bio} />*/}
+        {/*<br />*/}
+        {/*<button onClick={updateBio}>Save</button>*/}
       </div>
 
       <div class="block">
