@@ -19,7 +19,7 @@ class Research extends Component {
       hash: 1,
       question: "",
       editor: createRef(),
-      archive: [], // n-problem storage
+      archive: [], 
     };
   }
 
@@ -33,13 +33,14 @@ class Research extends Component {
         question: entry.question,
         archive: archive,
       });
+
       // in func component useEffect() instead (we might want to migrate for consistency)
       this.state.editor.current.quill.setContents(entry.raw);
     }
   }
 
   render() {
-    // no auth feb experiment
+
     const updateArchive = () => {
       const entry = {
         hash: this.state.hash,
@@ -80,13 +81,46 @@ class Research extends Component {
       });
     };
 
-    const trash = () => {
-      alert("tbd");
+    function trash () {
+      const yes_trash = window.confirm("Are you sure?");
+      if (yes_trash) {
+        newResearchEntry();
+        this.setState(prevState => ({
+          archive: prevState.archive.filter(
+             e => e.hash !== this.state.hash
+          )
+        }));
+        // TODO: update local storage as well...
+
+      }
     };
 
-    const autosave = () => {
-      // toggle interval runner; tbd...
+    function createAutosaver ($ref) {
+      let _id: number| null = null;
+
+      function toggle() {
+        if (_id) { // assuming `_id` is not 0...
+          clearInterval(_id);
+          _id = null;
+          console.log('stopped', _id);
+        } else {
+          console.log('tbd');
+          _id = setInterval(() => {
+            console.log('tbd...')
+          }, 1000);
+        }
+        $ref.current.classList.toggle("active");
+      }
+
+      return {
+        toggle,
+        _id
+      };
+
     };
+
+    const $autosave = createRef();
+    const autosaver = createAutosaver($autosave);
 
     return (
       <div class="page">
@@ -109,11 +143,9 @@ class Research extends Component {
             />
             <button onClick={updateArchive} class="save">
               Save
-            </button>
-            {/*
-              <button class="active" onClick={autosave} disabled>Autosave (timestamp)</button>
-              <button class="danger" onClick={trash} disabled>Trash</button>
-              */}
+              </button> 
+              {/*<button ref={$autosave} onClick={autosaver.toggle}>Autosave (timestamp)</button>*/}
+              {/*<button class="danger" onClick={trash.bind(this)}>Trash</button>*/}
           </div>
           <TextEditor ref={this.state.editor} />
           <div class="toast">
