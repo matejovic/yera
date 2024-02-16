@@ -3,6 +3,14 @@ import { createRef, Component } from "preact";
 import "./style.css";
 import TextEditor from "../components/TextEditor.tsx";
 
+function toast () {
+  const el = document.querySelector('.toast')
+  el.classList.add('show');
+  setTimeout(function () {
+    el.classList.remove('show')
+  }, 1000)
+}
+
 class Research extends Component {
   constructor() {
     super();
@@ -47,7 +55,7 @@ class Research extends Component {
       }
       localStorage.setItem("archive", JSON.stringify(this.state.archive));
       this.forceUpdate(); // todo: remove need for this ...
-      alert("saved. you can now refresh the page."); // todo: add simple toast ...
+      toast("saved to browser memory"); // todo: add simple toast ...
     };
 
     const newId = () => {
@@ -107,6 +115,9 @@ class Research extends Component {
               */}
           </div>
           <TextEditor ref={this.state.editor} />
+          <div class="toast">
+            Saved
+          </div>
         </div>
         <div class="block">
           <h2>More</h2>

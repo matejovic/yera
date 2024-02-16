@@ -164,3 +164,27 @@ input:focus {
   display: flex;
   justify-content: space-between;
 }
+
+/* Toast */
+.toast {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  position: absolute;
+  padding: 5px;
+  border-radius: 2px;
+  min-width: 100px;
+  text-align:center;
+  left: 45%;
+  top: 45%;
+  visibility: hidden;
+}
+
+.toast.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 1.5s;
+}
+
+@keyframe fadein {
+  from {opacity: 1}
+  to {opacity: 1}
+}
