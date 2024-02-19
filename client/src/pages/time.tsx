@@ -11,10 +11,6 @@ export function Time() {
   let editor = createRef();
   let intervalRef = useRef();
 
-  function toggleView(name: string) {
-    view === name ? setView(null) : setView(name);
-  }
-
   function timeToSeconds(time: string): number {
     const timeUnits = {
       s: 1,
@@ -67,22 +63,27 @@ export function Time() {
   }
 
   return (
-    <div class="page">
-      <div class="block">
-        <h2>History</h2>
-      </div>
-      <div class="block">
-        <h2>Time Management</h2>
-        <button onClick={() => toggleView("timer")}>timers</button>
-        <button onClick={() => toggleView("day")}>daily note</button>
-        <button onClick={() => toggleView("week")}>week note</button>
-        <button onClick={() => toggleView("month")}>month note</button>
-        <button onClick={() => toggleView("year")}>year note</button>
-      </div>
-      {view === "timer" && (
-        <div class="block">
-          <b>Productivity timers</b>
-          <br />
+    <div class="page" id="AdventApp">
+     <div class="block" >
+        <h2>Advent</h2>
+        <div class="Metabox">
+          <p>Today is {new Date().toString()}</p>
+          <div class="select">
+            <select onChange={(e) => setView(e.currentTarget.value)}>
+              <option value="mins">Mins</option>
+              <option value="day">Day</option>
+              <option value="week">Week</option>
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+              <option value="help">None</option>
+            </select>
+          </div>  
+        </div>
+
+      {view === "mins" && (
+        <div class="advent-view">
+          <br /> <br />
+          <h2>Mins</h2>
           {tick > 0 ? (
             <div>
               <span>{secondsToTime(tick)}</span>
@@ -113,29 +114,34 @@ export function Time() {
         </div>
       )}
       {view === "day" && (
-        <div class="block">
-          <b>Day 10. February</b>
+        <div class="advent-view">
+          <b>Day 16. February</b>
           <TextEditor ref={editor} /> save
         </div>
       )}
       {view === "week" && (
-        <div class="block">
-          <b>Week 6</b> save
+        <div class="advent-view">
+          <b>Week 7</b> save
           <TextEditor ref={editor} />
         </div>
       )}
       {view === "month" && (
-        <div class="block">
+        <div class="advent-view">
           <b>February</b>
           <TextEditor ref={editor} /> save
         </div>
       )}
       {view === "year" && (
-        <div class="block">
+        <div class="advent-view">
           <b>24</b>
           <TextEditor ref={editor} /> save and autosave
         </div>
       )}
+      </div>
+      <div class="block" style={{"display": "none"}}>
+        <h2>log</h2>
+      </div>
+ 
     </div>
   );
 }
