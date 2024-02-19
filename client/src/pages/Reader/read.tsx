@@ -43,8 +43,7 @@ export function Read(props) {
       hideToolbar();
     } else {
       // span is not properly cleaned and might cause issues....
-      const span = document.createElement("span");
-      displayToolbar(wrap(span));
+      displayToolbar(selection.getRangeAt(0).getBoundingClientRect());
     }
   };
 
@@ -68,35 +67,18 @@ export function Read(props) {
   //   console.log(response.json());
   // };
 
-  function wrap(elem: JSX.Element): JSX.Element | void {
-    const selection: Selection = window.getSelection();
-    if (!selection.rangeCount) return;
 
-    const selectedText: string = selection.toString();
-    if (selectedText === "") return;
-    elem.textContent = selectedText;
-
-    const range: Range = selection.getRangeAt(0);
-    // consider validation... (if empty wraps)
-
-    range.deleteContents();
-    range.insertNode(elem);
-
-    return elem;
-  }
 
   function removeAnnotation(el) {
     const id = el.getAttribute("data-id");
     setAnnotations(annotations.filter((_, i) => i.id !== id));
-    // window.localStorage.setItem('annotations', annotations);
 
     // unwrap mark
     el.replaceWith(...el.childNodes);
   }
 
-  function displayToolbar(span: JSX.Element) {
+  function displayToolbar(rect: DOMRect) {
     const toolbar = document.querySelector(".highlighter-actions");
-    const rect = span.getBoundingClientRect();
     toolbar.style.left = `${rect.left + window.scrollX}px`; // Adjust for scroll position
     toolbar.style.top = `${rect.top + window.scrollY - Math.max(toolbar.offsetHeight, 22)}px`; // Adjust for scroll and toolbar height
     toolbar.style.display = "block";
@@ -135,8 +117,6 @@ export function Read(props) {
     // task: reopen toolbar with more actions instead...
     el.onclick = () => removeAnnotation(el);
 
-    // ui side-effects
-    wrap(el);
     hideToolbar();
   }
 

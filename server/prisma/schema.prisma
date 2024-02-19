@@ -18,6 +18,8 @@ model User {
   bio String?
 }
 
+// Metadata maybe needed?
+
 model Entry {
   id Int @id @default(autoincrement())
   url String @unique

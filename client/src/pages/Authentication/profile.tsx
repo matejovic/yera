@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { showHelp } from "../../globals";
 interface Props {
   profile: {
@@ -10,15 +10,32 @@ const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
 
 export function Profile(props: Props) {
-  const { id } = props.profile ? props.profile : {};
+  const [id, setId] = useState(0);
 
   const [theme, setTheme] = useState("");
+  const [email, setEmail] = useState("");
   const [_showHelp, setShowHelp] = useState(Boolean(showHelp));
 
   // const [bio, setBio] = useState("");
 
   const ls = localStorage.getItem("theme");
-  setTheme(ls ? ls : "bright");
+  setTheme(ls ? ls : "light");
+
+  switch (localStorage.getItem("theme")) {
+    case "light": 
+      break;
+    case "dark": 
+      break;
+    default:
+      const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+      if (darkThemeMq.matches) {
+        setColourScheme("dark")
+      } else {
+        setColourScheme("light")
+      }
+      break;
+  }
+
 
   function setColourScheme(theme: string): void {
     document.documentElement.className = "theme-" + theme; // root element
@@ -40,13 +57,20 @@ export function Profile(props: Props) {
     });
   }
 
+  useEffect(() => {
+    fetch(API_URL + "/auth/profile", {
+      credentials: "include",
+    }).then((response) => response.json())
+    .then((data) => { setId(data.id); setEmail(data.email) })
+    .catch((error) => console.log(error));
+  })
+
   return (
     <div class="page">
       <div class="block">
           <h2>Metabox</h2>
           <p>id: {id}</p>
-          <p>username: unknown</p>
-          <p>email: unknown</p>
+          <p>email: {email}</p>
 
         {/*<p>Whatever you will write in the box will be saved in the database</p>*/}
         {/*<textarea onInput={(e) => setBio(e.target.value)} value={bio} />*/}
@@ -65,10 +89,8 @@ export function Profile(props: Props) {
           value={theme}
           onChange={(e) => setColourScheme(e.currentTarget.value)}
         >
-          <option value="">None</option>
-          <option value="orange">Light</option>
+          <option value="light">Light</option>
           <option value="dark">Dark</option>
-          <option value="purple">Purple</option>
         </select>
         <br />
         <label>Show Help: </label>

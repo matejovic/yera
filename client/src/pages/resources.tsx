@@ -6,24 +6,28 @@ const API_URL =
 
 export function Resources() {
   const [resources, setResources] = useState([]);
+  const [addLink, setAddLink] = useState("");
+
+  const handleEnter = async (url: string) => {
+    const response = await fetch(API_URL + "/entry", {
+      method: "POST",
+      credentials: "include", // consider no credentials local storage.
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ url, type: "resource-html" }),
+    });
+    const data = await response.json();
+    if (data.id) {
+      window.location = `/resource/${data.id}`;
+    } else {
+      alert("invalid server response");
+    }
+  };
 
   const handleKeyDown = async (event: KeyboardEvent) => {
     if (event.key === "Enter") {
-      const url = event.target.value;
-      const response = await fetch(API_URL + "/entry", {
-        method: "POST",
-        credentials: "include", // consider no credentials local storage.
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url, type: "resource-html" }),
-      });
-      const data = await response.json();
-      if (data.id) {
-        window.location = `/resource/${data.id}`;
-      } else {
-        alert("invalid server response");
-      }
+      handleEnter(event.target.value);
     }
   };
 
@@ -60,18 +64,21 @@ export function Resources() {
           extract the text and store it in html and markdown formats. You can
           read it distraction-free in our reader app.{" "}
         </p>
-        <div>
+        <div 
+          style={{marginBottom: "16px"}}
+        >
           <input
             type="text"
             class="lib-item-new"
             placeholder="https://"
+            value={addLink}
+            onChange={e => setAddLink(e.target.value)}
             onKeyDown={handleKeyDown}
+            
           />
-          <button class="lib-item-new" onClick={() => alert("press enter...")}>
+          <button class="lib-item-new" onClick={() => handleEnter(addLink)}>
             Enter
           </button>
-          <br />
-          <br />
         </div>
         {resources && resources.length ? (
           resources.map((resource) => (

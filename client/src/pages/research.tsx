@@ -16,7 +16,7 @@ class Research extends Component {
   constructor() {
     super();
     this.state = {
-      hash: 1,
+      hash: 0,
       question: "",
       editor: createRef(),
       archive: [], 
@@ -81,47 +81,6 @@ class Research extends Component {
       });
     };
 
-    function trash () {
-      const yes_trash = window.confirm("Are you sure?");
-      if (yes_trash) {
-        newResearchEntry();
-        this.setState(prevState => ({
-          archive: prevState.archive.filter(
-             e => e.hash !== this.state.hash
-          )
-        }));
-        // TODO: update local storage as well...
-
-      }
-    };
-
-    function createAutosaver ($ref) {
-      let _id: number| null = null;
-
-      function toggle() {
-        if (_id) { // assuming `_id` is not 0...
-          clearInterval(_id);
-          _id = null;
-          console.log('stopped', _id);
-        } else {
-          console.log('tbd');
-          _id = setInterval(() => {
-            console.log('tbd...')
-          }, 1000);
-        }
-        $ref.current.classList.toggle("active");
-      }
-
-      return {
-        toggle,
-        _id
-      };
-
-    };
-
-    const $autosave = createRef();
-    const autosaver = createAutosaver($autosave);
-
     return (
       <div class="page">
         <div class="block">
@@ -144,8 +103,6 @@ class Research extends Component {
             <button onClick={updateArchive} class="save">
               Save
               </button> 
-              {/*<button ref={$autosave} onClick={autosaver.toggle}>Autosave (timestamp)</button>*/}
-              {/*<button class="danger" onClick={trash.bind(this)}>Trash</button>*/}
           </div>
           <TextEditor ref={this.state.editor} />
           <div class="toast">

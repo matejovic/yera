@@ -31,9 +31,7 @@ export function Header(props: Props) {
         {props.profile?.id && (
           <>
 
-            <a href="/time" class={url === "/time" && "active"}>
-              Track
-            </a>
+
 
             <a href="/resources" class={url == "/resources" && "active"}>
               Read
@@ -41,6 +39,10 @@ export function Header(props: Props) {
 
             <a href="/research" class={url == "/research" && "active"}>
               Write
+            </a>
+
+            <a href="/time" class={url === "/time" && "active"}>
+              Track
             </a>
 
 

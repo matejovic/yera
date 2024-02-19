@@ -13,28 +13,32 @@
   -webkit-text-size-adjust: 100%;
 }
 
-html {
-  --show-help-display: none;
-}
-
 html.theme-dark {
-  --bg-color: #222;
-  --text-color: #fff;
+  --bg-color: #040405;
+  --text-color: #EEEEDCFF;
 
-  --tag-color: #cacbcccc;
-  --tag-color-hv: #0000002e;
-  --tag-color-bg: #00000033;
+  --tag-color: #040405;
+  --tag-color-select: #AAAAFF44;
+  --tag-color-text: var(--text-color);
+  --tag-color-border: #CCCCFF33;
+  --tag-color-hv: #AAAAFF44;
+  --tag-color-bg: #AAAAFF09;
 
-  --action-color: #00ff00;
-  --danger-color: #ff0000;
+  --action-color: #73F5A4;
+  --danger-color: #F57A73;
 }
 
 html.theme-light {
   --bg-color: #ffffff;
+  --tag-color-bg: #00000002;
+
   --text-color: #222;
+
+  --tag-color-select: #e1e1e1;
+  --tag-color-hv: #e1e1e1;
+  --tag-color-border: #e1e1e1;
+  
   --tag-color: #ce9a3a;
-  --tag-color-hv: #54401b45;
-  --tag-color-bg: #a4772430;
   --action-color: #00ff00;
   --danger-color: #ff0000;
 }
@@ -51,8 +55,17 @@ html.theme-purple {
   --danger-color: #ff0000;
 }
 
+html {
+  --show-help-display: none;
+}
+
+*::selection {
+  background-color: var(--tag-color-select); 
+}
+
 body {
   margin: 0;
+  color: var(--tag-color-text);
 }
 
 div#app {
@@ -63,7 +76,7 @@ div#app {
 
 main {
   flex: 1;
-  background-color: var(--tag-color-bg);
+  background-color: var(--bg-color);
 }
 
 /* Core Elements */
@@ -73,12 +86,12 @@ main {
   max-width: 777px;
   padding: 24px;
   margin: 24px auto;
-  border: 2px dotted var(--tag-color-bg);
-  background-color: var(--bg-color);
+  border: 1px dotted var(--tag-color-border);
+  background-color: var(--tag-color-bg);
 }
 
 a {
-  color: var(--tag-color);
+  color: var(--tag-color-text);
   text-decoration: none;
 }
 
@@ -95,8 +108,8 @@ button {
 }
 
 button:active {
-  color: var(--tag-color);
-  border: 1px solid var(--tag-color);
+  color: var(--tag-color-text);
+  border: 1px solid var(--tag-color-border);
 }
 
 button.active {
@@ -130,8 +143,8 @@ h3 {
 /* Modular Forms */
 input.branded {
   background: transparent;
-  color: var(--tag-color);
-  border: 1px solid var(--tag-color);
+  color: var(--tag-color-text);
+  border: 1px solid var(--tag-color-border);
   border-radius: 4px;
 
   min-width: 200px;
@@ -172,7 +185,7 @@ input:focus {
 /* Toast */
 .toast {
   background-color: var(--text-color);
-  color: var(--bg-color);
+  color: var(--text-color);
   position: absolute;
   padding: 5px;
   border-radius: 2px;

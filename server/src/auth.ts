@@ -75,8 +75,16 @@ export const auth = new Elysia()
     if (!token_data) {
       return null;
     }
+
+    const user = await db.user.findUnique({
+      where: {
+        id: token_data.id,
+      },
+    });
+
     return {
       id: token_data.id,
+      email: user?.email 
     };
   })
   .post("/auth/profile", async ({ body, cookie: { token }, jwt }) => {
