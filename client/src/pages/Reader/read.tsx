@@ -88,6 +88,7 @@ export function Read(props) {
   function removeAnnotation(el) {
     const id = el.getAttribute("data-id");
     setAnnotations(annotations.filter((_, i) => i.id !== id));
+    // window.localStorage.setItem('annotations', annotations);
 
     // unwrap mark
     el.replaceWith(...el.childNodes);
