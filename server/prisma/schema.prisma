@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      =  "postgresql://fedora:atinfinity@localhost:5432/research-r"
+  provider = "sqlite"
+  url      =  "file:./dev.db"
 }
 
 model User {
