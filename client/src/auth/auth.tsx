@@ -16,7 +16,7 @@ export function Auth(props: Props) {
   const [errors, setErrors] = useState([]);
 
   if (props.profile?.id) {
-    location.route("/resources");
+    location.route("/stack");
   }
 
   return (
@@ -47,7 +47,7 @@ export function Auth(props: Props) {
               .then((data) => {
                 // todo: validate data.token
                 setErrors([]);
-                window.location = "/resources"; // maybe profile page is better...
+                window.location = "/stack"; // maybe profile page is better...
               })
               .catch((error) => {
                 console.log("errors are here:", error);

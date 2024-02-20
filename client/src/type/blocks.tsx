@@ -4,6 +4,10 @@ import { createRef, Component } from "preact";
 import TextEditor from "../core/text-editor.tsx";
 import { showHelp } from "../core/globals.tsx";
 
+const API_URL =
+  import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
+
+
 function toast () {
   const el = document.querySelector('.toast')
   el.classList.add('show');
@@ -130,7 +134,7 @@ class Blocks extends Component {
             Each thesis starts with a question. Think carefully about your
             research question before making a decision of working on your
             thesis. It will take time to develop your thinking and we recommend
-            you to start by gathering <a href="/resources">Resources</a> and
+            you to start by gathering <a href="/stack">Resources</a> and
             improving your <a href="/time">Time Management</a>.{" "}
           </p>}
           <div class="flex-between mb16">

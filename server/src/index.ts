@@ -103,6 +103,42 @@ const app = new Elysia({ prefix: BASE_URL })
       }),
     },
   )
+  .post("/entry/:id/delete", async ({ params, cookie: { token }, jwt }) => {
+    const token_data = await jwt.verify(token);
+    if (!token_data) {
+      return { message: "Unauthorized" };
+    }
+
+    const { id } = params;
+    const entry = await db.entry.delete({
+      where: { id: Number(id) },
+    });
+
+    return entry;
+  })
+  .put("/highlight", async ({ params, body, cookie: { token }, jwt }) => {
+    const token_data = await jwt.verify(token);
+    if (!token_data) {
+      return { message: "Unauthorized" };
+    }
+
+    const user_id = token_data.id;
+    const { text, parent_id } = body;
+
+    const entry = await db.entry.create({
+      data: {
+        url: "",
+        parent: { connect: { id: parent_id } },
+        title: "(Highlight)",
+        content: text,
+        extra: text,
+        user: { connect: { id: user_id } },
+        type: "HIGHLIGHT",
+      }
+    })
+    
+    return entry
+  })
   .put("/entry/:id", async ({ params, body, cookie: { token }, jwt }) => {
     const token_data = await jwt.verify(token);
     if (!token_data) {

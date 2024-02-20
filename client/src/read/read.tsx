@@ -16,7 +16,10 @@ export function Read(props) {
   // const [showMeta, setShowMeta] = useState(false);
 
   useEffect(() => {
-    loadResource(props.id);
+    (async () => {
+      await loadResource(props.id);
+      await updateHighlights();
+    })();
   }, []);
 
   const loadResource = async (id) => {
@@ -81,35 +84,55 @@ export function Read(props) {
     window.getSelection().removeAllRanges();
   }
 
-  function highlight() {
+  async function updateHighlights() {
+    const entries = await fetch(API_URL + `/entries`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const data = await entries.json();
+
+    const newHighlights = data.filter((entry) => entry.type == "HIGHLIGHT" && entry.parent_id == parseInt(props.id)).map(e => ({id: e.id, text: e.extra}));
+
+    // maybe just write your own storage function which will handle server & browser sync with app state
+    // localStorage.setItem("resource-1-annotations", _list); // tbd ...
+    // http.fetch // tbd ...
+    setAnnotations((_prev) => {
+      const _list = newHighlights; // consider efficiency...
+      return _list;
+    });
+  }
+
+  async function highlight() {
     const selectedText = window.getSelection().toString();
 
     if (annotations.includes(selectedText)) {
       return;
     }
 
-    let data = {
-      id: annotations.length ? annotations[annotations.length - 1].id + 1 : 1,
-      text: selectedText,
-      // tags: ['red', 'memorize'],
-      // time: new Date()
-    };
+    const result = await (await fetch(API_URL+"/highlight", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        parent_id: parseInt(props.id),
+        text: selectedText,
+      }),
+    })).json();
 
-    // maybe just write your own storage function which will handle server & browser sync with app state
-    // localStorage.setItem("resource-1-annotations", _list); // tbd ...
-    // http.fetch // tbd ...
-    setAnnotations((_prev) => {
-      const _list = [..._prev, data]; // consider efficiency...
-      return _list;
-    });
+
+    await updateHighlights();
 
     const el: HTMLElement = document.createElement("mark");
-    el.setAttribute("data-id", data.id);
+    el.setAttribute("data-id", result.id);
     // task: reopen toolbar with more actions instead...
     el.onclick = () => removeAnnotation(el);
     
     // UI side effects
     wrap(el);
+
     hideToolbar();
   }
   
@@ -131,12 +154,36 @@ export function Read(props) {
     return elem;
   }
   
-  function removeAnnotation(el) {
+  async function removeAnnotation(el) {
     const id = el.getAttribute("data-id");
-    setAnnotations(annotations.filter((_, i) => i.id !== id));
+ 
+    await fetch(`${API_URL}/entry/${id}/delete`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: "{}"
+    });
+
+
+    await updateHighlights();
 
     // unwrap mark
     el.replaceWith(...el.childNodes);
+  }
+
+  async function deleteResource() {
+    await fetch(`${API_URL}/entry/${props.id}/delete`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: "{}"
+    });
+
+    window.location.href = "/stack";
   }
 
   // on keypress open modal window
@@ -156,7 +203,7 @@ export function Read(props) {
   });
 
   return (
-    <div class="home">
+    <div class="">
       {showConfig && (
         <Modal onClose={() => setShowConfig(false)}>
           <ReaderConfig
@@ -194,6 +241,9 @@ export function Read(props) {
               <button onClick={() => setShowConfig(true)} type="button">
                 config
               </button>
+              <button onClick={() => deleteResource()} type="button">
+                delete
+              </button>
             </p>
 
             {annotations.length ? (
@@ -201,7 +251,7 @@ export function Read(props) {
                 <h3>Highlights</h3>
                 <ul>
                   {annotations.map((a) => {
-                    return <li key={a.id}>{a.text} </li>;
+                    return <li key={a.id}>{a.text} <button><a href={`/resource/${a.id}`}>Go to entry</a></button></li>;
                   })}
                 </ul>
               </section>

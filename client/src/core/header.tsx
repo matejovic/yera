@@ -25,14 +25,17 @@ export function Header(props: Props) {
         )}
         {props.profile?.id && (
           <>
-            <a href="/resources" class={url == "/resources" && "active"}>
+
+            <a href="/stack" class={url == "/stack" && "active"}>
               {/* In future will become Resources as we add more formats */}
-                Tags
-            </a>
-            <a href="/blocks" class={url == "/blocks" && "active"}>
               {/* In future will become researcher as well as publisher */}
-              Blocks
+                Stack
             </a>
+
+            <a href="/blocks" class={url == "/blocks" && "active"}>
+              Block Editor
+            </a>
+
             {/**
                 <a href="/time" class={url === "/time" && "active"}>
                   Track

@@ -1,6 +1,6 @@
 // import { useEffect, useState } from "preact/hooks";
 
-export function Homepage() {
+export function About() {
   return (
     <div class="page">
       <div class="block">
@@ -12,16 +12,19 @@ export function Homepage() {
         </p>
         <ol>
           <li>
-            <a href="/research">Thesis</a> writer...
+            <a href="/block">Block</a> writer...
           </li>
           <li>
-            Gather html <a href="/resources">resources</a> and read.
+            <a href="/stack">Archive</a> and read.
           </li>
           <li>
-            Engage with <a href="/time">time</a> - measure and track.
+            <a href="/track">Track</a>, measure, plan and review.
           </li>
           <li>
             <a href="/in">auth</a> tbd (recovery, token, profile)
+          </li>
+          <li>
+            stream
           </li>
         </ol>
       </div>

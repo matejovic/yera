@@ -22,24 +22,27 @@ model User {
 
 model Entry {
   id Int @id @default(autoincrement())
-  url String @unique
+  url String
   title String 
   content String
   extra String
   published_at DateTime?
   created_at DateTime @default(now())
   user  User @relation(fields: [user_id], references: [id])
-  user_id Int
+  user_id Int 
+  parent_id Int? 
+  parent Entry? @relation("Parents", fields: [parent_id], references: [id])
+  children Entry[] @relation("Parents")
   tags Tags[]
   type String
 }
+
 
 // enum EntryType {
 //   RESOURCE
 //   RESEARCH
 //   ANNOTATION
 // }
-
 
 
 model Tags {

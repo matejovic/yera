@@ -4,8 +4,8 @@ import { LocationProvider, Router, Route } from "preact-iso";
 import "./style.css";
 import { Header } from "./header.js";
 import { Footer } from "./footer.js";
-import { Homepage } from "../home.js";
-import { Resources } from "../read/reads.js";
+import { About } from "../about.js";
+import { Stack } from "../stack.js";
 import { Read } from "../read/read.js";
 import { Auth } from "../auth/auth.js";
 import { Profile } from "../auth/profile.js";
@@ -56,14 +56,14 @@ export function App() {
       <Header profile={profile} />
       <main>
         <Router>
-          <Route path="/" component={Homepage} />
-          <Route path="/time" component={Time} />
-          <Route path="/resources" component={Resources} />
+          <Route path="/" component={About} />
           <Route path="/resource/:id" component={Read} />
           <Route path="/blocks" component={Blocks} />
-          <Route path="/logout" component={Logout} />
+          <Route path="/stack" component={Stack} />
+          <Route path="/time" component={Time} />
           <Route path="/auth" component={Auth} profile={profile} />
           <Route path="/profile" component={Profile} profile={profile} />
+          <Route path="/logout" component={Logout} />
           <Route default component={NotFound} />
         </Router>
       </main>

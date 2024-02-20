@@ -1,10 +1,9 @@
 import { useState, useEffect } from "preact/hooks";
-import "./style.css";
-import Modal from "../core/modal";
+
 const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
 
-export function Resources() {
+export function Stack() {
   const [resources, setResources] = useState([]);
   const [addLink, setAddLink] = useState("");
 
@@ -52,7 +51,7 @@ export function Resources() {
   return (
     <div class="page">
       <div class="block">
-        <h2>stack</h2>
+        <h2>Archive</h2>
         <p class="help">
           Paste any publicly available URL containing text and press Enter.{" "}
         </p>
@@ -76,7 +75,9 @@ export function Resources() {
           resources.map((resource) => (
             <ResourceLink
               title={resource.title}
+              type={resource.type}
               url={resource.url}
+              parent={resource.parent_id}
               createdAt={resource.created_at}
               tags={resource.tags ? resource.tags.map((t) => t.name) : []}
               clickAction={() => handleClick(resource.id)}
@@ -113,6 +114,16 @@ function ResourceLink(props) {
           <a target="_blank" href={props.url}>
             {props.url}
           </a>
+        </i>
+        {" "}
+        Type:{" "}
+        <i>
+          {props.type}
+        </i>
+        {" "}
+        Parent:{" "}
+        <i>
+          {props.parent ?? "None"}
         </i>
       </div>
       <div>
