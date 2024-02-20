@@ -2,7 +2,7 @@
 import { useEffect, useState } from "preact/hooks";
 import "./style.css";
 import ReaderConfig from "./config.tsx";
-import Modal from "../../components/Modal";
+import Modal from "../core/modal.tsx";
 
 const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
@@ -11,8 +11,8 @@ export function Read(props) {
   const [resource, setResource] = useState(null);
   const [tags, setTags] = useState("");
   const [note, setNote] = useState("");
-  const [showConfig, setShowConfig] = useState(false);
   const [annotations, setAnnotations] = useState([]);
+  const [showConfig, setShowConfig] = useState(false);
   // const [showMeta, setShowMeta] = useState(false);
 
   useEffect(() => {
@@ -209,7 +209,7 @@ export function Read(props) {
               ""
             )}
 
-            {/**
+{/*             
              <form onSubmit={handleSubmit} style="display: contents">
               <input
                 type="text"
@@ -228,7 +228,7 @@ export function Read(props) {
               <br />
               <button type="button">Save</button>
             </form>
-             **/}
+              */}
           </div>
 
           <div class="block">

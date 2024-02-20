@@ -1,8 +1,8 @@
 import { useEffect, useState } from "preact/hooks";
 import { createRef, Component } from "preact";
-import "./style.css";
-import TextEditor from "../components/TextEditor.tsx";
-import { showHelp } from "../globals";
+// import "./style.css";
+import TextEditor from "../core/text-editor.tsx";
+import { showHelp } from "../core/globals.tsx";
 
 function toast () {
   const el = document.querySelector('.toast')
@@ -12,7 +12,7 @@ function toast () {
   }, 1000)
 }
 
-class Research extends Component {
+class Blocks extends Component {
   constructor() {
     super();
     this.state = {
@@ -176,4 +176,4 @@ class Research extends Component {
   }
 }
 
-export default Research;
+export default Blocks;

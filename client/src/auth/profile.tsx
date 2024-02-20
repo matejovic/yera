@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import { showHelp } from "../../globals";
+import { showHelp } from "../core/globals";
 interface Props {
   profile: {
     id: number;

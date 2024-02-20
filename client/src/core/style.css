@@ -209,3 +209,155 @@ input:focus {
 .help {
   display: var(--show-help-display);
 }
+
+
+/* hacking ahead */
+.highlighter-actions {
+  position: absolute;
+  display: none;
+  background-color: var(--bg-color);
+}
+/* KID helper (keep/improve/delete) */
+.floater {
+  position: absolute;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+}
+
+/* Textarea */
+.ql-container.ql-snow {
+  border-radius: 4px;
+  border-color: var(--tag-color-border);
+}
+
+.ql-container {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Banner */
+.banner {
+  margin: 12px auto;
+  display: none; /* Distracting ... */
+}
+
+/* Header Component */
+header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--tag-color-bg);
+  border-bottom: 1px solid var(--tag-color-border);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+header .logo {
+  display: flex;
+  padding: 0 0.75rem;
+  font-size: 24px;
+}
+
+header nav {
+  display: flex;
+}
+
+header a {
+  color: var(--text-color);
+  padding: 0.75rem;
+}
+
+header a.active {
+  background-color: var(--tag-color-bg);
+}
+
+header a:hover {
+  background-color: var(--tag-color-hv);
+  border-bottom: none;
+}
+
+/* Footer Component */
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid var(--tag-color-border);
+  background-color: var(--tag-color-bg);
+  color: var(--text-color);
+}
+
+.footer a {
+  color: var(--text-color);
+  border-bottom: 1px solid var(--tag-color-border);
+}
+
+/* Move to a separate file  */
+.stream-response {
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid green;
+}
+
+.stream > button {
+  margin-top: 10px;
+}
+
+.stream > textarea {
+  min-height: 40px;
+}
+
+/* Library */
+
+input[type="text"] {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  border-radius: 2px;
+}
+
+textarea {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+}
+
+input.lib-item-new {
+  background: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  border-radius: 4px;
+  padding: 4px 8px;
+  /* maybe can be made into auto-expanding max-width, hehe */
+  width: 70%;
+}
+
+input.lib-item-new:focus {
+  border: 1px solid var(--tag-color-bg);
+}
+
+button.lib-item-new {
+  padding: 4px 8px;
+  margin-left: 12px;
+}
+
+.lib-item {
+  cursor: pointer;
+  border: 1px solid var(--text-color);
+  border-radius: 2px;
+  padding: 4px 8px;
+  margin-bottom: 12px;
+  /* display: flex;
+  justify-content: space-between; */
+}
+
+.lib-item:hover {
+  /* border: 1px solid var(--tag-color-hv); */
+  /* box-shadow: -1px -2px 12px 1px var(--tag-color-bg); */
+}
+
+.lib-item__right .tags span {
+  display: block;
+  /* attach # symbol before the span text */
+  content: "#" attr(data-tag);
+  font-size: 0.8em;
+}

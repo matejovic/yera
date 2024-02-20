@@ -3,7 +3,6 @@ import { useLocation } from "preact-iso";
 interface Props {
   profile: {
     id: number;
-    username: string;
   };
 }
 
@@ -14,13 +13,9 @@ export function Header(props: Props) {
       <div className="logo">
         <a href="/" class={url == "/" && "active"}>
           <b>Y</b>era
-          {/* <img src="/logo.svg" alt="Web Reader" /> */}
         </a>
       </div>
       <nav>
-        {/* <a href="/" class={url == "/" && "active"}>
-          re
-        </a> */}
         {!props.profile?.id && (
           <>
             <a href="/auth" class={url == "/auth" && "active"}>
@@ -30,24 +25,19 @@ export function Header(props: Props) {
         )}
         {props.profile?.id && (
           <>
-
-
-
             <a href="/resources" class={url == "/resources" && "active"}>
-              res
+              {/* In future will become Resources as we add more formats */}
+                Tags
             </a>
-
-        {/**
-           <a href="/research" class={url == "/research" && "active"}>
-              Write
+            <a href="/blocks" class={url == "/blocks" && "active"}>
+              {/* In future will become researcher as well as publisher */}
+              Blocks
             </a>
-
-            <a href="/time" class={url === "/time" && "active"}>
-              Track
-            </a>
-          **/}   
-
-
+            {/**
+                <a href="/time" class={url === "/time" && "active"}>
+                  Track
+                </a>
+              **/}   
             <a href="/profile">id:{props.profile.id}</a>
             <a href="/logout">out</a>
           </>

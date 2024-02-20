@@ -1,6 +1,6 @@
 import { useLocation } from "preact-iso";
 import { useState } from "preact/hooks";
-import { api_post } from "../../globals.tsx";
+import { api_post } from "../core/globals.tsx";
 
 interface Props {
   profile: {

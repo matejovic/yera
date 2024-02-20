@@ -1,6 +1,6 @@
 import { useState, useEffect } from "preact/hooks";
 import "./style.css";
-import Modal from "../components/Modal";
+import Modal from "../core/modal";
 const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
 
@@ -52,17 +52,9 @@ export function Resources() {
   return (
     <div class="page">
       <div class="block">
-        <h2>favourite links</h2>
+        <h2>stack</h2>
         <p class="help">
-          You are allowed to store up to 100mb right now. All your data can be
-          exported at anytime. Expand your data storage with out affordable
-          plans and tester options.{" "}
-        </p>
-        <p class="help">
-          You can paste any publicly available URL containing text you want to
-          read or remember into the input field below and press Enter. We will
-          extract the text and store it in html and markdown formats. You can
-          read it distraction-free in our reader app.{" "}
+          Paste any publicly available URL containing text and press Enter.{" "}
         </p>
         <div 
           style={{marginBottom: "16px"}}

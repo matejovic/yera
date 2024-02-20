@@ -1,4 +1,4 @@
-export function Footer(props: Props) {
+export function Footer() {
   return (
     <div className="footer">
       Metta Powered <a href="https://github.com/matejovic/reader">Product</a> of{" "}
