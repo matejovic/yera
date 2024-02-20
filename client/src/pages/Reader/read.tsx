@@ -68,15 +68,6 @@ export function Read(props) {
   // };
 
 
-
-  function removeAnnotation(el) {
-    const id = el.getAttribute("data-id");
-    setAnnotations(annotations.filter((_, i) => i.id !== id));
-
-    // unwrap mark
-    el.replaceWith(...el.childNodes);
-  }
-
   function displayToolbar(rect: DOMRect) {
     const toolbar = document.querySelector(".highlighter-actions");
     toolbar.style.left = `${rect.left + window.scrollX}px`; // Adjust for scroll position
@@ -116,8 +107,36 @@ export function Read(props) {
     el.setAttribute("data-id", data.id);
     // task: reopen toolbar with more actions instead...
     el.onclick = () => removeAnnotation(el);
-
+    
+    // UI side effects
+    wrap(el);
     hideToolbar();
+  }
+  
+  function wrap(elem: JSX.Element): JSX.Element | void {
+    const selection: Selection = window.getSelection();
+    if (!selection.rangeCount) return;
+
+
+    const selectedText: string = selection.toString();
+    if (selectedText === "") return;
+    elem.textContent = selectedText;
+
+    const range: Range = selection.getRangeAt(0);
+    // consider validation... (if empty wraps)
+
+    range.deleteContents();
+    range.insertNode(elem);
+
+    return elem;
+  }
+  
+  function removeAnnotation(el) {
+    const id = el.getAttribute("data-id");
+    setAnnotations(annotations.filter((_, i) => i.id !== id));
+
+    // unwrap mark
+    el.replaceWith(...el.childNodes);
   }
 
   // on keypress open modal window

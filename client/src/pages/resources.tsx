@@ -52,7 +52,7 @@ export function Resources() {
   return (
     <div class="page">
       <div class="block">
-        <h2>Resources</h2>
+        <h2>favourite links</h2>
         <p class="help">
           You are allowed to store up to 100mb right now. All your data can be
           exported at anytime. Expand your data storage with out affordable

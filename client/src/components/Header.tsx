@@ -34,19 +34,21 @@ export function Header(props: Props) {
 
 
             <a href="/resources" class={url == "/resources" && "active"}>
-              Read
+              res
             </a>
 
-            <a href="/research" class={url == "/research" && "active"}>
+        {/**
+           <a href="/research" class={url == "/research" && "active"}>
               Write
             </a>
 
             <a href="/time" class={url === "/time" && "active"}>
               Track
             </a>
+          **/}   
 
 
-            <a href="/profile">M40{props.profile.id}</a>
+            <a href="/profile">id:{props.profile.id}</a>
             <a href="/logout">out</a>
           </>
         )}

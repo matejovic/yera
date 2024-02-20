@@ -9,7 +9,7 @@ export function Stream() {
       <textarea /> <br />
       <button>Submit</button>
       <div class="stream-response">
-        .... streaming response is to be implemented.{" "}
+        .... streaming response remains be implemented.{" "}
         <a href="https://elysiajs.com/plugins/stream">ElysiaJS docs</a> makes it
         easy.
       </div>
