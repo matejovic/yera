@@ -51,7 +51,7 @@ export function Stack() {
   return (
     <div class="page">
       <div class="block">
-        <h2>Archive</h2>
+        <h2>Stack</h2>
         <p class="help">
           Paste any publicly available URL containing text and press Enter.{" "}
         </p>

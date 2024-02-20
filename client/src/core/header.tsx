@@ -33,7 +33,7 @@ export function Header(props: Props) {
             </a>
 
             <a href="/blocks" class={url == "/blocks" && "active"}>
-              Block Editor
+              Block
             </a>
 
             {/**
