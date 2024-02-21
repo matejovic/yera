@@ -1,6 +1,6 @@
 import { useState, useEffect } from "preact/hooks";
 import { useLocation } from "preact-iso";
-import { api_post, api_get } from "./core/globals";
+import { api_post, api_get } from "./core/globals.tsx";
 import TextEditor from "./core/text-editor.tsx";
 import { createRef } from "preact";
 

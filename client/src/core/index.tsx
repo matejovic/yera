@@ -9,7 +9,7 @@ import { Read } from "../read/read.js";
 import { Auth } from "../auth/auth.js";
 import { Profile } from "../auth/profile.js";
 import Logout from "../auth/logout.js";
-import Blocks from "../type/blocks.tsx";
+import Blocks from "../blocks.tsx";
 import { NotFound } from "./_404.js";
 import { Time } from "../_todo/time.js";
 // import {Data} from './pages/data.js';

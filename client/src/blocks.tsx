@@ -2,8 +2,8 @@ import { useEffect, useState } from "preact/hooks";
 import { createRef, Component } from "preact";
 
 
-import TextEditor from "../core/text-editor.tsx";
-import { showHelp } from "../core/globals.tsx";
+import TextEditor from "./core/text-editor.tsx";
+import { showHelp } from "./core/globals.tsx";
 
 const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
