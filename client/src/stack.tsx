@@ -6,6 +6,7 @@ import { api_post, api_get } from "./core/globals";
 export function Stack() {
   const [stack, setStack] = useState([]);
   const [addLink, setAddLink] = useState("");
+  const [showAddLink, setShowAddLink] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -42,12 +43,32 @@ export function Stack() {
     <div class="page">
       <div class="block">
         <h2>Stack</h2>
+        <div style={{"margin-bottom": '20px'}}>
+          <a href="/blocks">Add Note (w)</a> | <button onClick={() => setShowAddLink(prev => !prev)}>Add Link (k)</button> 
+        </div>
+        {/* TODO: add following filters */}
+        <div style={{display: 'none'}}>
+          <div>
+            Tags: #dev #science #travel 
+          </div>
+          <div>
+            Type: html, md; tbd: pdf, video, audio, image
+          </div>
+          <div>
+            Order: Newest, Oldest, Random, Custom
+          </div>
+          <div>
+            Search: fulltext, tags, type, source...
+          </div>
+
+        </div>
+
+        <div 
+          style={{marginBottom: "16px", display: showAddLink ? 'block' : "none"}}
+        >
         <p class="help">
           Paste any publicly available URL containing text and press Enter.{" "}
         </p>
-        <div 
-          style={{marginBottom: "16px"}}
-        >
           <input
             type="text"
             class="lib-item-new"
@@ -73,6 +94,7 @@ export function Stack() {
               clickAction={() => redirect(resource.id)}
             />
           ))
+          
         ) : (
           <div>
             Add your first resource by pasting a public URL address above and

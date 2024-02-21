@@ -32,11 +32,12 @@ export function Header(props: Props) {
                 Stack
             </a>
 
-            <a href="/blocks" class={url == "/blocks" && "active"}>
-              Block
-            </a>
+
 
             {/**
+             *             <a href="/blocks" class={url == "/blocks" && "active"}>
+              Block
+            </a>
                 <a href="/time" class={url === "/time" && "active"}>
                   Track
                 </a>
