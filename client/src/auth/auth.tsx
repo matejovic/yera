@@ -27,8 +27,6 @@ export function Auth(props: Props) {
 	Experimental software project in early stages of development on a mission to increase global ltieracy. 
         </p> */}
 
-        <p>Authenticate:</p>
-
         {errors.length > 0 && (
           <div className="form-errors">
             {errors.map((error) => (

@@ -66,6 +66,11 @@ html {
 body {
   margin: 0;
   color: var(--tag-color-text);
+  
+  /* Get a perspective */
+  max-width: 900px;
+  border: 1px solid var(--tag-color-border);
+  margin: 20px auto;
 }
 
 div#app {
@@ -91,7 +96,7 @@ main {
 }
 
 .nested-block {
-  border: 1px solid var(--action-color);
+  border: 1px solid var(--tag-color-border);
   padding: 8px 12px;
   margin-bottom: 16px;
 }
@@ -105,12 +110,14 @@ a:hover {
   border-bottom: 1px dashed;
 }
 
+
 button {
   cursor: pointer;
   color: var(--text-color);
   background: transparent;
   border: 1px solid var(--tag-color-border);
-  border-radius: 2px;
+  border-radius: 4px;
+  padding: 4px 8px;
 }
 
 button:active,
@@ -314,37 +321,24 @@ header a:hover {
 
 /* Library */
 
-input[type="text"] {
+input[type="text"],
+input[type="password"]{
   background: transparent;
   color: var(--text-color);
-  border: 1px solid var(--text-color);
-  border-radius: 2px;
+  border: 1px solid var(--tag-color-border);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+input[type="text"]:focus {
+  border: 1px solid var(--tag-color-hv);
+  /* background: var(--bg-color); */
 }
 
 textarea {
   background: transparent;
   color: var(--text-color);
   border: 1px solid var(--text-color);
-}
-
-input.lib-item-new {
-  background: transparent;
-  color: var(--text-color);
-  border: 1px solid var(--tag-color-border);
-  border-radius: 4px;
-  padding: 4px 8px;
-  /* maybe can be made into auto-expanding max-width, hehe */
-  width: 70%;
-}
-
-input.lib-item-new:focus {
-  /*border: 1px solid var(--tag-color-bg);*/
-  background: var(--bg-color);
-}
-
-button.lib-item-new {
-  padding: 4px 8px;
-  margin-left: 12px;
 }
 
 .lib-item {
@@ -359,7 +353,8 @@ button.lib-item-new {
 
 .lib-item:hover {
    border: 1px solid var(--tag-color-hv); 
-  /* box-shadow: -1px -2px 12px 1px var(--tag-color-bg); */
+   /* background-color: var(--bg-color); */
+   /* box-shadow: -1px -2px 12px 1px var(--tag-color-bg); */
 }
 
 .lib-item__right .tags span {

@@ -79,18 +79,21 @@ export function Stack() {
         <p class="help">
           Paste any publicly available URL containing text and press Enter.{" "}
         </p>
-          <input
+	<div style={{display: 'flex'}}>
+	  <input
             type="text"
-            class="lib-item-new"
             placeholder="https://"
             value={addLink}
             onChange={e => setAddLink(e.target.value)}
             onKeyDown={keyDown}
+	    style={{flexGrow: 1, marginRight: '12px'}}
             
           />
-          <button class="lib-item-new" onClick={() => addEntry(addLink)}>
+          <button onClick={() => addEntry(addLink)}>
             Enter
           </button>
+	</div>
+        
         </div>
         {stack && stack.length ? (
           stack.map((resource) => (
@@ -125,7 +128,7 @@ function ResourceLink(props) {
       onClick={props.clickAction}
     >
       <div>
-        <b>{props.title}</b>
+        {props.title}
       </div>
       <div class="small">
         Added: <i>{props.createdAt}</i>
