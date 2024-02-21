@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { createRef, Component } from "preact";
-// import "./style.css";
+
+
 import TextEditor from "../core/text-editor.tsx";
 import { showHelp } from "../core/globals.tsx";
 

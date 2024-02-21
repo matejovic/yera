@@ -20,6 +20,12 @@ import { showHelp } from "./globals.tsx";
 const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
 
+document.addEventListener("keydown", (event: KeyboardEvent) => {
+  if (event.key === ".") { 
+    document.querySelector('body').classList.toggle('with-perspective');
+  }
+});
+
 async function isAuthenticated() {
   try {
     const response = await fetch(API_URL + "/auth/profile", {

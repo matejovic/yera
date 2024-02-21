@@ -4,24 +4,58 @@ import { api_post, api_get } from "./core/globals";
 import TextEditor from "./core/text-editor.tsx";
 import { createRef } from "preact";
 
+
+const tieredFilter = [
+  (s: string) => s.replace(/[^a-zA-Z0-9\s]/g, "").toLocaleLowerCase(),
+  (s: string) => s.toLocaleLowerCase(),
+  (s: string) => s,
+]
+
+// Returns match tier, higher is better, 0 means no match.
+function matchTier(a: string, b: string) {
+  for (let i = 0; i < tieredFilter.length; i++) {
+    const f = tieredFilter[i];
+
+    if (f(a).includes(f(b))) {
+      return i+1;
+    }
+  }
+
+  return 0;
+}
+
+function filterEntries(entries, query: string) {
+  return entries.map((entry) => {
+    return [entry, matchTier(entry.title, query)*2 + matchTier(entry.content, query) + matchTier(entry.url, query)];
+  }).filter((match) => {
+    return match[1] > 0;
+  }).sort((a, b) => b[1] - a[1]).map((a) => a[0]);
+}
+
 export function Stack() {
   const [stack, setStack] = useState([]);
+  const [filteredStack, setFilteredStack] = useState([]); 
   const [addLink, setAddLink] = useState("");
+  const [filter, setFilter] = useState("");
   const [showAddLink, setShowAddLink] = useState(false);
   const [showNote, setShowNote] = useState(false);
-  const [showFinder, setShowFinder] = useState(false);
   const location = useLocation();
-  const note = createRef();
+  const quillRef = createRef();
 
   useEffect(() => {
-    const loadEntries = async () => {
-      // TODO: filter by tags, type, search, etc. 
-      const response = await api_get("/entries");
-      const data = await response.json();
-      setStack(data);
-    };
+    doSearch();
+  })
+
+  useEffect(() => {
     loadEntries();
   }, []);
+
+  const loadEntries = async () => {
+    // TODO: filter by tags, type, search, etc. 
+    const response = await api_get("/entries");
+    const data = await response.json();
+    setStack(data);
+  };
 
   const keyDown = async (event: KeyboardEvent) => {
     if (event.key === "Enter") {
@@ -43,16 +77,20 @@ export function Stack() {
     location.route(`/resource/${id}`);
   };
 
+  const doSearch = async () => {
+    setFilteredStack(filterEntries(stack, filter));
+  }
+
   return (
     <div class="page">
       <div class="block">
         <h2>Stack</h2>
         <div style={{"margin-bottom": '20px'}}>
-	  <button onClick={() => setShowFinder(prev => !prev)}>Search (s)</button> {" "}
-	  <button onClick={() => setShowAddLink(prev => !prev)}>Add Link (k)</button> {" "}
+          <input type="text" placeholder="Search (s)" accesskey="s" value={filter} onInput={e => setFilter(e.target.value)} style={{width: '100%', boxSizing: "border-box", marginBottom: '12px'}} />
+    	    <button onClick={() => setShowAddLink(prev => !prev)}>Add Link (k)</button> {" "}
           <button onClick={() => setShowNote(prev => !prev)}>Add Note (w)</button>  {" "}
         </div>
-        {/* TODO: add following filters */}
+        {/* TODO: add following filters 
         <div style={{display: showFinder ? 'block' : 'none'}} class="nested-block">
           <div>
             Tags: #dev #science #travel 
@@ -68,9 +106,28 @@ export function Stack() {
           </div>
 
         </div>
+        */}        
 
 	<div style={{marginBottom: "16px", display: showNote ? 'block' : 'none'}}>
-		<TextEditor ref={note} />
+		<TextEditor ref={quillRef} />
+    <button  style={{marginTop: '12px'}}
+             onClick={async () => {
+      const note = {
+        raw: quillRef.current.quill.getContents(),
+        text: quillRef.current.quill.getText(),
+        type: "resource-note"
+      };
+
+      // TODO: save as entry to the server. 
+      const response = await api_post("/note", note);
+      const data = await response.json();
+      if (data.id) {
+        location.route(`/resource/${data.id}`);
+      } else {
+        alert("invalid server response");
+      }
+      console.log(note.raw);
+    }}>Save</button>
 	</div>
 
         <div 
@@ -95,9 +152,9 @@ export function Stack() {
 	</div>
         
         </div>
-        {stack && stack.length ? (
-          stack.map((resource) => (
-            <ResourceLink
+        {filteredStack && filteredStack.length ? (
+          filteredStack.map((resource) => (
+            <StackEntry
               title={resource.title}
               type={resource.type}
               url={resource.url}
@@ -119,7 +176,7 @@ export function Stack() {
   );
 }
 
-function ResourceLink(props) {
+function StackEntry(props) {
   return (
     <div
       href={props.href}

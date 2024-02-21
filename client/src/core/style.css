@@ -66,8 +66,9 @@ html {
 body {
   margin: 0;
   color: var(--tag-color-text);
-  
-  /* Get a perspective */
+}
+
+body.with-perspective {
   max-width: 540px;
   border: 1px solid var(--tag-color-border);
   margin: 20px auto;

@@ -116,6 +116,28 @@ const app = new Elysia({ prefix: BASE_URL })
 
     return entry;
   })
+  .post("/note", async ({ params, body, cookie: { token }, jwt }) => {
+    const token_data = await jwt.verify(token);
+    if (!token_data) {
+      return { message: "Unauthorized" };
+    }
+
+    const user_id = token_data.id;
+    const { text, raw, type } = body;
+
+    const entry = await db.entry.create({
+      data: {
+        url: "",
+        title: "(Note)",
+        content: JSON.stringify(raw),
+        extra: text,
+        user: { connect: { id: user_id } },
+        type: type,
+      }
+    })
+    
+    return entry
+  })
   .put("/highlight", async ({ params, body, cookie: { token }, jwt }) => {
     const token_data = await jwt.verify(token);
     if (!token_data) {
