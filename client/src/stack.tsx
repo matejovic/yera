@@ -1,51 +1,41 @@
 import { useState, useEffect } from "preact/hooks";
+import { useLocation } from "preact-iso";
+import { api_post, api_get } from "./core/globals";
 
-const API_URL =
-  import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
 
 export function Stack() {
-  const [resources, setResources] = useState([]);
+  const [stack, setStack] = useState([]);
   const [addLink, setAddLink] = useState("");
+  const location = useLocation();
 
-  const handleEnter = async (url: string) => {
-    const response = await fetch(API_URL + "/entry", {
-      method: "POST",
-      credentials: "include", // consider no credentials local storage.
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ url, type: "resource-html" }),
-    });
+  useEffect(() => {
+    const loadEntries = async () => {
+      // TODO: filter by tags, type, search, etc. 
+      const response = await api_get("/entries");
+      const data = await response.json();
+      setStack(data);
+    };
+    loadEntries();
+  }, []);
+
+  const keyDown = async (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      addEntry(addLink);
+    }
+  };
+
+  const addEntry = async (url: string) => {
+    const response = await api_post("/entry", { url, type: "resource-html" });
     const data = await response.json();
     if (data.id) {
-      window.location = `/resource/${data.id}`;
+      location.route(`/resource/${data.id}`);
     } else {
       alert("invalid server response");
     }
   };
 
-  const handleKeyDown = async (event: KeyboardEvent) => {
-    if (event.key === "Enter") {
-      handleEnter(event.target.value);
-    }
-  };
-
-  useEffect(() => {
-    const fetchResources = async () => {
-      // TODO: filter by type for resources only
-      const response = await fetch(API_URL + "/entries", {
-        credentials: "include",
-      });
-      const data = await response.json();
-      setResources(data);
-      console.log("resources were set", data);
-    };
-    fetchResources();
-  }, []);
-
-  const handleClick = async (id) => {
-    // navigate to url
-    window.location = `/resource/${id}`;
+  const redirect = async (id) => {
+    location.route(`/resource/${id}`);
   };
 
   return (
@@ -64,15 +54,15 @@ export function Stack() {
             placeholder="https://"
             value={addLink}
             onChange={e => setAddLink(e.target.value)}
-            onKeyDown={handleKeyDown}
+            onKeyDown={keyDown}
             
           />
-          <button class="lib-item-new" onClick={() => handleEnter(addLink)}>
+          <button class="lib-item-new" onClick={() => addEntry(addLink)}>
             Enter
           </button>
         </div>
-        {resources && resources.length ? (
-          resources.map((resource) => (
+        {stack && stack.length ? (
+          stack.map((resource) => (
             <ResourceLink
               title={resource.title}
               type={resource.type}
@@ -80,7 +70,7 @@ export function Stack() {
               parent={resource.parent_id}
               createdAt={resource.created_at}
               tags={resource.tags ? resource.tags.map((t) => t.name) : []}
-              clickAction={() => handleClick(resource.id)}
+              clickAction={() => redirect(resource.id)}
             />
           ))
         ) : (
