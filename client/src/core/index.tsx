@@ -4,7 +4,6 @@ import { LocationProvider, Router, Route } from "preact-iso";
 import "./style.css";
 import { Header } from "./header.js";
 import { Footer } from "./footer.js";
-import { About } from "../about.js";
 import { Stack } from "../stack.js";
 import { Read } from "../read/read.js";
 import { Auth } from "../auth/auth.js";
@@ -56,7 +55,7 @@ export function App() {
       <Header profile={profile} />
       <main>
         <Router>
-          <Route path="/" component={About} />
+          <Route path="/" component={Auth} profile={profile} />
           <Route path="/resource/:id" component={Read} />
           <Route path="/blocks" component={Blocks} />
           <Route path="/stack" component={Stack} />

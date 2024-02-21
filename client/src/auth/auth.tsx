@@ -22,14 +22,12 @@ export function Auth(props: Props) {
   return (
     <div class="page">
       <div class="block">
-        <h2>Authenticate here</h2>
 
-        <p>
-          We expect the next release in March and explore the options for uptime
-          guarantees from there.{" "}
-        </p>
+        {/*<p>
+	Experimental software project in early stages of development on a mission to increase global ltieracy. 
+        </p> */}
 
-        <p>The form below can log you in, or register.</p>
+        <p>Authenticate:</p>
 
         {errors.length > 0 && (
           <div className="form-errors">
@@ -67,12 +65,13 @@ export function Auth(props: Props) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Auth</button>
+          <button type="submit">Go</button>
+
         </form>
 
-        <div>
+        {/*<div>
           <a href="#">No password</a>
-        </div>
+        </div>*/}
       </div>
     </div>
   );

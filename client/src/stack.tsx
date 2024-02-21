@@ -1,13 +1,17 @@
 import { useState, useEffect } from "preact/hooks";
 import { useLocation } from "preact-iso";
 import { api_post, api_get } from "./core/globals";
-
+import TextEditor from "./core/text-editor.tsx";
+import { createRef } from "preact";
 
 export function Stack() {
   const [stack, setStack] = useState([]);
   const [addLink, setAddLink] = useState("");
   const [showAddLink, setShowAddLink] = useState(false);
+  const [showNote, setShowNote] = useState(false);
+  const [showFinder, setShowFinder] = useState(false);
   const location = useLocation();
+  const note = createRef();
 
   useEffect(() => {
     const loadEntries = async () => {
@@ -44,10 +48,12 @@ export function Stack() {
       <div class="block">
         <h2>Stack</h2>
         <div style={{"margin-bottom": '20px'}}>
-          <a href="/blocks">Add Note (w)</a> | <button onClick={() => setShowAddLink(prev => !prev)}>Add Link (k)</button> 
+	  <button onClick={() => setShowFinder(prev => !prev)}>Search (s)</button> {" "}
+	  <button onClick={() => setShowAddLink(prev => !prev)}>Add Link (k)</button> {" "}
+          <button onClick={() => setShowNote(prev => !prev)}>Add Note (w)</button>  {" "}
         </div>
         {/* TODO: add following filters */}
-        <div style={{display: 'none'}}>
+        <div style={{display: showFinder ? 'block' : 'none'}} class="nested-block">
           <div>
             Tags: #dev #science #travel 
           </div>
@@ -62,6 +68,10 @@ export function Stack() {
           </div>
 
         </div>
+
+	<div style={{marginBottom: "16px", display: showNote ? 'block' : 'none'}}>
+		<TextEditor ref={note} />
+	</div>
 
         <div 
           style={{marginBottom: "16px", display: showAddLink ? 'block' : "none"}}

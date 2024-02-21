@@ -86,8 +86,14 @@ main {
   max-width: 777px;
   padding: 24px;
   margin: 24px auto;
-  border: 1px dotted var(--tag-color-border);
+  border: 1px solid var(--tag-color-border);
   background-color: var(--tag-color-bg);
+}
+
+.nested-block {
+  border: 1px solid var(--action-color);
+  padding: 8px 12px;
+  margin-bottom: 16px;
 }
 
 a {
@@ -103,13 +109,13 @@ button {
   cursor: pointer;
   color: var(--text-color);
   background: transparent;
-  border: 1px solid var(--text-color);
+  border: 1px solid var(--tag-color-border);
   border-radius: 2px;
 }
 
-button:active {
-  color: var(--tag-color-text);
-  border: 1px solid var(--tag-color-border);
+button:active,
+button:hover {
+  border: 1px solid var(--tag-color-hv);
 }
 
 button.active {
@@ -322,9 +328,9 @@ textarea {
 }
 
 input.lib-item-new {
-  background: var(--bg-color);
+  background: transparent;
   color: var(--text-color);
-  border: 1px solid var(--text-color);
+  border: 1px solid var(--tag-color-border);
   border-radius: 4px;
   padding: 4px 8px;
   /* maybe can be made into auto-expanding max-width, hehe */
@@ -332,7 +338,8 @@ input.lib-item-new {
 }
 
 input.lib-item-new:focus {
-  border: 1px solid var(--tag-color-bg);
+  /*border: 1px solid var(--tag-color-bg);*/
+  background: var(--bg-color);
 }
 
 button.lib-item-new {
@@ -342,7 +349,7 @@ button.lib-item-new {
 
 .lib-item {
   cursor: pointer;
-  border: 1px solid var(--text-color);
+  border: 1px solid var(--tag-color-border);
   border-radius: 2px;
   padding: 4px 8px;
   margin-bottom: 12px;
@@ -351,7 +358,7 @@ button.lib-item-new {
 }
 
 .lib-item:hover {
-  /* border: 1px solid var(--tag-color-hv); */
+   border: 1px solid var(--tag-color-hv); 
   /* box-shadow: -1px -2px 12px 1px var(--tag-color-bg); */
 }
 

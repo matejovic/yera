@@ -11,28 +11,26 @@ export function Header(props: Props) {
   return (
     <header>
       <div className="logo">
-        <a href="/" class={url == "/" && "active"}>
+	 <a href="/stack" class={url == "/stack" && "active"}>
           <b>Y</b>era
         </a>
-      </div>
+       </div>
       <nav>
         {!props.profile?.id && (
           <>
-            <a href="/auth" class={url == "/auth" && "active"}>
+            {/*<a href="/auth" class={url == "/auth" && "active"}>
               auth
-            </a>
+            </a>*/}
           </>
         )}
         {props.profile?.id && (
           <>
-
-            <a href="/stack" class={url == "/stack" && "active"}>
               {/* In future will become Resources as we add more formats */}
               {/* In future will become researcher as well as publisher */}
+
+            {/* <a href="/stack" class={url == "/stack" && "active"}>
                 Stack
-            </a>
-
-
+            </a> */}
 
             {/**
              *             <a href="/blocks" class={url == "/blocks" && "active"}>
@@ -42,7 +40,7 @@ export function Header(props: Props) {
                   Track
                 </a>
               **/}   
-            <a href="/profile">id:{props.profile.id}</a>
+            <a href="/profile" class={url === '/profile' && 'active'}>profile</a>
             <a href="/logout">out</a>
           </>
         )}
