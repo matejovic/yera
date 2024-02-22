@@ -9,7 +9,7 @@ import { Read } from "../read/read.js";
 import { Auth } from "../auth/auth.js";
 import { Profile } from "../auth/profile.js";
 import Logout from "../auth/logout.js";
-import Blocks from "../blocks.tsx";
+import { Block } from "../block.tsx";
 import { NotFound } from "./_404.js";
 import { Time } from "../_todo/time.js";
 // import {Data} from './pages/data.js';
@@ -63,7 +63,7 @@ export function App() {
         <Router>
           <Route path="/" component={Auth} profile={profile} />
           <Route path="/resource/:id" component={Read} />
-          <Route path="/blocks" component={Blocks} />
+          <Route path="/block" component={Block} />
           <Route path="/stack" component={Stack} />
           <Route path="/time" component={Time} />
           <Route path="/auth" component={Auth} profile={profile} />

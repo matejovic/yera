@@ -3,54 +3,12 @@ import { useEffect, useState } from "preact/hooks";
 import "./style.css";
 import ReaderConfig from "./config.tsx";
 import Modal from "../core/modal.tsx";
+import TextEditor from "../core/text-editor.tsx";
 
 const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";
-
-export function Read(props) {
-  const [resource, setResource] = useState(null);
-  const [tags, setTags] = useState("");
-  const [note, setNote] = useState("");
-  const [annotations, setAnnotations] = useState([]);
-  const [showConfig, setShowConfig] = useState(false);
-  // const [showMeta, setShowMeta] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      await loadResource(props.id);
-      await updateHighlights();
-    })();
-  }, []);
-
-  const loadResource = async (id) => {
-    const response = await fetch(API_URL + `/entry/${id}`);
-    const data = await response.json();
-    setResource(data);
-    setNote(data.annotations);
-    setTags(data.tags.map((t) => t.name).join(","));
-
-    setTimeout(() => {
-      document
-        .querySelector(".reader")
-        // .addEventListener("select", () => {
-        //   alert('select')
-        // })
-        .addEventListener("mouseup", onMouseUp);
-    }, 500); // heh...
-  };
-
-  const onMouseUp = (event) => {
-    const selection = window.getSelection();
-
-    if (selection.isCollapsed) {
-      hideToolbar();
-    } else {
-      // span is not properly cleaned and might cause issues....
-      displayToolbar(selection.getRangeAt(0).getBoundingClientRect());
-    }
-  };
-
-  // const handleSubmit = async (event) => {
+  
+  // const save = async (event) => {
   //   event.preventDefault();
   //   // Your submit logic here...
   //   console.log(`Tags: ${tags}`);
@@ -69,7 +27,46 @@ export function Read(props) {
   //   });
   //   console.log(response.json());
   // };
+  
 
+export function Read(props) {
+  const [resource, setResource] = useState(null);
+  const [tags, setTags] = useState("");
+  const [note, setNote] = useState("");
+  const [annotations, setAnnotations] = useState([]);
+  const [showConfig, setShowConfig] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await loadResource(props.id);
+      await updateHighlights();
+    })();
+  }, []);
+
+  const loadResource = async (id) => {
+    const response = await fetch(API_URL + `/entry/${id}`);
+    const data = await response.json();
+    setResource(data);
+    setNote(data.annotations);
+    setTags(data.tags.map((t) => t.name).join(","));
+
+    setTimeout(() => {
+      document
+        .querySelector(".reader")
+        .addEventListener("mouseup", onMouseUp);
+    }, 500); // heh...
+  };
+
+  const onMouseUp = (event) => {
+    const selection = window.getSelection();
+
+    if (selection.isCollapsed) {
+      hideToolbar();
+    } else {
+      // span is not properly cleaned and might cause issues....
+      displayToolbar(selection.getRangeAt(0).getBoundingClientRect());
+    }
+  };
 
   function displayToolbar(rect: DOMRect) {
     const toolbar = document.querySelector(".highlighter-actions");
@@ -95,7 +92,6 @@ export function Read(props) {
     const newHighlights = data.filter((entry) => entry.type == "HIGHLIGHT" && entry.parent_id == parseInt(props.id)).map(e => ({id: e.id, text: e.extra}));
 
     // maybe just write your own storage function which will handle server & browser sync with app state
-    // localStorage.setItem("resource-1-annotations", _list); // tbd ...
     // http.fetch // tbd ...
     setAnnotations((_prev) => {
       const _list = newHighlights; // consider efficiency...
@@ -132,7 +128,6 @@ export function Read(props) {
     
     // UI side effects
     wrap(el);
-
     hideToolbar();
   }
   
@@ -225,12 +220,7 @@ export function Read(props) {
         <button type="button" onClick={highlight}>
           Highlight
         </button>
-        {/**
-			<button type="button">Underline</button>
-			<button type="button">Strike</button>
-			<button type="button">Comment</button>
-		**/}
-
+		<button type="button" onClick={() => alert('implement me pls')}>Comment</button>
         <button onClick={hideToolbar}>Close</button>
       </div>
 
@@ -238,13 +228,13 @@ export function Read(props) {
         <div class="page">
           <div class="block metadata">
             <p>
-              <button onClick={() => setShowConfig(true)} type="button">
+            {/* <button onClick={() => setShowConfig(true)} type="button">
                 config
-              </button>
-              <button onClick={() => deleteResource()} type="button">
+              </button> */} 
+             {/** <button onClick={() => deleteResource()} type="button">
                 delete
-              </button>
-            </p>
+              </button> **/}
+              </p> 
 
             {annotations.length ? (
               <section>
@@ -259,8 +249,8 @@ export function Read(props) {
               ""
             )}
 
-{/*             
-             <form onSubmit={handleSubmit} style="display: contents">
+           
+             <div>
               <input
                 type="text"
                 placeholder="add comma separated tags"
@@ -277,8 +267,8 @@ export function Read(props) {
               />
               <br />
               <button type="button">Save</button>
-            </form>
-              */}
+            </div>
+              
           </div>
 
           <div class="block">

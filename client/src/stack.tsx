@@ -4,6 +4,19 @@ import { api_post, api_get } from "./core/globals.tsx";
 import TextEditor from "./core/text-editor.tsx";
 import { createRef } from "preact";
 
+                {/* TODO: add following filters 
+        <div style={{display: showFinder ? 'block' : 'none'}} class="nested-block">
+          <div>
+            Tags: #dev #science #travel 
+          </div>
+          <div>
+            Type: html, md; tbd: pdf, video, audio, image
+          </div>
+          <div>
+            Order: Newest, Oldest, Random, Custom
+          </div>
+        </div>
+        */}        
 
 const tieredFilter = [
   (s: string) => s.replace(/[^a-zA-Z0-9\s]/g, "").toLocaleLowerCase(),
@@ -84,29 +97,36 @@ export function Stack() {
   return (
     <div class="page">
       <div class="block">
-        <h2>Stack</h2>
+        <h2>Entries</h2>
         <div style={{"margin-bottom": '20px'}}>
-          <input type="text" placeholder="Search (s)" accesskey="s" value={filter} onInput={e => setFilter(e.target.value)} style={{width: '100%', boxSizing: "border-box", marginBottom: '12px'}} />
-    	    <button onClick={() => setShowAddLink(prev => !prev)}>Add Link (k)</button> {" "}
-          <button onClick={() => setShowNote(prev => !prev)}>Add Note (w)</button>  {" "}
+          <input type="text" placeholder="Search (s)" 
+                  accesskey="s" value={filter} 
+                  onInput={e => setFilter(e.target.value)} s
+                  tyle={{width: '100%', boxSizing: "border-box", marginBottom: '12px'}} />
+    	  
+    	  <p>Tags:</p>
+    	  <p>Types: 
+    	   <button>Reads</button>
+    	   <button>Notes</button> 
+    	  </p>
+    	  <p>
+    	    Order: <select>
+    	     <option>Newest</option>
+    	     <option>Oldest</option>
+    	     <option>Timeline</option>
+    	    </select>
+    	  </p>
+    	  <p>View:
+    	   <select>
+    	     <option>default</option>
+    	     <option>minimal</option>
+    	     <option>rich</option>
+    	   </select>
+    	  </p>
+    	  <button onClick={() => setShowAddLink(prev => !prev)}>Add Link</button> {" "}
+          <button onClick={() => setShowNote(prev => !prev)}>Add Text</button>  {" "}
         </div>
-        {/* TODO: add following filters 
-        <div style={{display: showFinder ? 'block' : 'none'}} class="nested-block">
-          <div>
-            Tags: #dev #science #travel 
-          </div>
-          <div>
-            Type: html, md; tbd: pdf, video, audio, image
-          </div>
-          <div>
-            Order: Newest, Oldest, Random, Custom
-          </div>
-          <div>
-            Search: fulltext, tags, type, source...
-          </div>
 
-        </div>
-        */}        
 
 	<div style={{marginBottom: "16px", display: showNote ? 'block' : 'none'}}>
 		<TextEditor ref={quillRef} />
