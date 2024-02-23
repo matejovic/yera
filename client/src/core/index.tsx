@@ -1,6 +1,7 @@
 import { render } from "preact";
 import { useState } from "preact/hooks";
 import { LocationProvider, Router, Route } from "preact-iso";
+
 import "./style.css";
 import { Header } from "./header.js";
 import { Footer } from "./footer.js";
@@ -9,7 +10,6 @@ import { Read } from "../read/read.js";
 import { Auth } from "../auth/auth.js";
 import { Profile } from "../auth/profile.js";
 import Logout from "../auth/logout.js";
-import { Block } from "../block.tsx";
 import { NotFound } from "./_404.js";
 import { Time } from "../_todo/time.js";
 // import {Data} from './pages/data.js';
@@ -56,7 +56,7 @@ export function App() {
   return (
     <LocationProvider>
       <div class="banner">
-        developed for each and every student and archivist.
+        developed for open-minded and curious humans and collaborative AI spirits.  
       </div>
       <Header profile={profile} />
       <main>
