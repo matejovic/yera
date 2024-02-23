@@ -4,20 +4,6 @@ import { api_post, api_get } from "./core/globals.tsx";
 import TextEditor from "./core/text-editor.tsx";
 import { createRef } from "preact";
 
-                {/* TODO: add following filters 
-        <div style={{display: showFinder ? 'block' : 'none'}} class="nested-block">
-          <div>
-            Tags: #dev #science #travel 
-          </div>
-          <div>
-            Type: html, md; tbd: pdf, video, audio, image
-          </div>
-          <div>
-            Order: Newest, Oldest, Random, Custom
-          </div>
-        </div>
-        */}        
-
 const tieredFilter = [
   (s: string) => s.replace(/[^a-zA-Z0-9\s]/g, "").toLocaleLowerCase(),
   (s: string) => s.toLocaleLowerCase(),
@@ -121,7 +107,7 @@ export function Stack() {
     	     <option>default</option>
     	     <option>minimal</option>
     	     <option>rich</option>
-    	   </select>
+    	   </select> 
     	  </p>
     	  <button onClick={() => setShowAddLink(prev => !prev)}>Add Link</button> {" "}
           <button onClick={() => setShowNote(prev => !prev)}>Add Text</button>  {" "}
