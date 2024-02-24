@@ -1,2 +1,19 @@
-# Yera
-Please refer to [Client](/client/README.md) and [Server](/server/README.md) for enginering instructions.
+# Run the project
+
+Install
+
+```
+bun install # if additional libraries
+```
+
+Run for development
+
+```
+bun run dev
+```
+
+Run for production (will generate `dist` folder)
+
+```
+bun run build
+```
