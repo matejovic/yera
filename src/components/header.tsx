@@ -12,7 +12,7 @@ export function Header(props: Props) {
     <header>
       <div className="logo">
 	 <a href="/stack" class={url == "/stack" && "active"}>
-          <b>Y</b>usbera 
+          <b>Y</b>usbera
         </a>
        </div>
       <nav>
