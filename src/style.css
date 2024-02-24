@@ -78,6 +78,7 @@ main {
 .block {
   box-sizing: border-box;
   max-width: 777px;
+  width: 90%;
   padding: 24px;
   margin: 24px auto;
   border: 1px solid var(--tag-color-border);

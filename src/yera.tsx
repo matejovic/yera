@@ -34,8 +34,7 @@ function Y () {
 export function Yera() {
 
   return (
-    <div class="page solo">
-	<p>On a mission to increase the global literacy.</p>
+    <div class="page">
 	<Config />
     </div>
   )
