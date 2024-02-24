@@ -14,13 +14,15 @@
 }
 
 
+html {
+  --show-help-display: none;
+}
 
 html {
   --bg-color: #ffffff;
   --tag-color-bg: #00000002;
 
   --text-color: #222;
-
   --tag-color-select: #e1e1e1;
   --tag-color-hv: #e1e1e1;
   --tag-color-border: #e1e1e1;
@@ -45,14 +47,12 @@ html.isDark {
   --danger-color: #F57A73;
 }
 
-html {
-  --show-help-display: none;
-}
-
 *::selection {
   background-color: var(--tag-color-select); 
 }
 
+
+/* Core Elements */
 body {
   margin: 0;
   color: var(--tag-color-text);
@@ -73,13 +73,11 @@ main {
   background-color: var(--bg-color);
 }
 
-/* Core Elements */
-
 .block {
   box-sizing: border-box;
   max-width: 777px;
   width: 90%;
-  padding: 24px;
+  padding: 12px;
   margin: 24px auto;
   border: 1px solid var(--tag-color-border);
   background-color: var(--tag-color-bg);
@@ -91,6 +89,23 @@ main {
   margin-bottom: 16px;
 }
 
+.help {
+  display: var(--show-help-display);
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+  /* will need to find a better solution here... */
+  margin-top: 0; 
+  margin-bottom: 8px;
+}
+
+.small {
+  font-size: 0.6em;
+}
+
 a {
   color: var(--tag-color-text);
   text-decoration: none;
@@ -99,7 +114,6 @@ a {
 a:hover {
   border-bottom: 1px dashed;
 }
-
 
 button {
   cursor: pointer;
@@ -125,110 +139,31 @@ button.danger {
   color: var(--danger-color);
 }
 
-/* Typo */
-h1.centered,
-h2.centered,
-p.centered {
-  text-align: center;
-}
-
-h1,
-h2,
-h3 {
-  /* will need to find a better solution here... */
-  margin-top: 0;
-}
-
-.small {
-  font-size: 0.6em;
-}
-
-/* Modular Forms */
-input.branded {
+/* Input fields */
+input[type="text"],
+input[type="password"]{
   background: transparent;
-  color: var(--tag-color-text);
+  color: var(--text-color);
   border: 1px solid var(--tag-color-border);
   border-radius: 4px;
+  padding: 4px 8px;
+}
 
-  min-width: 200px;
-  font-size: 18px;
-  width: 90%;
-  padding: 8px;
+input[type="text"]:focus {
+  border: 1px solid var(--tag-color-hv);
+  /* background: var(--bg-color); */
 }
 
 input:focus {
   outline: none;
 }
 
-.form-errors {
-  border: 1px solid red;
-  width: 400px;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-/* Helper Functions */
-.mb8 {
-  margin-bottom: 8px;
-}
-.mb16 {
-  margin-bottom: 16px;
-}
-.mt8 {
-  margin-top: 8px;
-}
-.mt16 {
-  margin-top: 16px;
-}
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-}
-
-/* Toast */
-.toast {
-  background-color: var(--text-color);
+textarea {
+  background: transparent;
   color: var(--text-color);
-  position: absolute;
-  padding: 5px;
-  border-radius: 2px;
-  min-width: 100px;
-  text-align:center;
-  left: 45%;
-  top: 45%;
-  visibility: hidden;
+  border: 1px solid var(--text-color);
 }
 
-.toast.show {
-  visibility: visible;
-  animation: fadein 0.5s, fadeout 0.5s 1.5s;
-}
-
-@keyframe fadein {
-  from {opacity: 1}
-  to {opacity: 1}
-}
-
-.help {
-  display: var(--show-help-display);
-}
-
-
-/* hacking ahead */
-.highlighter-actions {
-  position: absolute;
-  display: none;
-  background-color: var(--bg-color);
-}
-/* KID helper (keep/improve/delete) */
-.floater {
-  position: absolute;
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-}
-
-/* Textarea */
 .ql-container.ql-snow {
   border-radius: 4px;
   border-color: var(--tag-color-border);
@@ -239,10 +174,11 @@ input:focus {
   font-size: inherit;
 }
 
-/* Banner */
-.banner {
-  margin: 12px auto;
-  display: none; /* Distracting ... */
+.form-errors {
+  border: 1px solid red;
+  width: 400px;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 /* Header Component */
@@ -294,62 +230,4 @@ header a:hover {
   border-bottom: 1px solid var(--tag-color-border);
 }
 
-/* Move to a separate file  */
-.stream-response {
-  padding-top: 20px;
-  margin-top: 20px;
-  border-top: 1px solid green;
-}
 
-.stream > button {
-  margin-top: 10px;
-}
-
-.stream > textarea {
-  min-height: 40px;
-}
-
-/* Library */
-
-input[type="text"],
-input[type="password"]{
-  background: transparent;
-  color: var(--text-color);
-  border: 1px solid var(--tag-color-border);
-  border-radius: 4px;
-  padding: 4px 8px;
-}
-
-input[type="text"]:focus {
-  border: 1px solid var(--tag-color-hv);
-  /* background: var(--bg-color); */
-}
-
-textarea {
-  background: transparent;
-  color: var(--text-color);
-  border: 1px solid var(--text-color);
-}
-
-.lib-item {
-  cursor: pointer;
-  border: 1px solid var(--tag-color-border);
-  border-radius: 2px;
-  padding: 4px 8px;
-  margin-bottom: 12px;
-  /* display: flex;
-  justify-content: space-between; */
-}
-
-.lib-item:hover {
-   border: 1px solid var(--tag-color-hv); 
-   /* background-color: var(--bg-color); */
-   /* box-shadow: -1px -2px 12px 1px var(--tag-color-bg); */
-}
-
-.lib-item__right .tags span {
-  display: block;
-  /* attach # symbol before the span text */
-  content: "#" attr(data-tag);
-  font-size: 0.8em;
-}

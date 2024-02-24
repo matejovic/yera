@@ -1,0 +1,66 @@
+
+/* hacking ahead */
+.highlighter-actions {
+  position: absolute;
+  display: none;
+  background-color: var(--bg-color);
+}
+/* KID helper (keep/improve/delete) */
+.floater {
+  position: absolute;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+}
+
+
+/* TODO: Review or remove */
+.lib-item {
+  cursor: pointer;
+  border: 1px solid var(--tag-color-border);
+  border-radius: 2px;
+  padding: 4px 8px;
+  margin-bottom: 12px;
+  /* display: flex;
+  justify-content: space-between; */
+}
+
+.lib-item:hover {
+   border: 1px solid var(--tag-color-hv); 
+   /* background-color: var(--bg-color); */
+   /* box-shadow: -1px -2px 12px 1px var(--tag-color-bg); */
+}
+
+.lib-item__right .tags span {
+  display: block;
+  /* attach # symbol before the span text */
+  content: "#" attr(data-tag);
+  font-size: 0.8em;
+}
+
+
+/* Toast */
+.toast {
+  background-color: var(--text-color);
+  color: var(--text-color);
+  position: absolute;
+  padding: 5px;
+  border-radius: 2px;
+  min-width: 100px;
+  text-align:center;
+  left: 45%;
+  top: 45%;
+  visibility: hidden;
+}
+
+.toast.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 1.5s;
+}
+
+@keyframe fadein {
+  from {opacity: 1}
+  to {opacity: 1}
+}
+
+

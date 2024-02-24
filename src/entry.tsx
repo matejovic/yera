@@ -1,7 +1,7 @@
 import { render } from "preact";
 import { useState } from "preact/hooks";
 import { LocationProvider, Router, Route } from "preact-iso";
-import "./style.css";
+import "./style/main.css";
 import { Header } from "./components/header.js";
 import { Footer } from "./components/footer.js";
 import { NotFound } from "./_404.js";
