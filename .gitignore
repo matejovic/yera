@@ -1,2 +1,3 @@
 secret_sauce.md
 *.lock*
+node_modules
