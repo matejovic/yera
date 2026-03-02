@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import { apiUrl } from "../core/globals";
+import { apiUrl } from "../../globals.tsx";
 
 interface Props {
   profile: {
@@ -12,7 +12,7 @@ export function Profile(props: Props) {
   const [email, setEmail] = useState("");
  
   useEffect(() => {
-    fetch(API_URL + "/auth/profile", {
+    fetch(`${apiUrl}/auth/profile`, {
       credentials: "include",
     }).then((response) => response.json())
     .then((data) => { setId(data.id); setEmail(data.email) })

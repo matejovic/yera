@@ -2,8 +2,8 @@
 import { useEffect, useState } from "preact/hooks";
 import "./style.css";
 import ReaderConfig from "./config.tsx";
-import Modal from "../core/modal.tsx";
-import TextEditor from "../core/text-editor.tsx";
+import Modal from "../../components/modal.tsx";
+import TextEditor from "../../components/text-editor.tsx";
 
 const API_URL =
   import.meta.env.MODE === "development" ? "http://localhost:8000" : "/api";

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "preact/hooks";
-import "./style.css";
 
 export function Data() {
   return (

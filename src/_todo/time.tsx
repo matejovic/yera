@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "preact/hooks";
-import TextEditor from "../core/text-editor.tsx";
+import TextEditor from "../components/text-editor.tsx";
 import { createRef } from "preact";
 
 export function Time() {

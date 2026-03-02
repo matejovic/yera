@@ -1,7 +1,7 @@
 import { useState, useEffect } from "preact/hooks";
 import { useLocation } from "preact-iso";
-import { api_post, api_get } from "./core/globals.tsx";
-import TextEditor from "./core/text-editor.tsx";
+import { api_post, api_get } from "../globals.tsx";
+import TextEditor from "../components/text-editor.tsx";
 import { createRef } from "preact";
 
 const tieredFilter = [
@@ -85,10 +85,14 @@ export function Stack() {
       <div class="block">
         <h2>Entries</h2>
         <div style={{"margin-bottom": '20px'}}>
-          <input type="text" placeholder="Search (s)" 
-                  accesskey="s" value={filter} 
-                  onInput={e => setFilter(e.target.value)} s
-                  tyle={{width: '100%', boxSizing: "border-box", marginBottom: '12px'}} />
+          <input
+            type="text"
+            placeholder="Search (s)"
+            accessKey="s"
+            value={filter}
+            onInput={e => setFilter(e.currentTarget.value)}
+            style={{ width: '100%', boxSizing: 'border-box', marginBottom: '12px' }}
+          />
     	  
     	  <p>Tags:</p>
     	  <p>Types: 
@@ -142,16 +146,15 @@ export function Stack() {
         <p class="help">
           Paste any publicly available URL containing text and press Enter.{" "}
         </p>
-	<div style={{display: 'flex'}}>
-	  <input
-            type="text"
-            placeholder="https://"
-            value={addLink}
-            onChange={e => setAddLink(e.target.value)}
-            onKeyDown={keyDown}
-	    style={{flexGrow: 1, marginRight: '12px'}}
-            
-          />
+          <div style={{ display: 'flex' }}>
+            <input
+              type="text"
+              placeholder="https://"
+              value={addLink}
+              onInput={e => setAddLink(e.currentTarget.value)}
+              onKeyDown={keyDown}
+              style={{ flexGrow: 1, marginRight: '12px' }}
+            />
           <button onClick={() => addEntry(addLink)}>
             Enter
           </button>
