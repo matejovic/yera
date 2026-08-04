@@ -41,11 +41,11 @@ const app = new Elysia({ prefix: BASE_URL })
     return "Hello";
   })
   // TODO: load all data upfront and call it a day
-  .get("/entries", async ({ cookie: { token }, jwt }) => {
+  .get("/entries", async ({ cookie: { token }, jwt, set }) => {
     const token_data = await jwt.verify(token);
 
     if (!token_data) {
-      // TODO: show only public data
+      set.status = 401;
       return { message: "Unauthorized" };
     }
 
@@ -72,12 +72,12 @@ const app = new Elysia({ prefix: BASE_URL })
   })
   .post(
     "/entry",
-    async ({ body, cookie: { token }, jwt }) => {
+    async ({ body, cookie: { token }, jwt, set }) => {
       // check if the user is authenticated
       const token_data = await jwt.verify(token);
 
       if (!token_data) {
-        // show only public bookmarks
+        set.status = 401;
         return { message: "Unauthorized" };
       }
 
@@ -212,11 +212,16 @@ const app = new Elysia({ prefix: BASE_URL })
         console.error("Failed to sync tags:", error);
         throw error; // Rethrow the error after logging or handling it
       }
+    if (tags && Array.isArray(tags)) {
+      await syncTags(user_id, Number(id), tags);
     }
-    syncTags(user_id, Number(id), tags);
 
-    // TODO: return updated data
-    return entry;
+    const updatedEntry = await db.entry.findUnique({
+      where: { id: Number(id) },
+      include: { tags: true },
+    });
+
+    return updatedEntry;
   })
   .post("/entry/:id/delete", async ({ params, cookie: { token }, jwt }) => {
     const token_data = await jwt.verify(token);

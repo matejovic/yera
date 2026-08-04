@@ -75,4 +75,8 @@ export async function api_put(path: string, body: object): Promise<Response> {
   return api("PUT", path, body);
 }
 
+export async function api_delete(path: string, body: object = {}): Promise<Response> {
+  return api("DELETE", path, body);
+}
+
 
