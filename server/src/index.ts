@@ -251,6 +251,31 @@ const app = new Elysia({ prefix: BASE_URL })
     });
     return { id: highlightEntry.id, ...highlightEntry, parent_id, comment };
   })
+  .post("/stream", async ({ body }) => {
+    const { prompt } = (body as { prompt?: string }) || {};
+    const encoder = new TextEncoder();
+
+    return new Response(
+      new ReadableStream({
+        async start(controller) {
+          const sampleText = `Analyzing topic: "${prompt || "Knowledge Base Synthesis"}"...\n\n1. Insight Alpha: Web articles parsed via Readability & Turndown yield structured Markdown.\n2. Insight Beta: Highlights and comments persist across reading sessions.\n3. Insight Gamma: Streamed text responses enable continuous real-time UI rendering.`;
+          const words = sampleText.split(" ");
+
+          for (const word of words) {
+            controller.enqueue(encoder.encode(word + " "));
+            await new Promise((resolve) => setTimeout(resolve, 60));
+          }
+          controller.close();
+        },
+      }),
+      {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "no-cache",
+        },
+      },
+    );
+  })
   .listen(PORT);
 
 console.log(
