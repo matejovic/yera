@@ -8,15 +8,18 @@ import { parseArticle } from "../parse";
 import { auth } from "./auth";
 
 const BASE_URL = process.env.BASE_URL || "";
+const JWT_SECRET = process.env.JWT_SECRET || "yera-secret-jwt-key-development";
+const CORS_ORIGIN = (process.env.CORS_ORIGIN || "http://localhost:5173,http://localhost:3000")
+  .split(",")
+  .map((s) => s.trim());
+const PORT = Number(process.env.PORT) || 8000;
 
 let corsConfig = {
-  // Allow requests from any origin by reflecting the incoming Origin header
-  origin: 'http://localhost:3000',
+  origin: CORS_ORIGIN,
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
-
 
 const db = new PrismaClient();
 
@@ -27,8 +30,7 @@ const app = new Elysia({ prefix: BASE_URL })
   .use(
     jwt({
       name: "jwt",
-      // This should be Environment Variable
-      secret: "MY_SECRETS",
+      secret: JWT_SECRET,
       exp: "7d",
     }),
   )
@@ -81,16 +83,18 @@ const app = new Elysia({ prefix: BASE_URL })
 
       const { url, type } = body;
 
-      // TODO: HANDLE DUPLICATES
-      // TODO: check if the bookmark already exists
-      // if yes, check if UserBookmark exists (for id=1), if yes, return it
-      // if UserBookmark does not exist, create it and return it
+      // Check if entry with this URL already exists
+      const existingEntry = await db.entry.findUnique({
+        where: { url },
+      });
 
-      // we can do this in a separate worker thread
+      if (existingEntry) {
+        return existingEntry;
+      }
+
+      // Parse article and create entry
       const articleData = await parseArticle(url);
 
-      // we need to return prisma Promise, not the data
-      // TODO: this fails on duplicate url (unique constraint)
       return db.entry.create({
         data: {
           user: { connect: { id: token_data.id } },
@@ -194,7 +198,36 @@ const app = new Elysia({ prefix: BASE_URL })
     // TODO: return updated data
     return entry;
   })
-  .listen(8000);
+  .post("/entry/:id/delete", async ({ params, cookie: { token }, jwt }) => {
+    const token_data = await jwt.verify(token);
+    if (!token_data) {
+      return { message: "Unauthorized" };
+    }
+    const { id } = params;
+    await db.tags.deleteMany({ where: { entry_id: Number(id) } });
+    await db.entry.delete({ where: { id: Number(id) } });
+    return { message: "Entry deleted successfully" };
+  })
+  .put("/highlight", async ({ body, cookie: { token }, jwt }) => {
+    const token_data = await jwt.verify(token);
+    if (!token_data) {
+      return { message: "Unauthorized" };
+    }
+    const { parent_id, text } = body as { parent_id: number; text: string };
+    const uniqueUrl = `highlight://${parent_id}/${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+    const highlightEntry = await db.entry.create({
+      data: {
+        user: { connect: { id: token_data.id } },
+        url: uniqueUrl,
+        title: "Highlight",
+        content: text,
+        extra: text,
+        type: "HIGHLIGHT",
+      },
+    });
+    return { id: highlightEntry.id, ...highlightEntry, parent_id };
+  })
+  .listen(PORT);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
