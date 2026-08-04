@@ -104,84 +104,129 @@ export function Read(props) {
     });
 
     const data = await entries.json();
+    if (!Array.isArray(data)) return;
 
-    const newHighlights = data.filter((entry) => entry.type == "HIGHLIGHT" && entry.parent_id == parseInt(props.id)).map(e => ({id: e.id, text: e.extra}));
+    const newHighlights = data
+      .filter(
+        (entry: any) =>
+          entry.type === "HIGHLIGHT" &&
+          (entry.url.includes(`://${props.id}/`) ||
+            entry.url.startsWith(`highlight://${props.id}/`)),
+      )
+      .map((e: any) => ({
+        id: e.id,
+        text: e.extra,
+        comment: e.content,
+      }));
 
-    // maybe just write your own storage function which will handle server & browser sync with app state
-    // http.fetch // tbd ...
-    setAnnotations((_prev) => {
-      const _list = newHighlights; // consider efficiency...
-      return _list;
-    });
+    setAnnotations(newHighlights);
   }
 
   async function highlight() {
-    const selectedText = window.getSelection().toString();
+    const selectedText = window.getSelection().toString().trim();
+    if (!selectedText) return;
 
-    if (annotations.includes(selectedText)) {
-      return;
-    }
-
-    const result = await (await fetch(API_URL+"/highlight", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        parent_id: parseInt(props.id),
-        text: selectedText,
-      }),
-    })).json();
-
+    const result = await (
+      await fetch(API_URL + "/highlight", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          parent_id: parseInt(props.id),
+          text: selectedText,
+        }),
+      })
+    ).json();
 
     await updateHighlights();
 
     const el: HTMLElement = document.createElement("mark");
     el.setAttribute("data-id", result.id);
-    // task: reopen toolbar with more actions instead...
     el.onclick = () => removeAnnotation(el);
-    
-    // UI side effects
+
     wrap(el);
     hideToolbar();
   }
-  
+
+  async function addComment() {
+    const selectedText = window.getSelection().toString().trim();
+    if (!selectedText) return;
+
+    const comment = prompt("Add a comment for the selected text:");
+    if (comment === null) return;
+
+    const result = await (
+      await fetch(API_URL + "/highlight", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          parent_id: parseInt(props.id),
+          text: selectedText,
+          comment: comment,
+        }),
+      })
+    ).json();
+
+    await updateHighlights();
+
+    const el: HTMLElement = document.createElement("mark");
+    el.setAttribute("data-id", result.id);
+    el.setAttribute("title", comment);
+    el.onclick = () => removeAnnotation(el);
+
+    wrap(el);
+    hideToolbar();
+  }
+
   function wrap(elem: JSX.Element): JSX.Element | void {
     const selection: Selection = window.getSelection();
     if (!selection.rangeCount) return;
-
 
     const selectedText: string = selection.toString();
     if (selectedText === "") return;
     elem.textContent = selectedText;
 
     const range: Range = selection.getRangeAt(0);
-    // consider validation... (if empty wraps)
 
     range.deleteContents();
     range.insertNode(elem);
 
     return elem;
   }
-  
+
   async function removeAnnotation(el) {
     const id = el.getAttribute("data-id");
- 
+
     await fetch(`${API_URL}/entry/${id}/delete`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: "{}"
+      body: "{}",
     });
-
 
     await updateHighlights();
 
     // unwrap mark
     el.replaceWith(...el.childNodes);
+  }
+
+  async function deleteHighlightById(id: number) {
+    await fetch(`${API_URL}/entry/${id}/delete`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: "{}",
+    });
+    await updateHighlights();
   }
 
   async function deleteResource() {
@@ -191,7 +236,7 @@ export function Read(props) {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: "{}"
+      body: "{}",
     });
 
     window.location.href = "/stack";
@@ -239,28 +284,56 @@ export function Read(props) {
         <button type="button" onClick={highlight}>
           Highlight
         </button>
-		<button type="button" onClick={() => alert('implement me pls')}>Comment</button>
+        <button type="button" onClick={addComment}>
+          Comment
+        </button>
         <button onClick={hideToolbar}>Close</button>
       </div>
 
       {resource ? (
         <div class="page">
           <div class="block metadata">
-            <p>
-            {/* <button onClick={() => setShowConfig(true)} type="button">
-                config
-              </button> */} 
-             {/** <button onClick={() => deleteResource()} type="button">
-                delete
-              </button> **/}
-              </p> 
-
             {annotations.length ? (
               <section>
-                <h3>Highlights</h3>
-                <ul>
-                  {annotations.map((a) => {
-                    return <li key={a.id}>{a.text} <button><a href={`/resource/${a.id}`}>Go to entry</a></button></li>;
+                <h3>Highlights & Notes</h3>
+                <ul style={{ paddingLeft: "16px" }}>
+                  {annotations.map((a: any) => {
+                    return (
+                      <li key={a.id} style={{ marginBottom: "12px" }}>
+                        <blockquote
+                          style={{
+                            margin: "0 0 4px 0",
+                            paddingLeft: "8px",
+                            borderLeft: "3px solid var(--accent, #f0b400)",
+                            fontStyle: "italic",
+                          }}
+                        >
+                          "{a.text}"
+                        </blockquote>
+                        {a.comment && (
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              marginBottom: "4px",
+                              color: "var(--text-muted, #666)",
+                            }}
+                          >
+                            💬 <strong>Comment:</strong> {a.comment}
+                          </div>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => deleteHighlightById(a.id)}
+                          style={{
+                            fontSize: "0.75rem",
+                            padding: "2px 6px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </li>
+                    );
                   })}
                 </ul>
               </section>

@@ -233,19 +233,23 @@ const app = new Elysia({ prefix: BASE_URL })
     if (!token_data) {
       return { message: "Unauthorized" };
     }
-    const { parent_id, text } = body as { parent_id: number; text: string };
+    const { parent_id, text, comment } = body as {
+      parent_id: number;
+      text: string;
+      comment?: string;
+    };
     const uniqueUrl = `highlight://${parent_id}/${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
     const highlightEntry = await db.entry.create({
       data: {
         user: { connect: { id: token_data.id } },
         url: uniqueUrl,
-        title: "Highlight",
-        content: text,
+        title: comment ? "Annotation" : "Highlight",
+        content: comment || "",
         extra: text,
         type: "HIGHLIGHT",
       },
     });
-    return { id: highlightEntry.id, ...highlightEntry, parent_id };
+    return { id: highlightEntry.id, ...highlightEntry, parent_id, comment };
   })
   .listen(PORT);
 
