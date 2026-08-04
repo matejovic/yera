@@ -6,14 +6,14 @@ import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 import { NotFound } from "./_404";
 import { Yera } from "./yera";
-import { Stack } from "./_todo/stack.tsx";
-import { Time } from "./_todo/time.tsx";
-import { Stream } from "./_todo/stream.tsx";
-import { Data } from "./_todo/data.tsx";
-import { Auth } from "./_todo/authentication/auth.tsx";
-import Logout from "./_todo/authentication/logout.tsx";
-import { Profile } from "./_todo/authentication/profile.tsx";
-import { Read } from "./_todo/read/read.tsx";
+import { Stack } from "./pages/stack.tsx";
+import { Time } from "./pages/time.tsx";
+import { Stream } from "./pages/stream.tsx";
+import { Data } from "./pages/data.tsx";
+import { Auth } from "./pages/authentication/auth.tsx";
+import Logout from "./pages/authentication/logout.tsx";
+import { Profile } from "./pages/authentication/profile.tsx";
+import { Read } from "./pages/read/read.tsx";
 
 export function App() {
   return (
