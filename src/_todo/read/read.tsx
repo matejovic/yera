@@ -43,18 +43,34 @@ export function Read(props) {
     })();
   }, []);
 
+  // Save and restore reading progress (scroll position)
+  useEffect(() => {
+    if (!resource || !props.id) return;
+
+    const savedScroll = localStorage.getItem(`scroll-progress-${props.id}`);
+    if (savedScroll) {
+      setTimeout(() => {
+        window.scrollTo(0, parseInt(savedScroll, 10));
+      }, 150);
+    }
+
+    const handleScroll = () => {
+      localStorage.setItem(
+        `scroll-progress-${props.id}`,
+        String(window.scrollY),
+      );
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [resource, props.id]);
+
   const loadResource = async (id) => {
     const response = await fetch(API_URL + `/entry/${id}`);
     const data = await response.json();
     setResource(data);
-    setNote(data.annotations);
-    setTags(data.tags.map((t) => t.name).join(","));
-
-    setTimeout(() => {
-      document
-        .querySelector(".reader")
-        .addEventListener("mouseup", onMouseUp);
-    }, 500); // heh...
+    setNote(data.annotations || "");
+    setTags(data.tags ? data.tags.map((t) => t.name).join(",") : "");
   };
 
   const onMouseUp = (event) => {
@@ -181,21 +197,24 @@ export function Read(props) {
     window.location.href = "/stack";
   }
 
-  // on keypress open modal window
-  // TODO: needs to be scoped and removed before problems arise.
-  window.addEventListener("keydown", (event) => {
-    console.log(`Key pressed: ${event.key}`);
-    if (event.key === "Escape") {
-      setShowConfig(false);
-      // setShowMeta(false);
-    }
-    if (event.key === "a") {
-      setShowConfig(!showConfig);
-    }
-    if (event.key === "s") {
-      // setShowMeta(!showMeta);
-    }
-  });
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      if (event.key === "Escape") {
+        setShowConfig(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <div class="">
@@ -277,6 +296,7 @@ export function Read(props) {
             <hr />
             <div
               class="reader"
+              onMouseUp={onMouseUp}
               dangerouslySetInnerHTML={{ __html: resource.extra }}
             />
           </div>
