@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Save to Yera</title>
+  <style>
+    :root {
+      --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      --bg: #090d16;
+      --card-bg: #111827;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --border: #1f2937;
+      --success: #34d399;
+    }
+    body {
+      width: 320px;
+      margin: 0;
+      padding: 16px;
+      font-family: var(--font-family);
+      background-color: var(--bg);
+      color: var(--text);
+      box-sizing: border-box;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .logo-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #6366f1, #f59e0b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 12px;
+      color: #fff;
+    }
+    .title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .field {
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background-color: var(--card-bg);
+      color: var(--text);
+      font-size: 0.85rem;
+      box-sizing: border-box;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    button {
+      width: 100%;
+      padding: 9px;
+      border-radius: 6px;
+      border: none;
+      background-color: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+    .status {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      text-align: center;
+      display: none;
+    }
+    .status.success {
+      display: block;
+      color: var(--success);
+    }
+    .footer-link {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 0.75rem;
+    }
+    .footer-link a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .footer-link a:hover {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-badge">Y</div>
+    <h1 class="title">Yera Web Clipper</h1>
+  </div>
+
+  <div class="field">
+    <label for="pageTitle">Article Title</label>
+    <input type="text" id="pageTitle" placeholder="Loading page title..." />
+  </div>
+
+  <div class="field">
+    <label for="pageUrl">URL</label>
+    <input type="text" id="pageUrl" placeholder="Loading URL..." />
+  </div>
+
+  <div class="field">
+    <label for="tags">Tags (comma separated)</label>
+    <input type="text" id="tags" placeholder="e.g. tech, research, ai" />
+  </div>
+
+  <button id="saveBtn">Save to Yera (Offline First)</button>
+
+  <div id="status" class="status"></div>
+
+  <div class="footer-link">
+    <a href="http://localhost:5173/stack" target="_blank">Open Knowledge Stack &rarr;</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

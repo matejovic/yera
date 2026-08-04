@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Yera — Knowledge Base & Web Clipper",
+  "version": "1.0.0",
+  "description": "Save, annotate, and organize web articles, notes, and highlights offline-first.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Save to Yera"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "host_permissions": [
+    "http://localhost:8000/*"
+  ]
+}
