@@ -1,4 +1,5 @@
 const API_URL = "http://localhost:8000";
+const extAPI = typeof browser !== "undefined" ? browser : chrome;
 
 document.addEventListener("DOMContentLoaded", async () => {
   const pageTitleInput = document.getElementById("pageTitle");
@@ -9,10 +10,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Get active tab metadata
   try {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (tab) {
-      pageTitleInput.value = tab.title || "";
-      pageUrlInput.value = tab.url || "";
+    const tabs = await (extAPI.tabs.query({ active: true, currentWindow: true }));
+    if (tabs && tabs[0]) {
+      pageTitleInput.value = tabs[0].title || "";
+      pageUrlInput.value = tabs[0].url || "";
     }
   } catch (err) {
     console.error("Failed to query active tab:", err);
@@ -47,12 +48,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       synced: false,
     };
 
-    // Save offline first in chrome.storage.local
+    // Save offline first in extAPI.storage.local
     try {
-      const stored = await chrome.storage.local.get({ yeraOfflineEntries: [] });
-      const entries = stored.yeraOfflineEntries;
+      const stored = await extAPI.storage.local.get({ yeraOfflineEntries: [] });
+      const entries = stored.yeraOfflineEntries || [];
       entries.push(entryData);
-      await chrome.storage.local.set({ yeraOfflineEntries: entries });
+      await extAPI.storage.local.set({ yeraOfflineEntries: entries });
 
       // Attempt background sync to server if online
       try {
