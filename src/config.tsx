@@ -1,7 +1,9 @@
 import { useState } from "preact/hooks"
 import { showHelp, isDark } from "./globals.tsx"
 
-export function Config (props: Props) {
+interface ConfigProps {}
+
+export function Config(props: ConfigProps) {
   const [darkMode, setDarkMode] = useState(Boolean(isDark));
   const [help, setHelp] = useState(Boolean(showHelp));
 
@@ -12,11 +14,11 @@ export function Config (props: Props) {
 
         <label>Dark Mode: </label>
         <input type="checkbox" checked={darkMode}
-          onChange={(prev) => {
-		const isDark = !prev;
-		document.documentElement.classList.toggle("isDark"); 
-		localStorage.setItem("prefersDark", isDark);		
-		setDarkMode(isDark);
+          onChange={(e) => {
+		const newDark = e.currentTarget.checked;
+		document.documentElement.classList.toggle("isDark", newDark); 
+		localStorage.setItem("prefersDark", String(newDark));		
+		setDarkMode(newDark);
          }}
         />
 	</div>

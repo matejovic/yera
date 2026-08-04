@@ -43,7 +43,7 @@ export function Stack() {
 
   useEffect(() => {
     doSearch();
-  })
+  }, [filter, stack]);
 
   useEffect(() => {
     loadEntries();

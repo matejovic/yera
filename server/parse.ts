@@ -5,7 +5,9 @@ import TurndownService from "turndown";
 const { JSDOM } = jsdom;
 const turndownService = new TurndownService();
 
-export async function parseArticle(url: string): Promise<{ content: string, title: string }> {
+export async function parseArticle(
+  url: string,
+): Promise<{ content_md: string; content_html: string; title: string }> {
   const dom = await JSDOM.fromURL(url, {});
   const reader = new Readability(dom.window.document);
   const article = reader.parse();
