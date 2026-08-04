@@ -114,6 +114,26 @@ const app = new Elysia({ prefix: BASE_URL })
       }),
     },
   )
+  .post("/note", async ({ body, cookie: { token }, jwt }) => {
+    const token_data = await jwt.verify(token);
+    if (!token_data) {
+      return { message: "Unauthorized" };
+    }
+    const { text, raw, type } = body as { text: string; raw: any; type: string };
+    const title = text.slice(0, 30).trim() || "Untitled Note";
+    const uniqueUrl = `note://${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+    const noteEntry = await db.entry.create({
+      data: {
+        user: { connect: { id: token_data.id } },
+        url: uniqueUrl,
+        title: title,
+        content: text,
+        extra: JSON.stringify(raw),
+        type: type || "resource-note",
+      },
+    });
+    return noteEntry;
+  })
   .put("/entry/:id", async ({ params, body, cookie: { token }, jwt }) => {
     const token_data = await jwt.verify(token);
     if (!token_data) {

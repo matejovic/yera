@@ -23,19 +23,68 @@ function matchTier(a: string, b: string) {
   return 0;
 }
 
-function filterEntries(entries, query: string) {
-  return entries.map((entry) => {
-    return [entry, matchTier(entry.title, query)*2 + matchTier(entry.content, query) + matchTier(entry.url, query)];
-  }).filter((match) => {
-    return match[1] > 0;
-  }).sort((a, b) => b[1] - a[1]).map((a) => a[0]);
+function processEntries(
+  entries: any[],
+  query: string,
+  selectedType: string,
+  selectedTag: string,
+  sortOrder: string,
+) {
+  if (!Array.isArray(entries)) return [];
+  let result = [...entries];
+
+  // Filter by Type
+  if (selectedType !== "all") {
+    result = result.filter((e) => e.type === selectedType);
+  }
+
+  // Filter by Tag
+  if (selectedTag !== "all") {
+    result = result.filter(
+      (e) => e.tags && e.tags.some((t: any) => t.name === selectedTag),
+    );
+  }
+
+  // Filter by Search Query
+  if (query.trim() !== "") {
+    result = result
+      .map((entry) => [
+        entry,
+        matchTier(entry.title || "", query) * 2 +
+          matchTier(entry.content || "", query) +
+          matchTier(entry.url || "", query),
+      ])
+      .filter((match: any) => match[1] > 0)
+      .map((match: any) => match[0]);
+  }
+
+  // Sort Order
+  return result.sort((a: any, b: any) => {
+    if (sortOrder === "newest") {
+      return (
+        new Date(b.created_at || 0).getTime() -
+        new Date(a.created_at || 0).getTime()
+      );
+    } else if (sortOrder === "oldest") {
+      return (
+        new Date(a.created_at || 0).getTime() -
+        new Date(b.created_at || 0).getTime()
+      );
+    } else if (sortOrder === "title") {
+      return (a.title || "").localeCompare(b.title || "");
+    }
+    return 0;
+  });
 }
 
 export function Stack() {
   const [stack, setStack] = useState([]);
-  const [filteredStack, setFilteredStack] = useState([]); 
+  const [filteredStack, setFilteredStack] = useState([]);
   const [addLink, setAddLink] = useState("");
   const [filter, setFilter] = useState("");
+  const [selectedType, setSelectedType] = useState("all");
+  const [selectedTag, setSelectedTag] = useState("all");
+  const [sortOrder, setSortOrder] = useState("newest");
   const [showAddLink, setShowAddLink] = useState(false);
   const [showNote, setShowNote] = useState(false);
   const location = useLocation();
@@ -43,17 +92,18 @@ export function Stack() {
 
   useEffect(() => {
     doSearch();
-  }, [filter, stack]);
+  }, [filter, stack, selectedType, selectedTag, sortOrder]);
 
   useEffect(() => {
     loadEntries();
   }, []);
 
   const loadEntries = async () => {
-    // TODO: filter by tags, type, search, etc. 
     const response = await api_get("/entries");
     const data = await response.json();
-    setStack(data);
+    if (Array.isArray(data)) {
+      setStack(data);
+    }
   };
 
   const keyDown = async (event: KeyboardEvent) => {
@@ -76,45 +126,124 @@ export function Stack() {
     location.route(`/resource/${id}`);
   };
 
-  const doSearch = async () => {
-    setFilteredStack(filterEntries(stack, filter));
-  }
+  const doSearch = () => {
+    setFilteredStack(
+      processEntries(stack, filter, selectedType, selectedTag, sortOrder),
+    );
+  };
+
+  const availableTags: string[] = Array.from(
+    new Set(
+      stack.flatMap((e: any) =>
+        e.tags ? e.tags.map((t: any) => t.name) : [],
+      ),
+    ),
+  );
 
   return (
     <div class="page">
       <div class="block">
         <h2>Entries</h2>
-        <div style={{"margin-bottom": '20px'}}>
+        <div style={{ "margin-bottom": "20px" }}>
           <input
             type="text"
             placeholder="Search (s)"
             accessKey="s"
             value={filter}
-            onInput={e => setFilter(e.currentTarget.value)}
-            style={{ width: '100%', boxSizing: 'border-box', marginBottom: '12px' }}
+            onInput={(e) => setFilter(e.currentTarget.value)}
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+              marginBottom: "12px",
+            }}
           />
-    	  
-    	  <p>Tags:</p>
-    	  <p>Types: 
-    	   <button>Reads</button>
-    	   <button>Notes</button> 
-    	  </p>
-    	  <p>
-    	    Order: <select>
-    	     <option>Newest</option>
-    	     <option>Oldest</option>
-    	     <option>Timeline</option>
-    	    </select>
-    	  </p>
-    	  <p>View:
-    	   <select>
-    	     <option>default</option>
-    	     <option>minimal</option>
-    	     <option>rich</option>
-    	   </select> 
-    	  </p>
-    	  <button onClick={() => setShowAddLink(prev => !prev)}>Add Link</button> {" "}
-          <button onClick={() => setShowNote(prev => !prev)}>Add Text</button>  {" "}
+
+          <div style={{ marginBottom: "8px" }}>
+            <strong>Types: </strong>
+            <button
+              onClick={() => setSelectedType("all")}
+              style={{
+                fontWeight: selectedType === "all" ? "bold" : "normal",
+                marginRight: "4px",
+              }}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setSelectedType("resource-html")}
+              style={{
+                fontWeight:
+                  selectedType === "resource-html" ? "bold" : "normal",
+                marginRight: "4px",
+              }}
+            >
+              Reads
+            </button>
+            <button
+              onClick={() => setSelectedType("resource-note")}
+              style={{
+                fontWeight:
+                  selectedType === "resource-note" ? "bold" : "normal",
+                marginRight: "4px",
+              }}
+            >
+              Notes
+            </button>
+            <button
+              onClick={() => setSelectedType("HIGHLIGHT")}
+              style={{
+                fontWeight: selectedType === "HIGHLIGHT" ? "bold" : "normal",
+              }}
+            >
+              Highlights
+            </button>
+          </div>
+
+          {availableTags.length > 0 && (
+            <div style={{ marginBottom: "8px" }}>
+              <strong>Tags: </strong>
+              <button
+                onClick={() => setSelectedTag("all")}
+                style={{
+                  fontWeight: selectedTag === "all" ? "bold" : "normal",
+                  marginRight: "4px",
+                }}
+              >
+                All
+              </button>
+              {availableTags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setSelectedTag(tag)}
+                  style={{
+                    fontWeight: selectedTag === tag ? "bold" : "normal",
+                    marginRight: "4px",
+                  }}
+                >
+                  #{tag}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div style={{ marginBottom: "8px" }}>
+            <strong>Order: </strong>
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.currentTarget.value)}
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="title">Title (A-Z)</option>
+            </select>
+          </div>
+
+          <button onClick={() => setShowAddLink((prev) => !prev)}>
+            Add Link
+          </button>{" "}
+          <button onClick={() => setShowNote((prev) => !prev)}>
+            Add Text
+          </button>{" "}
         </div>
 
 
