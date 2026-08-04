@@ -1,3 +1,7 @@
 secret_sauce.md
 *.lock*
 node_modules/
+dist/
+.env
+*.db*
+
